@@ -1,45 +1,51 @@
-import { Routes, Route, useLocation } from "react-router";
-import BaseLayout from "./layouts/BaseLayout";
-import IntroView from "./views/public/IntroView";
-import RegisterView from "./views/public/RegisterView";
-import SignInView from "./views/public/SignInView";
+import { Navigate, Route, Routes, useLocation } from "react-router";
+import IntroView from "./views/start/IntroView";
+import RegisterView from "./views/start/RegisterView";
+import SignInView from "./views/start/SignInView";
 import NotFoundView from "./views/NotFoundView";
-import Modal from "./components/Modal/Modal";
+import StartLayout from "./layouts/StartLayout";
+import DashboardView from "./views/dashboard/DashboardView";
+import NotesView from "./views/dashboard/NotesView";
+import DashboardLayout from "./layouts/DashboardLayout";
+import UserView from "./views/dashboard/UserView";
 
 const Router = () => {
-  const location = useLocation();
-  const previousLocation = location.state?.previousLocation;
-
   return (
-    <div className="app">
-      <Routes location={previousLocation || location}>
-        <Route path="/" element={<BaseLayout />}>
-          <Route index element={<IntroView />} />
-          <Route path="*" element={<NotFoundView />} />
-        </Route>
-      </Routes>
+    <Routes>
+      <Route path="/" element={<Navigate to="/start" />} />
 
-      {previousLocation && (
-        <Routes>
-          <Route
-            path="/register"
-            element={
-              <Modal>
-                <RegisterView />
-              </Modal>
-            }
-          />
-          <Route
-            path="/signin"
-            element={
-              <Modal>
-                <SignInView />
-              </Modal>
-            }
-          />
-        </Routes>
-      )}
-    </div>
+      <Route element={<StartLayout />}>
+        <Route
+          path="/start/*"
+          element={
+            <>
+              <IntroView />
+              <Routes>
+                <Route path="register" element={<RegisterView />} />
+                <Route path="signin" element={<SignInView />} />
+              </Routes>
+            </>
+          }
+        />
+      </Route>
+
+      <Route element={<DashboardLayout />}>
+        <Route
+          path="/dashboard/*"
+          element={
+            <>
+              <DashboardView />
+              <Routes>
+                <Route path="notes" element={<NotesView />} />
+                <Route path="user" element={<UserView />} />
+              </Routes>
+            </>
+          }
+        />
+      </Route>
+
+      <Route path="*" element={<NotFoundView />} />
+    </Routes>
   );
 };
 
