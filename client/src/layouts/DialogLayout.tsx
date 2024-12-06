@@ -1,30 +1,29 @@
-import { useNavigate } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { Button, Dialog } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-interface IModalProps {
-  show: boolean;
-  children: React.ReactNode;
+interface ModalLayoutProps {
+  baseUrl: string;
 }
 
-const Modal = ({ show, children }: IModalProps) => {
+const DialogLayout = ({ baseUrl }: ModalLayoutProps) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Dialog
-      onClick={() => navigate("/")}
-      open={show}
+      onClick={() => navigate(baseUrl)}
+      open={true}
       fullScreen={fullScreen}
       keepMounted
       aria-describedby="alert-dialog-slide-description"
     >
-      <Button onClick={() => navigate("/")}>❌</Button>
-      <div>{children}</div>
+      <Button onClick={() => navigate(baseUrl)}>❌</Button>
+      <Outlet />
     </Dialog>
   );
 };
 
-export default Modal;
+export default DialogLayout;

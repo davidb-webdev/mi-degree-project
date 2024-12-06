@@ -8,6 +8,7 @@ import DashboardView from "./views/dashboard/DashboardView";
 import NotesView from "./views/dashboard/NotesView";
 import DashboardLayout from "./layouts/DashboardLayout";
 import UserView from "./views/dashboard/UserView";
+import DialogLayout from "./layouts/DialogLayout";
 
 const Router = () => {
   return (
@@ -21,8 +22,10 @@ const Router = () => {
             <>
               <IntroView />
               <Routes>
-                <Route path="register" element={<RegisterView />} />
-                <Route path="signin" element={<SignInView />} />
+                <Route element={<DialogLayout baseUrl="/start" />}>
+                  <Route path="register" element={<RegisterView />} />
+                  <Route path="signin" element={<SignInView />} />
+                </Route>
               </Routes>
             </>
           }
@@ -36,8 +39,10 @@ const Router = () => {
             <>
               <DashboardView />
               <Routes>
-                <Route path="notes" element={<NotesView />} />
-                <Route path="user" element={<UserView />} />
+                <Route element={<DialogLayout baseUrl="/dashboard" />}>
+                  <Route path="notes" element={<NotesView />} />
+                  <Route path="user" element={<UserView />} />
+                </Route>
               </Routes>
             </>
           }
