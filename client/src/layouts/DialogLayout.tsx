@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router";
-import { Button, Dialog } from "@mui/material";
+import { Box, Button, Dialog } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -20,8 +20,21 @@ const DialogLayout = ({ baseUrl }: ModalLayoutProps) => {
       keepMounted
       aria-describedby="alert-dialog-slide-description"
     >
-      <Button onClick={() => navigate(baseUrl)}>❌</Button>
-      <Outlet />
+      <Box
+        sx={{
+          p: 2,
+          display: "flex",
+          flexDirection: "column",
+          minWidth: "300px"
+        }}
+      >
+        <Button onClick={() => navigate(baseUrl)} sx={{ alignSelf: "end" }}>
+          Close
+        </Button>
+        <Box>
+          <Outlet />
+        </Box>
+      </Box>
     </Dialog>
   );
 };

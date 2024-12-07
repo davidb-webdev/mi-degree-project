@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useLocation } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import IntroView from "./views/start/IntroView";
 import RegisterView from "./views/start/RegisterView";
 import SignInView from "./views/start/SignInView";
