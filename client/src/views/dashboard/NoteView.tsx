@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router";
+import { useParams } from "react-router";
 
 const NoteView = () => {
   const { id } = useParams<{ id: string }>();
@@ -7,7 +7,6 @@ const NoteView = () => {
     <>
       <p>Note</p>
       <p>ID: {id}</p>
-      <Link to="/dashboard">Go back to all notes</Link>
     </>
   );
 };

@@ -3,13 +3,16 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router";
 import Router from "./Router";
 import "./index.css";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import fireInspectTheme from "./Theme";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <CssBaseline />
-      <Router />
-    </BrowserRouter>
+    <ThemeProvider theme={fireInspectTheme}>
+      <BrowserRouter>
+        <CssBaseline />
+        <Router />
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>
 );

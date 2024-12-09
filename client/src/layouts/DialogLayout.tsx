@@ -14,8 +14,8 @@ const DialogLayout = ({ baseUrl }: ModalLayoutProps) => {
 
   return (
     <Dialog
-      onClick={() => navigate(baseUrl)}
       open={true}
+      onClose={() => navigate(baseUrl)}
       fullScreen={isMobile}
       keepMounted
       aria-describedby="alert-dialog-slide-description"

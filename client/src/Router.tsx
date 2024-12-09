@@ -9,6 +9,7 @@ import UserView from "./views/dashboard/UserView";
 import DialogLayout from "./layouts/DialogLayout";
 import NotesListView from "./views/dashboard/NotesListView";
 import NoteView from "./views/dashboard/NoteView";
+import ProjectInfoView from "./views/dashboard/InfoView";
 
 const Router = () => {
   return (
@@ -38,6 +39,7 @@ const Router = () => {
 
         <Route element={<DialogLayout baseUrl="/dashboard" />}>
           <Route path="user" element={<UserView />} />
+          <Route path="info" element={<ProjectInfoView />} />
         </Route>
       </Route>
 

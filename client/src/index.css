@@ -3,7 +3,7 @@ body {
 }
 
 .scrollable {
-  height: 100vh;
+  /* height: 100vh; */
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }

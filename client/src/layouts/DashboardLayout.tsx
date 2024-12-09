@@ -8,8 +8,9 @@ import {
   useMediaQuery
 } from "@mui/material";
 import { useState } from "react";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import MenuIcon from "@mui/icons-material/Menu";
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import NotesDrawer from "../components/NotesDrawer";
 import FloorPlan from "../components/FloorPlan";
 import MenuDrawer from "../components/MenuDrawer";
@@ -20,6 +21,7 @@ const DashboardLayout = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [showMenu, setShowMenu] = useState(false);
   const [showNotes, setShowNotes] = useState(isMobile ? false : true);
+  const navigate = useNavigate();
 
   const notesWidth = "33vw";
 
@@ -27,6 +29,8 @@ const DashboardLayout = () => {
     <>
       <Box
         sx={{
+          backgroundColor: theme.palette.primary.light,
+          minHeight: "100vh",
           mr: !isMobile && showNotes ? notesWidth : 0,
           transition: theme.transitions.create(["margin", "width"], {
             easing: theme.transitions.easing.sharp,
@@ -34,22 +38,36 @@ const DashboardLayout = () => {
           })
         }}
       >
-        <AppBar position="static">
-          <Toolbar>
+        <AppBar
+          position="static"
+          sx={{
+            boxShadow: "none",
+            backgroundColor: theme.palette.primary.light
+          }}
+        >
+          <Toolbar disableGutters>
             <Button onClick={() => setShowMenu(true)}>
               <IconButton aria-label="menu">
                 <MenuIcon />
               </IconButton>
             </Button>
 
-            <Typography variant="h2" sx={{ flexGrow: 1 }}>
-              Headline
+            <Typography noWrap variant="body1" sx={{ flexGrow: 1 }} fontWeight="bold">
+              Project name
             </Typography>
+
+            <Button
+              variant="contained"
+              onClick={() => navigate("/dashboard/info")}
+              sx={{mr: isMobile ? 2 : 0}}
+            >
+              Details
+            </Button>
 
             {!isMobile && (
               <Button onClick={() => setShowNotes(!showNotes)}>
                 <IconButton aria-label="notes">
-                  <MenuIcon />
+                  <EditNoteIcon />
                 </IconButton>
               </Button>
             )}
@@ -67,6 +85,7 @@ const DashboardLayout = () => {
       <NotesDrawer
         showNotes={showNotes}
         toggleNotes={() => setShowNotes(!showNotes)}
+        notesWidth={notesWidth}
       >
         <Outlet />
       </NotesDrawer>
