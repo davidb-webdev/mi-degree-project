@@ -10,13 +10,13 @@ interface ModalLayoutProps {
 const DialogLayout = ({ baseUrl }: ModalLayoutProps) => {
   const navigate = useNavigate();
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Dialog
       onClick={() => navigate(baseUrl)}
       open={true}
-      fullScreen={fullScreen}
+      fullScreen={isMobile}
       keepMounted
       aria-describedby="alert-dialog-slide-description"
     >

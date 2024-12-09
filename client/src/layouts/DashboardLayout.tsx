@@ -1,57 +1,75 @@
 import {
   AppBar,
+  Box,
   Button,
-  Drawer,
   IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Toolbar
+  Toolbar,
+  Typography,
+  useMediaQuery
 } from "@mui/material";
 import { useState } from "react";
-import { NavLink, Outlet } from "react-router";
+import { Outlet } from "react-router";
 import MenuIcon from "@mui/icons-material/Menu";
+import NotesDrawer from "../components/NotesDrawer";
+import FloorPlan from "../components/FloorPlan";
+import MenuDrawer from "../components/MenuDrawer";
+import { useTheme } from "@mui/material/styles";
 
 const DashboardLayout = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [showMenu, setShowMenu] = useState(false);
+  const [showNotes, setShowNotes] = useState(isMobile ? false : true);
 
-  const listItems = [
-    { link: "/dashboard/notes", text: "Notes" },
-    { link: "/dashboard/user", text: "User" }
-  ];
+  const notesWidth = "33vw";
 
   return (
     <>
-      <AppBar position="static">
-        <Toolbar>
-          <Button onClick={() => setShowMenu(true)}>
-            <IconButton
-              edge="start"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-          </Button>
+      <Box
+        sx={{
+          mr: !isMobile && showNotes ? notesWidth : 0,
+          transition: theme.transitions.create(["margin", "width"], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen
+          })
+        }}
+      >
+        <AppBar position="static">
+          <Toolbar>
+            <Button onClick={() => setShowMenu(true)}>
+              <IconButton aria-label="menu">
+                <MenuIcon />
+              </IconButton>
+            </Button>
 
-          <Drawer open={showMenu} onClose={() => setShowMenu(false)}>
-            <List sx={{ minWidth: "250px" }}>
-              {listItems.map((listItem) => (
-                <ListItem key={listItem.text} disablePadding>
-                  <ListItemButton component={NavLink} to={listItem.link}>
-                    <ListItemText>
-                      {listItem.text}
-                    </ListItemText>
-                  </ListItemButton>
-                </ListItem>
-              ))}
-            </List>
-          </Drawer>
-        </Toolbar>
-      </AppBar>
+            <Typography variant="h2" sx={{ flexGrow: 1 }}>
+              Headline
+            </Typography>
 
-      <Outlet />
+            {!isMobile && (
+              <Button onClick={() => setShowNotes(!showNotes)}>
+                <IconButton aria-label="notes">
+                  <MenuIcon />
+                </IconButton>
+              </Button>
+            )}
+          </Toolbar>
+        </AppBar>
+
+        <FloorPlan />
+      </Box>
+
+      <MenuDrawer
+        showMenu={showMenu}
+        toggleMenu={() => setShowMenu(!showMenu)}
+      />
+
+      <NotesDrawer
+        showNotes={showNotes}
+        toggleNotes={() => setShowNotes(!showNotes)}
+      >
+        <Outlet />
+      </NotesDrawer>
     </>
   );
 };

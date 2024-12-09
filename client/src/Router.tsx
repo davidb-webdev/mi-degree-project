@@ -4,11 +4,11 @@ import RegisterView from "./views/start/RegisterView";
 import SignInView from "./views/start/SignInView";
 import NotFoundView from "./views/NotFoundView";
 import StartLayout from "./layouts/StartLayout";
-import DashboardView from "./views/dashboard/DashboardView";
-import NotesView from "./views/dashboard/NotesView";
 import DashboardLayout from "./layouts/DashboardLayout";
 import UserView from "./views/dashboard/UserView";
 import DialogLayout from "./layouts/DialogLayout";
+import NotesListView from "./views/dashboard/NotesListView";
+import NoteView from "./views/dashboard/NoteView";
 
 const Router = () => {
   return (
@@ -32,21 +32,13 @@ const Router = () => {
         />
       </Route>
 
-      <Route element={<DashboardLayout />}>
-        <Route
-          path="/dashboard/*"
-          element={
-            <>
-              <DashboardView />
-              <Routes>
-                <Route element={<DialogLayout baseUrl="/dashboard" />}>
-                  <Route path="notes" element={<NotesView />} />
-                  <Route path="user" element={<UserView />} />
-                </Route>
-              </Routes>
-            </>
-          }
-        />
+      <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route index element={<NotesListView />} />
+        <Route path="/dashboard/notes/:id" element={<NoteView />} />
+
+        <Route element={<DialogLayout baseUrl="/dashboard" />}>
+          <Route path="user" element={<UserView />} />
+        </Route>
       </Route>
 
       <Route path="*" element={<NotFoundView />} />
