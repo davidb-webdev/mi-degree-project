@@ -10,7 +10,7 @@ import {
 import { useState } from "react";
 import { Outlet, useNavigate } from "react-router";
 import MenuIcon from "@mui/icons-material/Menu";
-import EditNoteIcon from '@mui/icons-material/EditNote';
+import NotesIcon from '@mui/icons-material/Notes';
 import NotesDrawer from "../components/NotesDrawer";
 import FloorPlan from "../components/FloorPlan";
 import MenuDrawer from "../components/MenuDrawer";
@@ -67,7 +67,7 @@ const DashboardLayout = () => {
             {!isMobile && (
               <Button onClick={() => setShowNotes(!showNotes)}>
                 <IconButton aria-label="notes">
-                  <EditNoteIcon />
+                  <NotesIcon />
                 </IconButton>
               </Button>
             )}
