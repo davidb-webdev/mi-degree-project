@@ -10,11 +10,12 @@ import {
 import { useState } from "react";
 import { Outlet, useNavigate } from "react-router";
 import MenuIcon from "@mui/icons-material/Menu";
-import NotesIcon from '@mui/icons-material/Notes';
+import NotesIcon from "@mui/icons-material/Notes";
 import NotesDrawer from "../components/NotesDrawer";
 import FloorPlan from "../components/FloorPlan";
 import MenuDrawer from "../components/MenuDrawer";
 import { useTheme } from "@mui/material/styles";
+import { NotesTitleProvider } from "../utils/useNotesTitle";
 
 const DashboardLayout = () => {
   const theme = useTheme();
@@ -52,14 +53,19 @@ const DashboardLayout = () => {
               </IconButton>
             </Button>
 
-            <Typography noWrap variant="body1" sx={{ flexGrow: 1 }} fontWeight="bold">
+            <Typography
+              noWrap
+              variant="body1"
+              sx={{ flexGrow: 1 }}
+              fontWeight="bold"
+            >
               Project name
             </Typography>
 
             <Button
               variant="contained"
               onClick={() => navigate("/dashboard/info")}
-              sx={{mr: isMobile ? 2 : 0}}
+              sx={{ mr: isMobile ? 2 : 0 }}
             >
               Details
             </Button>
@@ -82,13 +88,15 @@ const DashboardLayout = () => {
         toggleMenu={() => setShowMenu(!showMenu)}
       />
 
-      <NotesDrawer
-        showNotes={showNotes}
-        toggleNotes={() => setShowNotes(!showNotes)}
-        notesWidth={notesWidth}
-      >
-        <Outlet />
-      </NotesDrawer>
+      <NotesTitleProvider>
+        <NotesDrawer
+          showNotes={showNotes}
+          toggleNotes={() => setShowNotes(!showNotes)}
+          notesWidth={notesWidth}
+        >
+          <Outlet />
+        </NotesDrawer>
+      </NotesTitleProvider>
     </>
   );
 };

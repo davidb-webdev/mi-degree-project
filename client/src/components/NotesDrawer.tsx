@@ -11,7 +11,8 @@ import { useTheme } from "@mui/material/styles";
 import { Global } from "@emotion/react";
 import { useNavigate } from "react-router";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
+import { useNotesTitle } from "../utils/useNotesTitle";
 
 interface NotesDrawerProps {
   showNotes: boolean;
@@ -26,9 +27,12 @@ const NotesDrawer = ({
   notesWidth,
   children
 }: NotesDrawerProps) => {
+  const { notesTitle, setNotesTitle } = useNotesTitle();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
+
+  setNotesTitle("NotesU");
 
   const iOS =
     typeof navigator !== "undefined" &&
@@ -103,22 +107,25 @@ const NotesDrawer = ({
           }}
         >
           <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-            {1 === 1 && (
-              <Button onClick={() => navigate("/dashboard")}>
-                <IconButton aria-label="back">
-                  <ArrowBackIcon />
-                </IconButton>
-              </Button>
-            )}
+            <Box width={64}>
+              {location.pathname.includes("/notes") && (
+                <Button onClick={() => navigate("/dashboard")}>
+                  <IconButton aria-label="back">
+                    <ArrowBackIcon />
+                  </IconButton>
+                </Button>
+              )}
+            </Box>
+
             <Typography noWrap variant="body1" fontWeight="bold">
-              Notes
+              {notesTitle}
             </Typography>
-            
+
             <Button onClick={() => toggleNotes()}>
-                <IconButton aria-label="close">
-                  <CloseIcon />
-                </IconButton>
-              </Button>
+              <IconButton aria-label="close">
+                <CloseIcon />
+              </IconButton>
+            </Button>
           </Toolbar>
           {children}
         </Box>
