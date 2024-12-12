@@ -13,8 +13,6 @@ const IntroView = () => {
 
   return (
     <>
-      <title>FireInspect</title>
-
       <Container maxWidth="lg" sx={{ textAlign: "center" }}>
         <Skeleton variant="rectangular" height={400} />
 
@@ -22,6 +20,8 @@ const IntroView = () => {
           <Typography variant="body1">Lorem</Typography>
           <Typography variant="body1">Ipsum</Typography>
           <Typography variant="body1">Dolor</Typography>
+          <Typography variant="body1">Sit</Typography>
+          <Typography variant="body1">Amet</Typography>
         </Stack>
 
         <Button
@@ -31,7 +31,7 @@ const IntroView = () => {
         >
           Register now
         </Button>
-        <Typography variant="body1">
+        <Typography variant="body1" sx={{mb: 3}}>
           or{" "}
           <Link component={RouterLink} to="/start/signin">
             Sign in

@@ -28,7 +28,7 @@ const DashboardLayout = () => {
       <Box
         sx={{
           backgroundColor: theme.palette.primary.light,
-          minHeight: "100vh",
+          height: "100dvh",
           mr: !isMobile && notesDrawer.open ? notesDrawer.width : 0,
           transition: theme.transitions.create(["margin", "width"], {
             easing: theme.transitions.easing.sharp,

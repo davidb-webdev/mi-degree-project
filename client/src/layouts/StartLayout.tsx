@@ -6,7 +6,7 @@ const StartLayout = () => {
   const navigate = useNavigate();
 
   return (
-    <>
+    <Box className="scrollable">
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Button
           aria-label="start page"
@@ -16,13 +16,20 @@ const StartLayout = () => {
           FireInspect
         </Button>
         <Box>
-          <Button onClick={() => navigate("/start/register")} sx={{mr: 2}}>Register</Button>
-          <Button variant="contained" onClick={() => navigate("/start/signin")}>Sign in</Button>
+          <Button
+            onClick={() => navigate("/start/register")}
+            sx={{ mr: 2, display: { xs: "none", md: "inline" } }}
+          >
+            Register
+          </Button>
+          <Button variant="contained" onClick={() => navigate("/start/signin")}>
+            Sign in
+          </Button>
         </Box>
       </Toolbar>
 
       <Outlet />
-    </>
+    </Box>
   );
 };
 

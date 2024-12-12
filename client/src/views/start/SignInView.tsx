@@ -16,7 +16,7 @@ const SignInView = () => {
   return (
     <>
       <ModalToolbar
-        title="Register user"
+        title="Sign in"
         actionButton={
           <IconButton onClick={() => navigate("/start")} aria-label="close">
             <CloseIcon />
