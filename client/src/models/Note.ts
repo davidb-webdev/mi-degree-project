@@ -1,7 +1,11 @@
-import { NoteCategories } from "./NoteCategory";
-
 export interface Note {
   title: string;
-  categories: NoteCategories[];
+  categories: NoteCategory[];
   description: string;
+}
+
+export enum NoteCategory {
+  BlockedEscapeRoute = "BlockedEscapeRoute",
+  FireHazard = "FireHazard",
+  NoFireAlarm = "NoFireAlarm"
 }

@@ -6,6 +6,11 @@ import CloseIcon from "@mui/icons-material/Close";
 const UserEditView = () => {
   const navigate = useNavigate();
 
+  const user: User = {
+    name: "Name Lastname",
+    email: "email@example.com"
+  };
+
   return (
     <>
       <ModalToolbar

@@ -7,8 +7,7 @@ import {
   Stack,
   TextField
 } from "@mui/material";
-import { Note } from "../../models/Note";
-import { NoteCategories } from "../../models/NoteCategory";
+import { Note, NoteCategory } from "../../models/Note";
 import ModalToolbar from "../../components/ModalToolbar";
 import { useNavigate, useLocation } from "react-router";
 
@@ -22,7 +21,7 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
 
   const note: Note = {
     title: "Note 1",
-    categories: [NoteCategories.BlockedEscapeRoute],
+    categories: [NoteCategory.BlockedEscapeRoute],
     description: "TODO"
   };
 
@@ -61,7 +60,7 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
           <InputLabel id="categoryLabel">Category</InputLabel>
           <Select label="Category" labelId="categoryLabel">
             {(
-              Object.keys(NoteCategories) as Array<keyof typeof NoteCategories>
+              Object.keys(NoteCategory) as Array<keyof typeof NoteCategory>
             ).map((key) => (
               <MenuItem value={key} key={key}>
                 {key}

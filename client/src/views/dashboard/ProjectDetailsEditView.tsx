@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   FormControl,
   IconButton,
@@ -7,8 +6,7 @@ import {
   MenuItem,
   Select,
   Stack,
-  TextField,
-  Typography
+  TextField
 } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
 import { useNavigate } from "react-router";
@@ -21,7 +19,10 @@ const ProjectDetailsEditView = () => {
   const project: Project = {
     title: "Project 1",
     description: "TODO",
-    status: ProjectStatus.InProgress
+    status: ProjectStatus.InProgress,
+    owner: "user1",
+    createdAt: new Date(),
+    editedAt: new Date()
   };
 
   return (

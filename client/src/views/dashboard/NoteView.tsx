@@ -6,8 +6,7 @@ import {
   Typography,
   useTheme
 } from "@mui/material";
-import { Note } from "../../models/Note";
-import { NoteCategories } from "../../models/NoteCategory";
+import { Note, NoteCategory } from "../../models/Note";
 import ModalToolbar from "../../components/ModalToolbar";
 import { useLocation, useNavigate } from "react-router";
 
@@ -18,7 +17,7 @@ const NoteView = () => {
 
   const note: Note = {
     title: "Note 1",
-    categories: [NoteCategories.BlockedEscapeRoute],
+    categories: [NoteCategory.BlockedEscapeRoute],
     description: "TODO"
   };
 
