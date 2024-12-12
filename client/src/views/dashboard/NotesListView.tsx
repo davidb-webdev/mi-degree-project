@@ -7,7 +7,7 @@ import {
   ListItemButton,
   ListItemText
 } from "@mui/material";
-import NotesToolbar from "../../components/NotesToolbar";
+import ModalToolbar from "../../components/ModalToolbar";
 
 const NotesListView = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const NotesListView = () => {
 
   return (
     <>
-      <NotesToolbar
+      <ModalToolbar
         title="Notes"
         actionButton={
           <Button onClick={() => navigate("/dashboard/notes/new")}>Add</Button>

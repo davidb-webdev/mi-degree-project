@@ -51,8 +51,7 @@ const DashboardLayout = () => {
           </Typography>
 
           <Button
-            variant="contained"
-            onClick={() => navigate("/dashboard/info")}
+            onClick={() => navigate("/dashboard/details")}
             sx={{ mr: isMobile ? 2 : 0 }}
           >
             Details

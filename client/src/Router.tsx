@@ -9,17 +9,20 @@ import UserView from "./views/dashboard/UserView";
 import DialogLayout from "./layouts/DialogLayout";
 import NotesListView from "./views/dashboard/NotesListView";
 import NoteView from "./views/dashboard/NoteView";
-import ProjectInfoView from "./views/dashboard/InfoView";
+import ProjectDetailsView from "./views/dashboard/ProjectDetailsView";
 import NoteEditView from "./views/dashboard/NoteEditView";
+import UserEditView from "./views/dashboard/UserEditView";
+import UserPasswordView from "./views/dashboard/UserPasswordView";
+import ProjectDetailsEditView from "./views/dashboard/ProjectDetailsEditView";
 
 const Router = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/start" />} />
+      <Route path="/" element={<Navigate to="start" />} />
 
       <Route element={<StartLayout />}>
         <Route
-          path="/start/*"
+          path="start/*"
           element={
             <>
               <IntroView />
@@ -34,15 +37,18 @@ const Router = () => {
         />
       </Route>
 
-      <Route path="/dashboard" element={<DashboardLayout />}>
+      <Route path="dashboard" element={<DashboardLayout />}>
         <Route index element={<NotesListView />} />
-        <Route path="/dashboard/notes/new" element={<NoteEditView newNote />} />
-        <Route path="/dashboard/notes/:id" element={<NoteView />} />
-        <Route path="/dashboard/notes/:id/edit" element={<NoteEditView />} />
+        <Route path="notes/new" element={<NoteEditView newNote />} />
+        <Route path="notes/:id" element={<NoteView />} />
+        <Route path="notes/:id/edit" element={<NoteEditView />} />
 
         <Route element={<DialogLayout baseUrl="/dashboard" />}>
           <Route path="user" element={<UserView />} />
-          <Route path="info" element={<ProjectInfoView />} />
+          <Route path="user/edit" element={<UserEditView />} />
+          <Route path="user/editpassword" element={<UserPasswordView />} />
+          <Route path="details" element={<ProjectDetailsView />} />
+          <Route path="details/edit" element={<ProjectDetailsEditView />} />
         </Route>
       </Route>
 

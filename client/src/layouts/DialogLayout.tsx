@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router";
-import { Box, Button, Dialog, useTheme } from "@mui/material";
+import { Box, Dialog, useTheme } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface ModalLayoutProps {
@@ -17,22 +17,10 @@ const DialogLayout = ({ baseUrl }: ModalLayoutProps) => {
       onClose={() => navigate(baseUrl)}
       fullScreen={isMobile}
       keepMounted
-      aria-describedby="alert-dialog-slide-description"
+      aria-describedby="modalTitle"
     >
-      <Box
-        sx={{
-          p: 2,
-          display: "flex",
-          flexDirection: "column",
-          minWidth: "300px"
-        }}
-      >
-        <Button onClick={() => navigate(baseUrl)} sx={{ alignSelf: "end" }}>
-          Close
-        </Button>
-        <Box>
-          <Outlet />
-        </Box>
+      <Box minWidth="300px">
+        <Outlet />
       </Box>
     </Dialog>
   );

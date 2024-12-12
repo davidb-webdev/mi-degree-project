@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { Note } from "../../models/Note";
 import { NoteCategories } from "../../models/NoteCategory";
-import NotesToolbar from "../../components/NotesToolbar";
+import ModalToolbar from "../../components/ModalToolbar";
 import { useLocation, useNavigate } from "react-router";
 
 const NoteView = () => {
@@ -24,7 +24,7 @@ const NoteView = () => {
 
   return (
     <>
-      <NotesToolbar
+      <ModalToolbar
         title={note.title}
         backPath="/dashboard"
         actionButton={

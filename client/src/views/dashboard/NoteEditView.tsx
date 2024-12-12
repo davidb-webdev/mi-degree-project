@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Note } from "../../models/Note";
 import { NoteCategories } from "../../models/NoteCategory";
-import NotesToolbar from "../../components/NotesToolbar";
+import ModalToolbar from "../../components/ModalToolbar";
 import { useNavigate, useLocation } from "react-router";
 
 interface EditNoteViewProps {
@@ -28,7 +28,7 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
 
   return (
     <>
-      <NotesToolbar
+      <ModalToolbar
         title={newNote ? "New note" : note.title}
         backPath={
           newNote
@@ -58,8 +58,8 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
         <TextField label="Title" />
 
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Category</InputLabel>
-          <Select label="Category">
+          <InputLabel id="categoryLabel">Category</InputLabel>
+          <Select label="Category" labelId="categoryLabel">
             {(
               Object.keys(NoteCategories) as Array<keyof typeof NoteCategories>
             ).map((key) => (
@@ -70,11 +70,11 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
           </Select>
         </FormControl>
 
-        <TextField label="Description" />
+        <TextField multiline label="Description" />
 
-        <Button variant="contained">Add photos</Button>
+        <Button>Add photos</Button>
 
-        <Button variant="contained">Edit location on floor plan</Button>
+        <Button>Edit location on floor plan</Button>
       </Stack>
     </>
   );
