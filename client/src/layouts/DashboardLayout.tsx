@@ -1,11 +1,11 @@
 import {
-  AppBar,
   Box,
   Button,
   IconButton,
   Toolbar,
   Typography,
-  useMediaQuery
+  useMediaQuery,
+  useTheme
 } from "@mui/material";
 import { useState } from "react";
 import { Outlet, useNavigate } from "react-router";
@@ -14,17 +14,14 @@ import NotesIcon from "@mui/icons-material/Notes";
 import NotesDrawer from "../components/NotesDrawer";
 import FloorPlan from "../components/FloorPlan";
 import MenuDrawer from "../components/MenuDrawer";
-import { useTheme } from "@mui/material/styles";
-import { NotesTitleProvider } from "../utils/useNotesTitle";
+import { useNotesDrawer } from "../utils/useNotesDrawer";
 
 const DashboardLayout = () => {
+  const [showMenu, setShowMenu] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const [showMenu, setShowMenu] = useState(false);
-  const [showNotes, setShowNotes] = useState(isMobile ? false : true);
   const navigate = useNavigate();
-
-  const notesWidth = "33vw";
+  const notesDrawer = useNotesDrawer();
 
   return (
     <>
@@ -32,53 +29,41 @@ const DashboardLayout = () => {
         sx={{
           backgroundColor: theme.palette.primary.light,
           minHeight: "100vh",
-          mr: !isMobile && showNotes ? notesWidth : 0,
+          mr: !isMobile && notesDrawer.open ? notesDrawer.width : 0,
           transition: theme.transitions.create(["margin", "width"], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen
           })
         }}
       >
-        <AppBar
-          position="static"
-          sx={{
-            boxShadow: "none",
-            backgroundColor: theme.palette.primary.light
-          }}
-        >
-          <Toolbar disableGutters>
-            <Button onClick={() => setShowMenu(true)}>
-              <IconButton aria-label="menu">
-                <MenuIcon />
-              </IconButton>
-            </Button>
+        <Toolbar disableGutters sx={{gap: 2, px: 2}}>
+          <IconButton onClick={() => setShowMenu(true)} aria-label="menu">
+            <MenuIcon />
+          </IconButton>
 
-            <Typography
-              noWrap
-              variant="body1"
-              sx={{ flexGrow: 1 }}
-              fontWeight="bold"
-            >
-              Project name
-            </Typography>
+          <Typography
+            noWrap
+            variant="body1"
+            sx={{ flexGrow: 1 }}
+            fontWeight="bold"
+          >
+            Project name
+          </Typography>
 
-            <Button
-              variant="contained"
-              onClick={() => navigate("/dashboard/info")}
-              sx={{ mr: isMobile ? 2 : 0 }}
-            >
-              Details
-            </Button>
+          <Button
+            variant="contained"
+            onClick={() => navigate("/dashboard/info")}
+            sx={{ mr: isMobile ? 2 : 0 }}
+          >
+            Details
+          </Button>
 
-            {!isMobile && (
-              <Button onClick={() => setShowNotes(!showNotes)}>
-                <IconButton aria-label="notes">
-                  <NotesIcon />
-                </IconButton>
-              </Button>
-            )}
-          </Toolbar>
-        </AppBar>
+          {!isMobile && (
+            <IconButton onClick={() => notesDrawer.toggle()} aria-label="notes">
+              <NotesIcon />
+            </IconButton>
+          )}
+        </Toolbar>
 
         <FloorPlan />
       </Box>
@@ -88,15 +73,9 @@ const DashboardLayout = () => {
         toggleMenu={() => setShowMenu(!showMenu)}
       />
 
-      <NotesTitleProvider>
-        <NotesDrawer
-          showNotes={showNotes}
-          toggleNotes={() => setShowNotes(!showNotes)}
-          notesWidth={notesWidth}
-        >
-          <Outlet />
-        </NotesDrawer>
-      </NotesTitleProvider>
+      <NotesDrawer>
+        <Outlet />
+      </NotesDrawer>
     </>
   );
 };

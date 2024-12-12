@@ -1,6 +1,5 @@
 import { Outlet, useNavigate } from "react-router";
-import { Box, Button, Dialog } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Box, Button, Dialog, useTheme } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface ModalLayoutProps {

@@ -1,38 +1,22 @@
 import {
   Box,
-  Button,
-  IconButton,
   SwipeableDrawer,
-  Toolbar,
   Typography,
-  useMediaQuery
+  useMediaQuery,
+  useTheme
 } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import { Global } from "@emotion/react";
-import { useNavigate } from "react-router";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import CloseIcon from "@mui/icons-material/Close";
-import { useNotesTitle } from "../utils/useNotesTitle";
+import { useNotesDrawer } from "../utils/useNotesDrawer";
+import { ReactNode } from "react";
 
 interface NotesDrawerProps {
-  showNotes: boolean;
-  toggleNotes: () => void;
-  notesWidth: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-const NotesDrawer = ({
-  showNotes,
-  toggleNotes,
-  notesWidth,
-  children
-}: NotesDrawerProps) => {
-  const { notesTitle, setNotesTitle } = useNotesTitle();
+const NotesDrawer = ({ children }: NotesDrawerProps) => {
+  const notesDrawer = useNotesDrawer();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const navigate = useNavigate();
-
-  setNotesTitle("NotesU");
 
   const iOS =
     typeof navigator !== "undefined" &&
@@ -56,9 +40,9 @@ const NotesDrawer = ({
         className="notesDrawer"
         variant={isMobile ? "temporary" : "persistent"}
         anchor={isMobile ? "bottom" : "right"}
-        open={showNotes}
-        onClose={toggleNotes}
-        onOpen={toggleNotes}
+        open={notesDrawer.open}
+        onClose={notesDrawer.toggle}
+        onOpen={notesDrawer.toggle}
         swipeAreaWidth={drawerBleeding}
         disableSwipeToOpen={false}
         ModalProps={{
@@ -72,8 +56,8 @@ const NotesDrawer = ({
             sx={{
               position: "absolute",
               top: -drawerBleeding,
-              borderTopLeftRadius: showNotes ? 0 : 8,
-              borderTopRightRadius: showNotes ? 0 : 8,
+              borderTopLeftRadius: notesDrawer.open ? 0 : 8,
+              borderTopRightRadius: notesDrawer.open ? 0 : 8,
               visibility: "visible",
               right: 0,
               left: 0,
@@ -103,30 +87,9 @@ const NotesDrawer = ({
         <Box
           className="scrollable"
           sx={{
-            width: isMobile ? "auto" : notesWidth
+            width: isMobile ? "auto" : notesDrawer.width
           }}
         >
-          <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-            <Box width={64}>
-              {location.pathname.includes("/notes") && (
-                <Button onClick={() => navigate("/dashboard")}>
-                  <IconButton aria-label="back">
-                    <ArrowBackIcon />
-                  </IconButton>
-                </Button>
-              )}
-            </Box>
-
-            <Typography noWrap variant="body1" fontWeight="bold">
-              {notesTitle}
-            </Typography>
-
-            <Button onClick={() => toggleNotes()}>
-              <IconButton aria-label="close">
-                <CloseIcon />
-              </IconButton>
-            </Button>
-          </Toolbar>
           {children}
         </Box>
       </SwipeableDrawer>

@@ -5,13 +5,16 @@ import Router from "./Router";
 import "./index.css";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import fireInspectTheme from "./Theme";
+import { NotesDrawerProvider } from "./utils/useNotesDrawer";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider theme={fireInspectTheme}>
       <BrowserRouter>
-        <CssBaseline />
-        <Router />
+        <NotesDrawerProvider>
+          <CssBaseline />
+          <Router />
+        </NotesDrawerProvider>
       </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>
