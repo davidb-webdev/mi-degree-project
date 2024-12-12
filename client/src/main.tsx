@@ -1,10 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider } from "react-router-dom";
-import { router } from "./Router.tsx";
+import { BrowserRouter } from "react-router";
+import Router from "./Router";
+import "./index.css";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import fireInspectTheme from "./Theme";
+import { NotesDrawerProvider } from "./utils/useNotesDrawer";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={fireInspectTheme}>
+      <BrowserRouter>
+        <NotesDrawerProvider>
+          <CssBaseline />
+          <Router />
+        </NotesDrawerProvider>
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>
 );

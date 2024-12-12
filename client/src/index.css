@@ -1,0 +1,9 @@
+body {
+	overflow: hidden;
+}
+
+.scrollable {
+  height: 100dvh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
