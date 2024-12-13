@@ -4,9 +4,9 @@ import { BrowserRouter } from "react-router";
 import Router from "./Router";
 import "./index.css";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import fireInspectTheme from "./Theme";
+import fireInspectTheme from "./utils/theme";
 import { NotesDrawerProvider } from "./utils/useNotesDrawer";
-import "./i18n";
+import "./utils/i18n";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
