@@ -19,8 +19,7 @@
       "repeatPassword": "Repeat password",
       "submit": "Register user",
       "or": "or",
-      "signIn": "Sign in",
-      "close": "Close"
+      "signIn": "Sign in"
     },
     "signIn": {
       "title": "Sign In",
@@ -28,8 +27,7 @@
       "password": "Password",
       "submit": "Sign in",
       "or": "or",
-      "register": "Register",
-      "close": "Close"
+      "register": "Register"
     }
   },
   "dashboard": {
@@ -72,13 +70,11 @@
       "NoFireAlarm": "No Fire Alarm"
     },
     "projectDetails": {
-      "close": "Close",
       "status": "Status",
       "description": "Description",
       "edit": "Edit details"
     },
     "projectDetailsEdit": {
-      "close": "Close",
       "title": "Title",
       "status": "Status",
       "description": "Description",

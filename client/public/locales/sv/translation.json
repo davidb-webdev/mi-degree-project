@@ -19,8 +19,7 @@
       "repeatPassword": "Upprepa lösenord",
       "submit": "Registrera användare",
       "or": "eller",
-      "signIn": "Logga in",
-      "close": "Stäng"
+      "signIn": "Logga in"
     },
     "signIn": {
       "title": "Logga in",
@@ -28,8 +27,7 @@
       "password": "Lösenord",
       "submit": "Logga in",
       "or": "eller",
-      "register": "Registrera",
-      "close": "Stäng"
+      "register": "Registrera"
     }
   },
   "dashboard": {
@@ -72,13 +70,11 @@
       "NoFireAlarm": "Inget brandlarm"
     },
     "projectDetails": {
-      "close": "Stäng",
       "status": "Status",
       "description": "Beskrivning",
       "edit": "Redigera detaljer"
     },
     "projectDetailsEdit": {
-      "close": "Stäng",
       "title": "Titel",
       "status": "Status",
       "description": "Beskrivning",
