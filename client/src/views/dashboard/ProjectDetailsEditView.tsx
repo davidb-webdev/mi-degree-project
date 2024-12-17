@@ -1,20 +1,16 @@
-import {
-  Button,
-  FormControl,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  TextField
-} from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
 import { useNavigate } from "react-router";
-import CloseIcon from "@mui/icons-material/Close";
 import { Project, ProjectStatus } from "../../models/Project";
+import { useTranslation } from "react-i18next";
+import SelectWithPredefinedList from "../../components/SelectWithPredefinedList";
+import CloseButton from "../../components/CloseButton";
 
 const ProjectDetailsEditView = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation("translation", {
+    keyPrefix: "dashboard.projectDetailsEdit"
+  });
 
   const project: Project = {
     title: "Project 1",
@@ -30,30 +26,15 @@ const ProjectDetailsEditView = () => {
       <ModalToolbar
         title={project.title}
         backPath="/dashboard/details"
-        actionButton={
-          <IconButton onClick={() => navigate("/dashboard")} aria-label="close">
-            <CloseIcon />
-          </IconButton>
-        }
+        actionButton={<CloseButton to="/dashboard" />}
       />
 
       <Stack sx={{ mx: 3, mb: 3 }} spacing={2}>
-        <TextField label="Title" />
+        <TextField label={t("title")} />
 
-        <FormControl fullWidth>
-          <InputLabel id="categoryLabel">Category</InputLabel>
-          <Select label="Category" labelId="categoryLabel">
-            {(
-              Object.keys(ProjectStatus) as Array<keyof typeof ProjectStatus>
-            ).map((key) => (
-              <MenuItem value={key} key={key}>
-                {key}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <SelectWithPredefinedList list="projectStatuses" label={t("status")} />
 
-        <TextField label="Description" />
+        <TextField label={t("description")} />
 
         <Button
           variant="contained"
@@ -62,7 +43,7 @@ const ProjectDetailsEditView = () => {
             navigate("/dashboard/details");
           }}
         >
-          Save project details
+          {t("submit")}
         </Button>
       </Stack>
     </>

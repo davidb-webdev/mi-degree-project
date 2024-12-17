@@ -46,7 +46,7 @@ const Router = () => {
         <Route element={<DialogLayout baseUrl="/dashboard" />}>
           <Route path="user" element={<UserView />} />
           <Route path="user/edit" element={<UserEditView />} />
-          <Route path="user/editpassword" element={<UserPasswordView />} />
+          <Route path="user/changepassword" element={<UserPasswordView />} />
           <Route path="details" element={<ProjectDetailsView />} />
           <Route path="details/edit" element={<ProjectDetailsEditView />} />
         </Route>

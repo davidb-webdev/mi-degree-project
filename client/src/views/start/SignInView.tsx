@@ -1,41 +1,32 @@
-import {
-  Button,
-  IconButton,
-  Link,
-  Stack,
-  TextField,
-  Typography
-} from "@mui/material";
+import { Button, Link, Stack, TextField, Typography } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
-import CloseIcon from "@mui/icons-material/Close";
 import { Link as RouterLink, useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
+import CloseButton from "../../components/CloseButton";
 
 const SignInView = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation("translation", { keyPrefix: "start.signIn" });
 
   return (
     <>
       <ModalToolbar
-        title="Sign in"
-        actionButton={
-          <IconButton onClick={() => navigate("/start")} aria-label="close">
-            <CloseIcon />
-          </IconButton>
-        }
+        title={t("title")}
+        actionButton={<CloseButton to="/start" />}
       />
 
       <Stack sx={{ mx: 3, mb: 3 }} spacing={2}>
-        <TextField label="Email address" type="email" />
-        <TextField label="Password" type="password" />
+        <TextField label={t("email")} type="email" />
+        <TextField label={t("password")} type="password" />
 
         <Button variant="contained" onClick={() => navigate("/dashboard")}>
-          Sign in
+          {t("submit")}
         </Button>
 
         <Typography variant="body1" sx={{ textAlign: "center" }}>
-          or{" "}
+          {t("or") + " "}
           <Link component={RouterLink} to="/start/register">
-            Register
+            {t("register")}
           </Link>
         </Typography>
       </Stack>

@@ -1,19 +1,16 @@
-import {
-  Box,
-  Button,
-  Skeleton,
-  Stack,
-  Typography,
-  useTheme
-} from "@mui/material";
+import { Box, Button, Skeleton, Stack, Typography } from "@mui/material";
 import { Note, NoteCategory } from "../../models/Note";
 import ModalToolbar from "../../components/ModalToolbar";
 import { useLocation, useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
+import NoteCategoryTag from "../../components/NoteCategoryTag";
 
 const NoteView = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const theme = useTheme();
+  const { t } = useTranslation("translation", {
+    keyPrefix: "dashboard.note"
+  });
 
   const note: Note = {
     title: "Note 1",
@@ -28,7 +25,7 @@ const NoteView = () => {
         backPath="/dashboard"
         actionButton={
           <Button onClick={() => navigate(`${location.pathname}/edit`)}>
-            Edit
+            {t("edit")}
           </Button>
         }
       />
@@ -37,29 +34,20 @@ const NoteView = () => {
 
       <Stack sx={{ mx: 3 }} spacing={2}>
         <Box>
-          <Typography variant="subtitle2">Category</Typography>
+          <Typography variant="subtitle2">{t("category")}</Typography>
           <Typography
             variant="body1"
             sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}
           >
             {note.categories.map((category) => (
-              <Box
-                sx={{
-                  backgroundColor: theme.palette.primary.dark,
-                  color: theme.palette.primary.light,
-                  px: "5px",
-                  borderRadius: "5px"
-                }}
-              >
-                {category}
-              </Box>
+              <NoteCategoryTag label={category} />
             ))}
           </Typography>
         </Box>
 
         <Box>
-          <Typography variant="subtitle2">Description</Typography>
-          <Typography variant="body1">TODO</Typography>
+          <Typography variant="subtitle2">{t("description")}</Typography>
+          <Typography variant="body1">{note.description}</Typography>
         </Box>
       </Stack>
     </>

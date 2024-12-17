@@ -1,8 +1,108 @@
 {
-  "intro": {
-    "key": "abc"
+  "start": {
+    "layout": {
+      "register": "Register",
+      "signIn": "Sign in"
+    },
+    "intro": {
+      "p1": "p1",
+      "p2": "p2",
+      "p3": "p3",
+      "register": "Register",
+      "signIn": "Sign in"
+    },
+    "register": {
+      "title": "Register User",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "repeatPassword": "Repeat password",
+      "submit": "Register user",
+      "or": "or",
+      "signIn": "Sign in",
+      "close": "Close"
+    },
+    "signIn": {
+      "title": "Sign In",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "or": "or",
+      "register": "Register",
+      "close": "Close"
+    }
   },
-	"dashboard": {
-    "key": "def"
+  "dashboard": {
+    "layout": {
+      "openMenu": "Open menu",
+      "openNotes": "Open notes",
+      "details": "Details"
+    },
+    "modalToolbar": {
+      "back": "Back"
+    },
+    "closeButton": {
+      "close": "Close"
+    },
+    "notesDrawer": {
+      "title": "Notes"
+    },
+    "notesList": {
+      "title": "Notes",
+      "add": "Add",
+      "export": "Export to document"
+    },
+    "note": {
+      "edit": "Edit",
+      "category": "Category",
+      "description": "Description"
+    },
+    "noteEdit": {
+      "newNote": "New note",
+      "save": "Save",
+      "title": "Title",
+      "category": "Category",
+      "description": "Description",
+      "addPhotos": "Add photos",
+      "editLocation": "Edit location on floor plan"
+    },
+    "noteCategories": {
+      "BlockedEscapeRoute": "Blocked Escape Route",
+      "FireHazard": "Fire Hazard",
+      "NoFireAlarm": "No Fire Alarm"
+    },
+    "projectDetails": {
+      "close": "Close",
+      "status": "Status",
+      "description": "Description",
+      "edit": "Edit details"
+    },
+    "projectDetailsEdit": {
+      "close": "Close",
+      "title": "Title",
+      "status": "Status",
+      "description": "Description",
+      "submit": "Save project details"
+    },
+    "user": {
+			"title": "User Profile",
+			"edit": "Edit user",
+			"changePassword": "Change password",
+			"signOut": "Sign out"
+		},
+    "userEdit": {
+      "title": "Edit User",
+      "replaceAvatar": "Replace picture",
+      "addPicture": "Add picture",
+      "name": "Name",
+      "email": "Email",
+      "submit": "Save user"
+    },
+    "userPassword": {
+      "title": "Change Password",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "submit": "Save password"
+    }
   }
 }

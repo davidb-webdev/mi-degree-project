@@ -1,10 +1,14 @@
-import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
 import { useNavigate } from "react-router";
-import CloseIcon from "@mui/icons-material/Close";
+import { useTranslation } from "react-i18next";
+import CloseButton from "../../components/CloseButton";
 
 const UserView = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation("translation", {
+    keyPrefix: "dashboard.user"
+  });
 
   const user: User = {
     name: "Name Lastname",
@@ -14,12 +18,8 @@ const UserView = () => {
   return (
     <>
       <ModalToolbar
-        title="User profile"
-        actionButton={
-          <IconButton onClick={() => navigate("/dashboard")} aria-label="close">
-            <CloseIcon />
-          </IconButton>
-        }
+        title={t("title")}
+        actionButton={<CloseButton to="/dashboard" />}
       />
 
       <Stack sx={{ mx: 3, mb: 3 }} spacing={2}>
@@ -30,18 +30,18 @@ const UserView = () => {
             <Typography variant="body1" sx={{ fontWeight: 600 }}>
               {user.name}
             </Typography>
-            
+
             <Typography variant="body1">{user.email}</Typography>
           </Box>
         </Box>
 
-        <Button onClick={() => navigate("edit")}>Edit user</Button>
+        <Button onClick={() => navigate("edit")}>{t("edit")}</Button>
 
-        <Button onClick={() => navigate("editpassword")}>
-          Change password
+        <Button onClick={() => navigate("changepassword")}>
+          {t("changePassword")}
         </Button>
 
-        <Button onClick={() => navigate("/start")}>Sign out</Button>
+        <Button onClick={() => navigate("/start")}>{t("signOut")}</Button>
       </Stack>
     </>
   );

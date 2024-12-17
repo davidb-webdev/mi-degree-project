@@ -1,28 +1,26 @@
-import { Button, IconButton, Stack, TextField } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
-import { useNavigate } from "react-router";
-import CloseIcon from "@mui/icons-material/Close";
+import { useTranslation } from "react-i18next";
+import CloseButton from "../../components/CloseButton";
 
 const UserPasswordView = () => {
-  const navigate = useNavigate();
+  const { t } = useTranslation("translation", {
+    keyPrefix: "dashboard.userPassword"
+  });
 
   return (
     <>
       <ModalToolbar
-        title="Change password"
+        title={t("title")}
         backPath="/dashboard/user"
-        actionButton={
-          <IconButton onClick={() => navigate("/dashboard")} aria-label="close">
-            <CloseIcon />
-          </IconButton>
-        }
+        actionButton={<CloseButton to="/dashboard" />}
       />
 
       <Stack sx={{ mx: 3, mb: 3 }} spacing={2}>
-        <TextField label="Current password" type="password" />
-        <TextField label="New password" type="password" />
+        <TextField label={t("currentPassword")} type="password" />
+        <TextField label={t("newPassword")} type="password" />
 
-        <Button variant="contained">Save password</Button>
+        <Button variant="contained">{t("submit")}</Button>
       </Stack>
     </>
   );
