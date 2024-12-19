@@ -1,10 +1,12 @@
-import { Box, Button, IconButton, Stack, TextField } from "@mui/material";
+import { Box, Button, Stack, TextField } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
-import { useNavigate } from "react-router";
-import CloseIcon from "@mui/icons-material/Close";
+import { useTranslation } from "react-i18next";
+import CloseButton from "../../components/CloseButton";
 
 const UserEditView = () => {
-  const navigate = useNavigate();
+  const { t } = useTranslation("translation", {
+    keyPrefix: "dashboard.userEdit"
+  });
 
   const user: User = {
     name: "Name Lastname",
@@ -14,28 +16,24 @@ const UserEditView = () => {
   return (
     <>
       <ModalToolbar
-        title="Edit user"
+        title={t("title")}
         backPath="/dashboard/user"
-        actionButton={
-          <IconButton onClick={() => navigate("/dashboard")} aria-label="close">
-            <CloseIcon />
-          </IconButton>
-        }
+        actionButton={<CloseButton to="/dashboard" />}
       />
 
       <Stack sx={{ mx: 3, mb: 3 }} spacing={2}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-          <Button variant="contained" aria-label="replace picture">
+          <Button variant="contained" aria-label={t("replaceAvatar")}>
             U
           </Button>
-          <Button>Add new picture</Button>
+          <Button>{t("addPicture")}</Button>
         </Box>
 
-        <TextField label="Name" />
+        <TextField label={t("name")} />
 
-        <TextField label="Email address" type="email" />
+        <TextField label={t("email")} type="email" />
 
-        <Button variant="contained">Save user profile</Button>
+        <Button variant="contained">{t("submit")}</Button>
       </Stack>
     </>
   );

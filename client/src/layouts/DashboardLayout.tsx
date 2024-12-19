@@ -15,6 +15,7 @@ import NotesDrawer from "../components/NotesDrawer";
 import FloorPlan from "../components/FloorPlan";
 import MenuDrawer from "../components/MenuDrawer";
 import { useNotesDrawer } from "../utils/useNotesDrawer";
+import { useTranslation } from "react-i18next";
 
 const DashboardLayout = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -22,6 +23,9 @@ const DashboardLayout = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
   const notesDrawer = useNotesDrawer();
+  const { t } = useTranslation("translation", {
+    keyPrefix: "dashboard.layout"
+  });
 
   return (
     <>
@@ -36,8 +40,11 @@ const DashboardLayout = () => {
           })
         }}
       >
-        <Toolbar disableGutters sx={{gap: 2, px: 2}}>
-          <IconButton onClick={() => setShowMenu(true)} aria-label="menu">
+        <Toolbar disableGutters sx={{ gap: 2, px: 2 }}>
+          <IconButton
+            onClick={() => setShowMenu(true)}
+            aria-label={t("openMenu")}
+          >
             <MenuIcon />
           </IconButton>
 
@@ -47,18 +54,21 @@ const DashboardLayout = () => {
             sx={{ flexGrow: 1 }}
             fontWeight="bold"
           >
-            Project name
+            Project Title
           </Typography>
 
           <Button
             onClick={() => navigate("/dashboard/details")}
             sx={{ mr: isMobile ? 2 : 0 }}
           >
-            Details
+            {t("details")}
           </Button>
 
           {!isMobile && (
-            <IconButton onClick={() => notesDrawer.toggle()} aria-label="notes">
+            <IconButton
+              onClick={() => notesDrawer.toggle()}
+              aria-label={t("openNotes")}
+            >
               <NotesIcon />
             </IconButton>
           )}

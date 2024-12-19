@@ -1,34 +1,35 @@
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  TextField
-} from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import { Note, NoteCategory } from "../../models/Note";
 import ModalToolbar from "../../components/ModalToolbar";
 import { useNavigate, useLocation } from "react-router";
+import { useTranslation } from "react-i18next";
+import SelectWithPredefinedList from "../../components/SelectWithPredefinedList";
+import { useEffect, useState } from "react";
 
 interface EditNoteViewProps {
   newNote?: boolean;
 }
 
 const EditNoteView = ({ newNote }: EditNoteViewProps) => {
+  const [note, setNote] = useState<Note>();
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation("translation", {
+    keyPrefix: "dashboard.noteEdit"
+  });
 
-  const note: Note = {
-    title: "Note 1",
-    categories: [NoteCategory.BlockedEscapeRoute],
-    description: "TODO"
-  };
+  useEffect(() => {
+    setNote({
+      title: "Note 1",
+      category: "BlockedEscapeRoute",
+      description: "TODO"
+    });
+  }, []);
 
-  return (
+  return note ? (
     <>
       <ModalToolbar
-        title={newNote ? "New note" : note.title}
+        title={newNote ? t("newNote") : note.title}
         backPath={
           newNote
             ? "/dashboard"
@@ -48,34 +49,32 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
               navigate(`/dashboard/notes/${returnedId}`);
             }}
           >
-            Save
+            {t("save")}
           </Button>
         }
       />
 
       <Stack sx={{ mx: 3 }} spacing={2}>
-        <TextField label="Title" />
+        <TextField label={t("title")} />
 
-        <FormControl fullWidth>
-          <InputLabel id="categoryLabel">Category</InputLabel>
-          <Select label="Category" labelId="categoryLabel">
-            {(
-              Object.keys(NoteCategory) as Array<keyof typeof NoteCategory>
-            ).map((key) => (
-              <MenuItem value={key} key={key}>
-                {key}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <SelectWithPredefinedList
+          list="noteCategories"
+          label={t("category")}
+          onChange={(value) =>
+            setNote({ ...note, category: value as NoteCategory })
+          }
+          value={note.category}
+        />
 
-        <TextField multiline label="Description" />
+        <TextField multiline label={t("description")} />
 
-        <Button>Add photos</Button>
+        <Button>{t("addPhotos")}</Button>
 
-        <Button>Edit location on floor plan</Button>
+        <Button>{t("editLocation")}</Button>
       </Stack>
     </>
+  ) : (
+    <>{t("notLoaded")}</>
   );
 };
 

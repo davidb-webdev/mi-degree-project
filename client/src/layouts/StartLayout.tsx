@@ -1,9 +1,13 @@
-import { Box, Button, Toolbar } from "@mui/material";
+import { Box, Button, Stack, Toolbar } from "@mui/material";
 import { Outlet, useNavigate } from "react-router";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import { useTranslation } from "react-i18next";
 
 const StartLayout = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation("translation", {
+    keyPrefix: "start.layout"
+  });
 
   return (
     <Box className="scrollable">
@@ -15,17 +19,18 @@ const StartLayout = () => {
         >
           FireInspect
         </Button>
-        <Box>
+        <Stack direction="row">
           <Button
             onClick={() => navigate("/start/register")}
             sx={{ mr: 2, display: { xs: "none", md: "inline" } }}
           >
-            Register
+            {t("register")}
           </Button>
+
           <Button variant="contained" onClick={() => navigate("/start/signin")}>
-            Sign in
+            {t("signIn")}
           </Button>
-        </Box>
+        </Stack>
       </Toolbar>
 
       <Outlet />

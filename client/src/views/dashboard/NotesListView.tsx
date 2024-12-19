@@ -8,18 +8,22 @@ import {
   ListItemText
 } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
+import { useTranslation } from "react-i18next";
 
 const NotesListView = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation("translation", {
+    keyPrefix: "dashboard.notesList"
+  });
 
   const notes = [{ link: "/dashboard/notes/1", text: "Note 1" }];
 
   return (
     <>
       <ModalToolbar
-        title="Notes"
+        title={t("title")}
         actionButton={
-          <Button onClick={() => navigate("/dashboard/notes/new")}>Add</Button>
+          <Button onClick={() => navigate("/dashboard/notes/new")}>{t("add")}</Button>
         }
       />
 
@@ -35,7 +39,7 @@ const NotesListView = () => {
 
       <Box sx={{ position: "absolute", bottom: 0, width: "100%", p: 2 }}>
         <Button fullWidth variant="contained">
-          Export to document
+          {t("export")}
         </Button>
       </Box>
     </>

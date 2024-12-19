@@ -8,6 +8,7 @@ import {
 import { Global } from "@emotion/react";
 import { useNotesDrawer } from "../utils/useNotesDrawer";
 import { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 
 interface NotesDrawerProps {
   children: ReactNode;
@@ -17,6 +18,9 @@ const NotesDrawer = ({ children }: NotesDrawerProps) => {
   const notesDrawer = useNotesDrawer();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { t } = useTranslation("translation", {
+    keyPrefix: "dashboard.layout"
+  });
 
   const iOS =
     typeof navigator !== "undefined" &&
@@ -79,7 +83,7 @@ const NotesDrawer = ({ children }: NotesDrawerProps) => {
             />
 
             <Typography variant="body1" sx={{ my: 2 }}>
-              Notes
+              {t("title")}
             </Typography>
           </Box>
         )}

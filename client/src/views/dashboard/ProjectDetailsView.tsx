@@ -1,16 +1,20 @@
-import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
 import { useNavigate } from "react-router";
-import CloseIcon from "@mui/icons-material/Close";
-import { Project, ProjectStatus } from "../../models/Project";
+import { Project } from "../../models/Project";
+import { useTranslation } from "react-i18next";
+import CloseButton from "../../components/CloseButton";
 
 const ProjectDetailsView = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation("translation", {
+    keyPrefix: "dashboard.projectDetails"
+  });
 
   const project: Project = {
     title: "Project 1",
     description: "TODO",
-    status: ProjectStatus.InProgress,
+    status: "InProgress",
     owner: "user1",
     createdAt: new Date(),
     editedAt: new Date()
@@ -20,25 +24,21 @@ const ProjectDetailsView = () => {
     <>
       <ModalToolbar
         title={project.title}
-        actionButton={
-          <IconButton onClick={() => navigate("/dashboard")} aria-label="close">
-            <CloseIcon />
-          </IconButton>
-        }
+        actionButton={<CloseButton to="/dashboard" />}
       />
 
       <Stack sx={{ mx: 3, mb: 3 }} spacing={2}>
         <Box>
-          <Typography variant="subtitle2">Status</Typography>
+          <Typography variant="subtitle2">{t("status")}</Typography>
           <Typography variant="body1">{project.status}</Typography>
         </Box>
 
         <Box>
-          <Typography variant="subtitle2">Description</Typography>
+          <Typography variant="subtitle2">{t("description")}</Typography>
           <Typography variant="body1">{project.description}</Typography>
         </Box>
 
-        <Button onClick={() => navigate("edit")}>Edit info</Button>
+        <Button onClick={() => navigate("edit")}>{t("edit")}</Button>
       </Stack>
     </>
   );
