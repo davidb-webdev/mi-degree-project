@@ -42,6 +42,9 @@
     "closeButton": {
       "close": "Stäng"
     },
+    "languagePicker": {
+      "language": "Språk"
+    },
     "notesDrawer": {
       "title": "Anteckningar"
     },
@@ -63,11 +66,6 @@
       "description": "Beskrivning",
       "addPhotos": "Lägg till bilder",
       "editLocation": "Redigera plats på planritning"
-    },
-    "noteCategories": {
-      "BlockedEscapeRoute": "Blockerad utrymningsväg",
-      "FireHazard": "Brandrisk",
-      "NoFireAlarm": "Inget brandlarm"
     },
     "projectDetails": {
       "status": "Status",
@@ -99,6 +97,21 @@
       "currentPassword": "Nuvarande lösenord",
       "newPassword": "Nytt lösenord",
       "submit": "Spara lösenord"
+    }
+  },
+  "models": {
+    "languages": {
+      "en": "Engelska",
+      "sv": "Svenska"
+    },
+    "noteCategories": {
+      "BlockedEscapeRoute": "Blockerad utrymningsväg",
+      "FireHazard": "Brandrisk",
+      "NoFireAlarm": "Inget brandlarm"
+    },
+    "projectStatuses": {
+      "InProgress": "Pågående",
+      "Finished": "Avslutat"
     }
   }
 }

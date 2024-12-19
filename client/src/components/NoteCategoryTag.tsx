@@ -8,7 +8,7 @@ interface NoteCategoryTagProps {
 const NoteCategoryTag = ({ label }: NoteCategoryTagProps) => {
   const theme = useTheme();
   const { t } = useTranslation("translation", {
-    keyPrefix: "dashboard.noteCategories"
+    keyPrefix: "models.noteCategories"
   });
 
   return (

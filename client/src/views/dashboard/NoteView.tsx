@@ -14,7 +14,7 @@ const NoteView = () => {
 
   const note: Note = {
     title: "Note 1",
-    categories: [NoteCategory.BlockedEscapeRoute],
+    category: "BlockedEscapeRoute",
     description: "TODO"
   };
 
@@ -39,9 +39,7 @@ const NoteView = () => {
             variant="body1"
             sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}
           >
-            {note.categories.map((category) => (
-              <NoteCategoryTag label={category} />
-            ))}
+            <NoteCategoryTag label={note.category} />
           </Typography>
         </Box>
 

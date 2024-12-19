@@ -14,7 +14,7 @@ const ProjectDetailsView = () => {
   const project: Project = {
     title: "Project 1",
     description: "TODO",
-    status: ProjectStatus.InProgress,
+    status: "InProgress",
     owner: "user1",
     createdAt: new Date(),
     editedAt: new Date()

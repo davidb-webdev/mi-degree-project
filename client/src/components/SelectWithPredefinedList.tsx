@@ -1,29 +1,38 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { NoteCategory } from "../models/Note";
+import { NoteCategories } from "../models/Note";
 import { useTranslation } from "react-i18next";
-import { ProjectStatus } from "../models/Project";
+import { ProjectStatuses } from "../models/Project";
+import { Languages } from "../models/Language";
 
 interface SelectWithPredefinedListProps {
-  list: "noteCategories" | "projectStatuses";
+  list: "noteCategories" | "projectStatuses" | "languages";
   label: string;
+  value: string;
+  onChange: (value: string) => void;
 }
 
 const SelectWithPredefinedList = ({
   list,
-  label
+  label,
+  value,
+  onChange
 }: SelectWithPredefinedListProps) => {
   const { t } = useTranslation("translation", {
-    keyPrefix: "dashboard.noteCategories"
+    keyPrefix: `models.${list}`
   });
 
   let importedList;
   switch (list) {
     case "noteCategories": {
-      importedList = NoteCategory;
+      importedList = NoteCategories;
       break;
     }
     case "projectStatuses": {
-      importedList = ProjectStatus;
+      importedList = ProjectStatuses;
+      break;
+    }
+    case "languages": {
+      importedList = Languages;
       break;
     }
   }
@@ -31,14 +40,17 @@ const SelectWithPredefinedList = ({
   return (
     <FormControl fullWidth>
       <InputLabel id="categoryLabel">{label}</InputLabel>
-      <Select label={label} labelId="categoryLabel">
-        {(Object.keys(importedList) as Array<keyof typeof NoteCategory>).map(
-          (key) => (
-            <MenuItem value={key} key={key}>
-              {t(key)}
-            </MenuItem>
-          )
-        )}
+      <Select
+        label={label}
+        labelId="categoryLabel"
+        onChange={(event) => onChange(event.target.value)}
+        value={value}
+      >
+        {Object.keys(importedList).map((key) => (
+          <MenuItem value={key} key={key}>
+            {t(key)}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );

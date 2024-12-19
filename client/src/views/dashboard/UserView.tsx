@@ -3,6 +3,7 @@ import ModalToolbar from "../../components/ModalToolbar";
 import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import CloseButton from "../../components/CloseButton";
+import LanguagePicker from "../../components/LanguagePicker";
 
 const UserView = () => {
   const navigate = useNavigate();
@@ -34,6 +35,8 @@ const UserView = () => {
             <Typography variant="body1">{user.email}</Typography>
           </Box>
         </Box>
+
+        <LanguagePicker />
 
         <Button onClick={() => navigate("edit")}>{t("edit")}</Button>
 

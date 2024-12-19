@@ -4,25 +4,29 @@ import ModalToolbar from "../../components/ModalToolbar";
 import { useNavigate, useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
 import SelectWithPredefinedList from "../../components/SelectWithPredefinedList";
+import { useEffect, useState } from "react";
 
 interface EditNoteViewProps {
   newNote?: boolean;
 }
 
 const EditNoteView = ({ newNote }: EditNoteViewProps) => {
+  const [note, setNote] = useState<Note>();
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation("translation", {
     keyPrefix: "dashboard.noteEdit"
   });
 
-  const note: Note = {
-    title: "Note 1",
-    categories: [NoteCategory.BlockedEscapeRoute],
-    description: "TODO"
-  };
+  useEffect(() => {
+    setNote({
+      title: "Note 1",
+      category: "BlockedEscapeRoute",
+      description: "TODO"
+    });
+  }, []);
 
-  return (
+  return note ? (
     <>
       <ModalToolbar
         title={newNote ? t("newNote") : note.title}
@@ -53,7 +57,14 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
       <Stack sx={{ mx: 3 }} spacing={2}>
         <TextField label={t("title")} />
 
-        <SelectWithPredefinedList list="noteCategories" label={t("category")} />
+        <SelectWithPredefinedList
+          list="noteCategories"
+          label={t("category")}
+          onChange={(value) =>
+            setNote({ ...note, category: value as NoteCategory })
+          }
+          value={note.category}
+        />
 
         <TextField multiline label={t("description")} />
 
@@ -62,6 +73,8 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
         <Button>{t("editLocation")}</Button>
       </Stack>
     </>
+  ) : (
+    <>{t("notLoaded")}</>
   );
 };
 

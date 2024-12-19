@@ -1,11 +1,15 @@
-export interface Note {
-  title: string;
-  categories: NoteCategory[];
-  description: string;
+export class Note {
+  constructor(
+    public title: string,
+    public category: NoteCategory,
+    public description: string
+  ) {}
 }
 
-export enum NoteCategory {
-  BlockedEscapeRoute = "BlockedEscapeRoute",
-  FireHazard = "FireHazard",
-  NoFireAlarm = "NoFireAlarm"
-}
+export const NoteCategories = {
+  BlockedEscapeRoute: "BlockedEscapeRoute",
+  FireHazard: "FireHazard",
+  NoFireAlarm: "NoFireAlarm"
+} as const;
+
+export type NoteCategory = (typeof NoteCategories)[keyof typeof NoteCategories];

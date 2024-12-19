@@ -1,7 +1,7 @@
 import { Button, Stack, TextField } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
 import { useNavigate } from "react-router";
-import { Project, ProjectStatus } from "../../models/Project";
+import { Project } from "../../models/Project";
 import { useTranslation } from "react-i18next";
 import SelectWithPredefinedList from "../../components/SelectWithPredefinedList";
 import CloseButton from "../../components/CloseButton";
@@ -15,7 +15,7 @@ const ProjectDetailsEditView = () => {
   const project: Project = {
     title: "Project 1",
     description: "TODO",
-    status: ProjectStatus.InProgress,
+    status: "InProgress",
     owner: "user1",
     createdAt: new Date(),
     editedAt: new Date()
@@ -32,7 +32,12 @@ const ProjectDetailsEditView = () => {
       <Stack sx={{ mx: 3, mb: 3 }} spacing={2}>
         <TextField label={t("title")} />
 
-        <SelectWithPredefinedList list="projectStatuses" label={t("status")} />
+        <SelectWithPredefinedList
+          list="projectStatuses"
+          label={t("status")}
+          value={project.status}
+          onChange={() => {}}
+        />
 
         <TextField label={t("description")} />
 

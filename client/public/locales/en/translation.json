@@ -42,6 +42,9 @@
     "closeButton": {
       "close": "Close"
     },
+    "languagePicker": {
+      "language": "Language"
+    },
     "notesDrawer": {
       "title": "Notes"
     },
@@ -64,11 +67,6 @@
       "addPhotos": "Add photos",
       "editLocation": "Edit location on floor plan"
     },
-    "noteCategories": {
-      "BlockedEscapeRoute": "Blocked Escape Route",
-      "FireHazard": "Fire Hazard",
-      "NoFireAlarm": "No Fire Alarm"
-    },
     "projectDetails": {
       "status": "Status",
       "description": "Description",
@@ -81,11 +79,11 @@
       "submit": "Save project details"
     },
     "user": {
-			"title": "User Profile",
-			"edit": "Edit user",
-			"changePassword": "Change password",
-			"signOut": "Sign out"
-		},
+      "title": "User Profile",
+      "edit": "Edit user",
+      "changePassword": "Change password",
+      "signOut": "Sign out"
+    },
     "userEdit": {
       "title": "Edit User",
       "replaceAvatar": "Replace picture",
@@ -99,6 +97,21 @@
       "currentPassword": "Current password",
       "newPassword": "New password",
       "submit": "Save password"
+    }
+  },
+  "models": {
+    "languages": {
+      "en": "English",
+      "sv": "Swedish"
+    },
+    "noteCategories": {
+      "BlockedEscapeRoute": "Blocked Escape Route",
+      "FireHazard": "Fire Hazard",
+      "NoFireAlarm": "No Fire Alarm"
+    },
+    "projectStatuses": {
+      "InProgress": "In progress",
+      "Finished": "Finished"
     }
   }
 }
