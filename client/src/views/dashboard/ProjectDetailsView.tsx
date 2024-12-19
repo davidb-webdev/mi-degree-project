@@ -1,7 +1,7 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
 import { useNavigate } from "react-router";
-import { Project, ProjectStatus } from "../../models/Project";
+import { Project } from "../../models/Project";
 import { useTranslation } from "react-i18next";
 import CloseButton from "../../components/CloseButton";
 

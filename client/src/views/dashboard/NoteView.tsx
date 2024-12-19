@@ -1,5 +1,5 @@
 import { Box, Button, Skeleton, Stack, Typography } from "@mui/material";
-import { Note, NoteCategory } from "../../models/Note";
+import { Note } from "../../models/Note";
 import ModalToolbar from "../../components/ModalToolbar";
 import { useLocation, useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
