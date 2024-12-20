@@ -7,7 +7,8 @@ import {
   authorize,
   registerUser,
   signIn,
-  signOut
+  signOut,
+  testDb
 } from "./controllers/auth.controller";
 
 dotenv.config();
@@ -29,5 +30,6 @@ app.post("/authorize", authorize);
 app.post("/registerUser", registerUser);
 app.post("/signin", signIn);
 app.post("/signOut", signOut);
+app.get("/testDb", testDb);
 
 app.listen(serverPort, () => console.log("Node server running"));

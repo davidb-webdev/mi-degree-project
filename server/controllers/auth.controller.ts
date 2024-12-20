@@ -11,9 +11,9 @@ export const signIn = async (
 ) => {
   try {
     const { email, password } = req.body;
-    const user = await DatabaseConnection.getInstance().getUserByEmail(email); // TODO
+    const user = await DatabaseConnection.getInstance().getUserByEmail(email);
 
-    if (!user || !(await compare(password, user.password))) {
+    if (!user || !user.password || !(await compare(password, user.password))) {
       throw new BadRequestError("Wrong username or password");
     }
 
@@ -68,18 +68,36 @@ export const registerUser = async (
   try {
     const { name, email, password } = req.body;
 
-    const user = await DatabaseConnection.getInstance().getUserByEmail(email); // TODO
+    const user = await DatabaseConnection.getInstance().getUserByEmail(email);
     if (user) throw new BadRequestError("E-mail address already used");
 
     const hashedPassword = await hash(password, 10);
-    const userId = await DatabaseConnection.getInstance().saveUser({ // TODO
-      // TODO
+    const userId = await DatabaseConnection.getInstance().saveUser({
       name,
       email,
       password: hashedPassword
     });
 
-    res.status(200).json(userId);
+    res.status(200).json({ userId });
+  } catch (error: unknown) {
+    res
+      .status(error instanceof BadRequestError ? 400 : 500)
+      .json(
+        error instanceof Error ? error : new Error("An unknown error occurred")
+      );
+  }
+};
+
+export const testDb = async (
+  req: TypedRequestBody<{}>,
+  res: TypedResponse<{ userId: ObjectId } | Error>
+) => {
+  try {
+    const user = await DatabaseConnection.getInstance().getUserByEmail(
+      "abc@example.com"
+    );
+
+    res.status(200).json({ userId: user!._id });
   } catch (error: unknown) {
     res
       .status(error instanceof BadRequestError ? 400 : 500)
