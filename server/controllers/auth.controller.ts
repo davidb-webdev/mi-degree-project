@@ -89,7 +89,7 @@ export const registerUser = async (
 };
 
 export const testDb = async (
-  req: TypedRequestBody<{}>,
+  req: Request,
   res: TypedResponse<{ userId: ObjectId } | Error>
 ) => {
   try {

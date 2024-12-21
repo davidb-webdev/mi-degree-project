@@ -27,6 +27,13 @@ export default class DatabaseConnection {
     await this.client.connect();
   }
 
+  async disconnect() {
+    if (!this.client) {
+      return;
+    }
+    await this.client.close();
+  }
+
   async getUserByEmail(email: string) {
     try {
       await this.connect();

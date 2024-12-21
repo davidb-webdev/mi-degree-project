@@ -32,7 +32,7 @@ app.get("/", async (req, res) => {
 app.post("/authorize", authorize);
 app.post("/registerUser", registerUser);
 app.post("/signin", signIn);
-app.post("/signOut", signOut);
-app.get("/testDb", testDb);
+app.post("/signout", signOut);
+app.get("/testdb", testDb);
 
 export default app;
