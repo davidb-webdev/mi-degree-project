@@ -6,7 +6,7 @@
   "author": "David Boström",
   "license": "ISC",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "dev": "tsx watch ."
   },
   "dependencies": {
@@ -14,13 +14,19 @@
     "cookie-session": "^2.1.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.1",
-    "mongodb": "^6.12.0",
-    "tsx": "^4.19.2"
+    "mongodb": "^6.12.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-session": "^2.0.49",
     "@types/express": "^5.0.0",
-    "@types/node": "^22.10.1"
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.10.1",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
   }
 }

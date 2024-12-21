@@ -49,7 +49,7 @@ export default class DatabaseConnection {
     }
 
     const db = this.client!.db(process.env.DB_NAME || "noDbNameSet");
-    const collection = db.collection("users");
+    const collection = db.collection<User>("users");
 
     const result = await collection.insertOne(user);
     return result.insertedId;
