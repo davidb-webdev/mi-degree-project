@@ -1,14 +1,11 @@
-import express from "express";
-import dotenv from "dotenv";
+import app from "./app";
+import DatabaseConnection from "./database/DatabaseConnection";
 
-dotenv.config();
-const app = express();
-const serverPort = process.env.SERVER_PORT || "3000";
+const serverPort = process.env.SERVER_PORT || 3000;
+const dbUrl = process.env.DB_URL || "noDbUrlSet";
 
-app.use(express.json());
+DatabaseConnection.getInstance().setUrl(dbUrl);
 
-app.get("/", (req, res) => {
-  res.send("Server response");
+app.listen(serverPort, () => {
+  console.log("Node server running");
 });
-
-app.listen(serverPort, () => console.log("Node server running"));
