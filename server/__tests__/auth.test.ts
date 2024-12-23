@@ -2,6 +2,7 @@ import request from "supertest";
 import app from "../app";
 import DatabaseConnection from "../database/DatabaseConnection";
 import { User } from "../models/User";
+import { hash } from "bcrypt";
 
 jest.mock("mongodb");
 
@@ -26,6 +27,91 @@ describe("Auth endpoints", () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+  });
+
+  //
+  // ========== Sign in ==========
+  //
+
+  test("signing in, expect success", async () => {
+    const hashedPassword = await hash("1234567890", 10);
+    const mockCollection = {
+      findOne: jest.fn().mockResolvedValue({
+        _id: "12345",
+        name: "existing user",
+        email: "email@example.com",
+        password: hashedPassword
+      })
+    };
+    mockGetCollection.mockReturnValue(mockCollection);
+
+    const payload = {
+      email: "email@example.com",
+      password: "1234567890"
+    };
+
+    const res = await request(app)
+      .post("/signin")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual({ success: true });
+  });
+
+  test("signing in, incorrect input data, expect failure", async () => {
+    const hashedPassword = await hash("1234567890", 10);
+    const mockCollection = {
+      findOne: jest.fn().mockResolvedValue({
+        _id: "12345",
+        name: "existing user",
+        email: "email@example.com",
+        password: hashedPassword
+      })
+    };
+    mockGetCollection.mockReturnValue(mockCollection);
+
+    const payload = {
+      email: "email",
+      password: "wrongpassword"
+    };
+
+    const res = await request(app)
+      .post("/signin")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toEqual({ error: "Validation error: \"email\" must be a valid email" });
+  });
+
+  test("signing in, incorrect password, expect failure", async () => {
+    const hashedPassword = await hash("1234567890", 10);
+    const mockCollection = {
+      findOne: jest.fn().mockResolvedValue({
+        _id: "12345",
+        name: "existing user",
+        email: "email@example.com",
+        password: hashedPassword
+      })
+    };
+    mockGetCollection.mockReturnValue(mockCollection);
+
+    const payload = {
+      email: "email@example.com",
+      password: "wrongpassword"
+    };
+
+    const res = await request(app)
+      .post("/signin")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toEqual({ error: "Wrong username or password" });
   });
 
   //
@@ -61,7 +147,7 @@ describe("Auth endpoints", () => {
         _id: "12345",
         name: "existing user",
         email: "email@example.com",
-        password: "abcdefghij"
+        password: "hashed1234567890"
       }),
       insertOne: jest.fn().mockResolvedValue({ insertedId: "12345" })
     };
