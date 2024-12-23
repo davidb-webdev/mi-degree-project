@@ -1,10 +1,10 @@
-import type { JestConfigWithTsJest } from 'ts-jest';
+import type { JestConfigWithTsJest } from "ts-jest";
 
 const config: JestConfigWithTsJest = {
-  testEnvironment: 'node',
   transform: {
-    '^.+\\.tsx?$': ['ts-jest', {}],
+    "^.+\\.tsx?$": ["ts-jest", {}]
   },
+  preset: "@shelf/jest-mongodb"
 };
 
 export default config;
