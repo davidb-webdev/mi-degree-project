@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import cookieSession from "cookie-session";
-import DatabaseConnection from "./database/DatabaseConnection";
 
 import {
   authorize,
@@ -13,9 +12,6 @@ import {
 
 dotenv.config();
 const app = express();
-const dbUrl = process.env.DB_URL || "noDbUrlSet";
-
-DatabaseConnection.getInstance().setUrl(dbUrl);
 
 app.use(express.json());
 app.use(
@@ -29,10 +25,10 @@ app.get("/", async (req, res) => {
   res.status(200).send();
 });
 
-app.post("/authorize", authorize);
-app.post("/registerUser", registerUser);
+app.get("/authorize", authorize);
+app.post("/register", registerUser);
 app.post("/signin", signIn);
-app.post("/signout", signOut);
+app.get("/signout", signOut);
 app.get("/testdb", testDb);
 
 export default app;
