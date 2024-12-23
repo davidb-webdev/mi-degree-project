@@ -84,7 +84,9 @@ describe("Auth endpoints", () => {
       .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(400);
-    expect(res.body).toEqual({ error: "Validation error: \"email\" must be a valid email" });
+    expect(res.body).toEqual({
+      error: 'Validation error: "email" must be a valid email'
+    });
   });
 
   test("signing in, incorrect password, expect failure", async () => {
@@ -112,6 +114,62 @@ describe("Auth endpoints", () => {
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toEqual({ error: "Wrong username or password" });
+  });
+
+  //
+  // ========== Sign out ==========
+  //
+
+  test("signing out, expect success", async () => {
+    const res = await request(app).get("/signout");
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual({ success: true });
+  });
+
+  //
+  // ========== Auth ==========
+  //
+
+  test("signing in, then authenticating, expect success", async () => {
+    const hashedPassword = await hash("1234567890", 10);
+    const mockCollection = {
+      findOne: jest.fn().mockResolvedValue({
+        _id: "12345",
+        name: "existing user",
+        email: "email@example.com",
+        password: hashedPassword
+      })
+    };
+    mockGetCollection.mockReturnValue(mockCollection);
+
+    const payload = {
+      email: "email@example.com",
+      password: "1234567890"
+    };
+
+    const signInRes = await request(app)
+      .post("/signin")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+
+    expect(signInRes.statusCode).toEqual(200);
+    expect(signInRes.body).toEqual({ success: true });
+
+    const cookies = signInRes.headers["set-cookie"];
+
+    const authRes = await request(app).get("/auth").set("Cookie", cookies);
+
+    expect(authRes.statusCode).toEqual(200);
+    expect(authRes.body).toEqual({ success: true });
+  });
+
+  test("authenticating without signing in, expect failure", async () => {
+    const res = await request(app).get("/auth");
+
+    expect(res.statusCode).toEqual(401);
+    expect(res.body).toEqual({ error: "You are not signed in" });
   });
 
   //
