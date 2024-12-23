@@ -53,7 +53,7 @@ export const auth = async (
 
 export const register = async (
   req: TypedRequestBody<{ name: string; email: string; password: string }>,
-  res: TypedResponse<{ userId: string }>,
+  res: TypedResponse<{ success: boolean }>,
   next: NextFunction
 ) => {
   try {
@@ -69,7 +69,7 @@ export const register = async (
       password: hashedPassword
     });
 
-    res.json({ userId: userId.toString() });
+    res.json({ success: true });
   } catch (error: unknown) {
     next(error);
   }

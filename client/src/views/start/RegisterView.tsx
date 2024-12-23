@@ -3,22 +3,80 @@ import ModalToolbar from "../../components/ModalToolbar";
 import { Link as RouterLink, useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import CloseButton from "../../components/CloseButton";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { RegisterFormData } from "../../models/FormData";
+import axios from "axios";
 
 const RegisterView = () => {
+  const [formData, setFormData] = useState(
+    new RegisterFormData("", "", "", "")
+  );
   const navigate = useNavigate();
   const { t } = useTranslation("translation", { keyPrefix: "start.register" });
 
+  const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    try {
+      event.preventDefault();
+      const { name, email, password, repeatPassword } = formData;
+      if (password !== repeatPassword) throw new Error(t("passwordsMustMatch"));
+      const payload = { name, email, password };
+      const response = await axios.post("/api/register", payload);
+      // TODO: Snackbar success
+      navigate("/");
+    } catch (error) {
+      // TODO: Snackbar error
+    }
+  };
+
   return (
-    <>
-      <ModalToolbar title={t("title")} actionButton={<CloseButton to="/start" />} />
+    <form onSubmit={onSubmit}>
+      <ModalToolbar
+        title={t("title")}
+        actionButton={<CloseButton to="/start" />}
+      />
 
       <Stack sx={{ mx: 3, mb: 3 }} spacing={2}>
-        <TextField label={t("name")} />
-        <TextField label={t("email")} type="email" />
-        <TextField label={t("password")} type="password" />
-        <TextField label={t("repeatPassword")} type="password" />
+        <TextField
+          label={t("name")}
+          name="name"
+          value={formData.name}
+          onChange={handleFormChange}
+          required
+        />
+        <TextField
+          label={t("email")}
+          name="email"
+          type="email"
+          value={formData.email}
+          onChange={handleFormChange}
+          required
+        />
+        <TextField
+          label={t("password")}
+          name="password"
+          type="password"
+          value={formData.password}
+          onChange={handleFormChange}
+          required
+        />
+        <TextField
+          label={t("repeatPassword")}
+          name="repeatPassword"
+          type="password"
+          value={formData.repeatPassword}
+          onChange={handleFormChange}
+          required
+        />
 
-        <Button variant="contained" onClick={() => navigate("/start")}>
+        <Button type="submit" variant="contained">
           {t("submit")}
         </Button>
 
@@ -29,7 +87,7 @@ const RegisterView = () => {
           </Link>
         </Typography>
       </Stack>
-    </>
+    </form>
   );
 };
 
