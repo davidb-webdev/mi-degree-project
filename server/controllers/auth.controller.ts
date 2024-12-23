@@ -38,7 +38,7 @@ export const signOut = async (
   }
 };
 
-export const authorize = async (
+export const auth = async (
   req: Request,
   res: TypedResponse<{ success: boolean }>,
   next: NextFunction
@@ -51,7 +51,7 @@ export const authorize = async (
   }
 };
 
-export const registerUser = async (
+export const register = async (
   req: TypedRequestBody<{ name: string; email: string; password: string }>,
   res: TypedResponse<{ userId: string }>,
   next: NextFunction

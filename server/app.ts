@@ -2,10 +2,12 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieSession from "cookie-session";
 import { errorHandler } from "./middleware/errorHandler";
+import validate from "./middleware/validate";
+import { registerSchema } from "./schemas/auth.schema";
 
 import {
-  authorize,
-  registerUser,
+  auth,
+  register,
   signIn,
   signOut,
   testDb
@@ -26,8 +28,8 @@ app.get("/", async (req, res) => {
   res.status(200).send();
 });
 
-app.get("/authorize", authorize);
-app.post("/register", registerUser);
+app.get("/authorize", auth);
+app.post("/register", validate(registerSchema), register);
 app.post("/signin", signIn);
 app.get("/signout", signOut);
 app.get("/testdb", testDb);
