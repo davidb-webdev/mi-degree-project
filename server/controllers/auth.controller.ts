@@ -2,12 +2,12 @@ import DatabaseConnection from "../database/DatabaseConnection";
 import { hash, compare } from "bcrypt";
 import { TypedRequestBody, TypedResponse } from "../models/Express";
 import { BadRequestError, UnauthorizedError } from "../models/Error";
-import { Request } from "express";
-import { ObjectId } from "mongodb";
+import { NextFunction, Request } from "express";
 
 export const signIn = async (
   req: TypedRequestBody<{ email: string; password: string }>,
-  res: TypedResponse<{ success: boolean } | Error>
+  res: TypedResponse<{ success: boolean }>,
+  next: NextFunction
 ) => {
   try {
     const { email, password } = req.body;
@@ -21,49 +21,40 @@ export const signIn = async (
     req.session.id = user._id;
     res.status(200).json({ success: true });
   } catch (error: unknown) {
-    res
-      .status(error instanceof BadRequestError ? 400 : 500)
-      .json(
-        error instanceof Error ? error : new Error("An unknown error occurred")
-      );
+    next(error);
   }
 };
 
 export const signOut = async (
   req: Request,
-  res: TypedResponse<{ success: boolean } | Error>
+  res: TypedResponse<{ success: boolean }>,
+  next: NextFunction
 ) => {
   try {
     req.session = null;
     res.status(200).json({ success: true });
   } catch (error: unknown) {
-    res
-      .status(error instanceof BadRequestError ? 400 : 500)
-      .json(
-        error instanceof Error ? error : new Error("An unknown error occurred")
-      );
+    next(error);
   }
 };
 
 export const authorize = async (
   req: Request,
-  res: TypedResponse<{ success: boolean } | Error>
+  res: TypedResponse<{ success: boolean }>,
+  next: NextFunction
 ) => {
   try {
     if (!req.session?.id) throw new UnauthorizedError("You are not signed in"); // TODO: test "?"
-    res.status(200).json({ success: true });
+    res.json({ success: true });
   } catch (error: unknown) {
-    res
-      .status(error instanceof UnauthorizedError ? 401 : 500)
-      .json(
-        error instanceof Error ? error : new Error("An unknown error occurred")
-      );
+    next(error);
   }
 };
 
 export const registerUser = async (
   req: TypedRequestBody<{ name: string; email: string; password: string }>,
-  res: TypedResponse<{ userId: string } | Error>
+  res: TypedResponse<{ userId: string }>,
+  next: NextFunction
 ) => {
   try {
     const { name, email, password } = req.body;
@@ -78,31 +69,25 @@ export const registerUser = async (
       password: hashedPassword
     });
 
-    res.status(200).json({ userId: userId.toString() });
+    res.json({ userId: userId.toString() });
   } catch (error: unknown) {
-    res
-      .status(error instanceof BadRequestError ? 400 : 500)
-      .json(
-        error instanceof Error ? error : new Error("An unknown error occurred")
-      );
+    next(error);
   }
 };
 
 export const testDb = async (
   req: Request,
-  res: TypedResponse<{ userId: string } | Error>
+  res: TypedResponse<{ userId: string }>,
+  next: NextFunction
 ) => {
   try {
     const user = await DatabaseConnection.getInstance().getUserByEmail(
       "abc@example.com"
     );
+    throw new BadRequestError("E-mail address already used");
 
-    res.status(200).json({ userId: user!._id.toString() });
+    res.json({ userId: user!._id.toString() });
   } catch (error: unknown) {
-    res
-      .status(error instanceof BadRequestError ? 400 : 500)
-      .json(
-        error instanceof Error ? error : new Error("An unknown error occurred")
-      );
+    next(error);
   }
 };

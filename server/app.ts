@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cookieSession from "cookie-session";
+import { errorHandler } from "./middleware/errorHandler";
 
 import {
   authorize,
@@ -30,5 +31,7 @@ app.post("/register", registerUser);
 app.post("/signin", signIn);
 app.get("/signout", signOut);
 app.get("/testdb", testDb);
+
+app.use(errorHandler);
 
 export default app;
