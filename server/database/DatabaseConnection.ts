@@ -1,15 +1,23 @@
-import { MongoClient } from "mongodb";
+import { Collection, MongoClient } from "mongodb";
+import { WithDocument } from "../models/Mongodb";
 import { User } from "../models/User";
 
 let instance: DatabaseConnection | null = null;
 
 export default class DatabaseConnection {
-  url: string | null;
   client: MongoClient | null;
+  url: string | null;
 
   constructor() {
     this.url = null;
     this.client = null;
+  }
+
+  static getInstance() {
+    if (instance === null) {
+      instance = new DatabaseConnection();
+    }
+    return instance;
   }
 
   setUrl(url: string) {
@@ -27,45 +35,26 @@ export default class DatabaseConnection {
     await this.client.connect();
   }
 
-  async disconnect() {
+  getCollection<T extends Document>(name: string): Collection<T> {
     if (!this.client) {
-      return;
+      throw new Error("Database client is not connected");
     }
-    await this.client.close();
+    return this.client.db(process.env.DB_NAME).collection<T>(name);
   }
 
   async getUserByEmail(email: string) {
-    try {
-      await this.connect();
-    } catch (error) {
-      throw error;
-    }
+    await this.connect();
+    const collection = this.getCollection<WithDocument<User>>("users");
 
-    const db = this.client!.db(process.env.DB_NAME || "noDbNameSet");
-    const collection = db.collection<User>("users");
-
-    const customer = await collection.findOne({ email });
-    return customer;
+    const user = await collection.findOne({ email });
+    return user;
   }
 
   async saveUser(user: User) {
-    try {
-      await this.connect();
-    } catch (error) {
-      throw error;
-    }
+    await this.connect();
+    const collection = this.getCollection<WithDocument<User>>("users");
 
-    const db = this.client!.db(process.env.DB_NAME || "noDbNameSet");
-    const collection = db.collection<User>("users");
-
-    const result = await collection.insertOne(user);
+    const result = await collection.insertOne(user as WithDocument<User>);
     return result.insertedId;
-  }
-
-  static getInstance() {
-    if (instance === null) {
-      instance = new DatabaseConnection();
-    }
-    return instance;
   }
 }
