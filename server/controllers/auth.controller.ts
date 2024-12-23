@@ -63,7 +63,7 @@ export const authorize = async (
 
 export const registerUser = async (
   req: TypedRequestBody<{ name: string; email: string; password: string }>,
-  res: TypedResponse<{ userId: ObjectId } | Error>
+  res: TypedResponse<{ userId: string } | Error>
 ) => {
   try {
     const { name, email, password } = req.body;
@@ -78,7 +78,7 @@ export const registerUser = async (
       password: hashedPassword
     });
 
-    res.status(200).json({ userId });
+    res.status(200).json({ userId: userId.toString() });
   } catch (error: unknown) {
     res
       .status(error instanceof BadRequestError ? 400 : 500)
@@ -90,14 +90,14 @@ export const registerUser = async (
 
 export const testDb = async (
   req: Request,
-  res: TypedResponse<{ userId: ObjectId } | Error>
+  res: TypedResponse<{ userId: string } | Error>
 ) => {
   try {
     const user = await DatabaseConnection.getInstance().getUserByEmail(
       "abc@example.com"
     );
 
-    res.status(200).json({ userId: user!._id });
+    res.status(200).json({ userId: user!._id.toString() });
   } catch (error: unknown) {
     res
       .status(error instanceof BadRequestError ? 400 : 500)
