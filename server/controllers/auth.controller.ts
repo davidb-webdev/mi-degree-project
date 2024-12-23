@@ -74,20 +74,3 @@ export const register = async (
     next(error);
   }
 };
-
-export const testDb = async (
-  req: Request,
-  res: TypedResponse<{ userId: string }>,
-  next: NextFunction
-) => {
-  try {
-    const user = await DatabaseConnection.getInstance().getUserByEmail(
-      "abc@example.com"
-    );
-    throw new BadRequestError("E-mail address already used");
-
-    res.json({ userId: user!._id.toString() });
-  } catch (error: unknown) {
-    next(error);
-  }
-};

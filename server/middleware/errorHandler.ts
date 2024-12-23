@@ -1,7 +1,7 @@
 import { Request, NextFunction } from "express";
 import { TypedResponse } from "../models/Express";
 
-export const errorHandler = (
+const errorHandler = (
   error: Error & { statusCode?: number },
   req: Request,
   res: TypedResponse<{ error: string }>,
@@ -14,3 +14,5 @@ export const errorHandler = (
     error: message
   });
 };
+
+export default errorHandler;
