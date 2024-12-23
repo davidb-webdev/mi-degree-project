@@ -19,7 +19,8 @@
       "repeatPassword": "Repeat password",
       "submit": "Register user",
       "or": "or",
-      "signIn": "Sign in"
+      "signIn": "Sign in",
+      "passwordsMustMatch": "Password fields must match"
     },
     "signIn": {
       "title": "Sign In",

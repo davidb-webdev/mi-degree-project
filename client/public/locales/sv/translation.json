@@ -19,7 +19,8 @@
       "repeatPassword": "Upprepa lösenord",
       "submit": "Registrera användare",
       "or": "eller",
-      "signIn": "Logga in"
+      "signIn": "Logga in",
+      "passwordsMustMatch": "Lösenordsfälten måste vara samma"
     },
     "signIn": {
       "title": "Logga in",
