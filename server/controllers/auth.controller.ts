@@ -19,7 +19,7 @@ export const signIn = async (
 
     req.session = {};
     req.session.id = user._id;
-    res.status(200).json({ success: true });
+    res.json({ success: true });
   } catch (error: unknown) {
     next(error);
   }
@@ -32,7 +32,7 @@ export const signOut = async (
 ) => {
   try {
     req.session = null;
-    res.status(200).json({ success: true });
+    res.json({ success: true });
   } catch (error: unknown) {
     next(error);
   }
@@ -44,7 +44,7 @@ export const auth = async (
   next: NextFunction
 ) => {
   try {
-    if (!req.session?.id) throw new UnauthorizedError("You are not signed in"); // TODO: test "?"
+    if (!req.session?.id) throw new UnauthorizedError("You are not signed in");
     res.json({ success: true });
   } catch (error: unknown) {
     next(error);

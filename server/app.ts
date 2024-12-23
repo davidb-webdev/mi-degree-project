@@ -19,7 +19,7 @@ app.use(
 
 app.post("/signin", validate(signInSchema),signIn);
 app.get("/signout", signOut);
-app.get("/authorize", auth);
+app.get("/auth", auth);
 app.post("/register", validate(registerSchema), register);
 
 app.use(errorHandler);
