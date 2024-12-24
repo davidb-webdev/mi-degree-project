@@ -2,6 +2,7 @@ import { Box, Button, Stack, Toolbar } from "@mui/material";
 import { Outlet, useNavigate } from "react-router";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import { useTranslation } from "react-i18next";
+import { SnackbarModal } from "../utils/useSnackbar";
 
 const StartLayout = () => {
   const navigate = useNavigate();
@@ -34,6 +35,8 @@ const StartLayout = () => {
       </Toolbar>
 
       <Outlet />
+
+      <SnackbarModal />
     </Box>
   );
 };

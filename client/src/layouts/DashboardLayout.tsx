@@ -16,6 +16,7 @@ import FloorPlan from "../components/FloorPlan";
 import MenuDrawer from "../components/MenuDrawer";
 import { useNotesDrawer } from "../utils/useNotesDrawer";
 import { useTranslation } from "react-i18next";
+import { SnackbarModal } from "../utils/useSnackbar";
 
 const DashboardLayout = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -85,6 +86,8 @@ const DashboardLayout = () => {
       <NotesDrawer>
         <Outlet />
       </NotesDrawer>
+
+      <SnackbarModal />
     </>
   );
 };
