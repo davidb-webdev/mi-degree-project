@@ -20,7 +20,9 @@
       "submit": "Register user",
       "or": "or",
       "signIn": "Sign in",
-      "passwordsMustMatch": "Password fields must match"
+      "passwordsMustMatch": "Password fields must match",
+      "success": "User registered successfully",
+      "error": "Something went wrong, please try again"
     },
     "signIn": {
       "title": "Sign In",

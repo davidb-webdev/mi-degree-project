@@ -20,7 +20,9 @@
       "submit": "Registrera användare",
       "or": "eller",
       "signIn": "Logga in",
-      "passwordsMustMatch": "Lösenordsfälten måste vara samma"
+      "passwordsMustMatch": "Lösenordsfälten måste vara samma",
+      "success": "Användarkonto registrerat",
+      "error": "Något gick fel, vänligen försök igen"
     },
     "signIn": {
       "title": "Logga in",

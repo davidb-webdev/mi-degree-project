@@ -6,12 +6,14 @@ import CloseButton from "../../components/CloseButton";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { RegisterFormData } from "../../models/FormData";
 import axios from "axios";
+import { useSnackbar } from "../../utils/useSnackbar";
 
 const RegisterView = () => {
   const [formData, setFormData] = useState(
     new RegisterFormData("", "", "", "")
   );
   const navigate = useNavigate();
+  const snackbar = useSnackbar();
   const { t } = useTranslation("translation", { keyPrefix: "start.register" });
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -28,11 +30,14 @@ const RegisterView = () => {
       const { name, email, password, repeatPassword } = formData;
       if (password !== repeatPassword) throw new Error(t("passwordsMustMatch"));
       const payload = { name, email, password };
-      const response = await axios.post("/api/register", payload);
-      // TODO: Snackbar success
+      await axios.post("/api/register", payload);
+      snackbar.open("success", t("success"));
       navigate("/");
-    } catch (error) {
-      // TODO: Snackbar error
+    } catch (error: unknown) {
+      snackbar.open(
+        "error",
+        error instanceof Error ? error.message : t("error")
+      );
     }
   };
 
