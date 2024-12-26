@@ -3,23 +3,59 @@ import ModalToolbar from "../../components/ModalToolbar";
 import { Link as RouterLink, useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import CloseButton from "../../components/CloseButton";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { SignInFormData } from "../../models/FormData";
+import { useSnackbar } from "../../utils/useSnackbar";
+import useAxios from "../../utils/useAxios";
 
 const SignInView = () => {
+  const [formData, setFormData] = useState(new SignInFormData("", ""));
   const navigate = useNavigate();
+  const snackbar = useSnackbar();
+  const apiClient = useAxios();
   const { t } = useTranslation("translation", { keyPrefix: "start.signIn" });
 
+  const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    await apiClient.post("/api/signin", formData);
+    snackbar.open("success", t("success"));
+    navigate("/dashboard");
+  };
+
   return (
-    <>
+    <form onSubmit={onSubmit}>
       <ModalToolbar
         title={t("title")}
         actionButton={<CloseButton to="/start" />}
       />
 
       <Stack sx={{ mx: 3, mb: 3 }} spacing={2}>
-        <TextField label={t("email")} type="email" />
-        <TextField label={t("password")} type="password" />
+        <TextField
+          label={t("email")}
+          name="email"
+          type="email"
+          value={formData.email}
+          onChange={handleFormChange}
+          required
+        />
+        <TextField
+          label={t("password")}
+          name="password"
+          type="password"
+          value={formData.password}
+          onChange={handleFormChange}
+          required
+        />
 
-        <Button variant="contained" onClick={() => navigate("/dashboard")}>
+        <Button type="submit" variant="contained">
           {t("submit")}
         </Button>
 
@@ -30,7 +66,7 @@ const SignInView = () => {
           </Link>
         </Typography>
       </Stack>
-    </>
+    </form>
   );
 };
 

@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import CloseButton from "../../components/CloseButton";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { RegisterFormData } from "../../models/FormData";
-import axios from "axios";
 import { useSnackbar } from "../../utils/useSnackbar";
+import useAxios from "../../utils/useAxios";
 
 const RegisterView = () => {
   const [formData, setFormData] = useState(
@@ -14,6 +14,7 @@ const RegisterView = () => {
   );
   const navigate = useNavigate();
   const snackbar = useSnackbar();
+  const apiClient = useAxios();
   const { t } = useTranslation("translation", { keyPrefix: "start.register" });
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -25,20 +26,16 @@ const RegisterView = () => {
   };
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    try {
-      event.preventDefault();
-      const { name, email, password, repeatPassword } = formData;
-      if (password !== repeatPassword) throw new Error(t("passwordsMustMatch"));
-      const payload = { name, email, password };
-      await axios.post("/api/register", payload);
-      snackbar.open("success", t("success"));
-      navigate("/");
-    } catch (error: unknown) {
-      snackbar.open(
-        "error",
-        error instanceof Error ? error.message : t("error")
-      );
+    event.preventDefault();
+    const { name, email, password, repeatPassword } = formData;
+    if (password !== repeatPassword) {
+      snackbar.open("error", t("passwordsMustMatch"));
+      return;
     }
+    const payload = { name, email, password };
+    await apiClient.post("/api/register", payload);
+    snackbar.open("success", t("success"));
+    navigate("/");
   };
 
   return (

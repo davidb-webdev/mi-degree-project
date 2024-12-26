@@ -21,8 +21,7 @@
       "or": "or",
       "signIn": "Sign in",
       "passwordsMustMatch": "Password fields must match",
-      "success": "User registered successfully",
-      "error": "Something went wrong, please try again"
+      "success": "User registered successfully"
     },
     "signIn": {
       "title": "Sign In",
@@ -30,7 +29,8 @@
       "password": "Password",
       "submit": "Sign in",
       "or": "or",
-      "register": "Register"
+      "register": "Register",
+      "success": "Signed in successfully"
     }
   },
   "dashboard": {
@@ -115,6 +115,12 @@
     "projectStatuses": {
       "InProgress": "In progress",
       "Finished": "Finished"
+    }
+  },
+  "axios": {
+    "errors": {
+      "noResponse": "No response from server, please try again",
+      "unknown": "An unknown error occurred"
     }
   }
 }

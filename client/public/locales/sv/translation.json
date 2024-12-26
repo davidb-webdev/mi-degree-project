@@ -116,5 +116,11 @@
       "InProgress": "Pågående",
       "Finished": "Avslutat"
     }
+  },
+  "axios": {
+    "errors": {
+      "noResponse": "Inget svar från servern, vänligen försök igen",
+      "unknown": "Ett okänt fel inträffade"
+    }
   }
 }
