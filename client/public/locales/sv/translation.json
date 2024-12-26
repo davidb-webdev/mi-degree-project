@@ -30,7 +30,8 @@
       "password": "Lösenord",
       "submit": "Logga in",
       "or": "eller",
-      "register": "Registrera"
+      "register": "Registrera",
+      "success": "Du är nu inloggad"
     }
   },
   "dashboard": {
@@ -84,8 +85,7 @@
     "user": {
       "title": "Användarprofil",
       "edit": "Redigera användare",
-      "changePassword": "Ändra lösenord",
-      "signOut": "Logga ut"
+      "changePassword": "Ändra lösenord"
     },
     "userEdit": {
       "title": "Redigera användare",
@@ -100,6 +100,10 @@
       "currentPassword": "Nuvarande lösenord",
       "newPassword": "Nytt lösenord",
       "submit": "Spara lösenord"
+    },
+    "signOut": {
+      "signOut": "Logga ut",
+      "success": "Du är nu utloggad"
     }
   },
   "models": {

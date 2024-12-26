@@ -4,6 +4,8 @@ import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import CloseButton from "../../components/CloseButton";
 import LanguagePicker from "../../components/LanguagePicker";
+import { User } from "../../models/User";
+import SignOutButton from "../../components/SignOutButton";
 
 const UserView = () => {
   const navigate = useNavigate();
@@ -44,7 +46,7 @@ const UserView = () => {
           {t("changePassword")}
         </Button>
 
-        <Button onClick={() => navigate("/start")}>{t("signOut")}</Button>
+        <SignOutButton />
       </Stack>
     </>
   );
