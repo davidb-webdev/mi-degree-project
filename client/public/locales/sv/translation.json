@@ -119,6 +119,7 @@
   },
   "axios": {
     "errors": {
+      "genericServerError": "Servern svarade med en felkod, vänligen försök igen",
       "noResponse": "Inget svar från servern, vänligen försök igen",
       "unknown": "Ett okänt fel inträffade"
     }

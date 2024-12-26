@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useSnackbar } from "./useSnackbar";
 
 export const useAxios = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("translation", { keyPrefix: "axios" });
   const snackbar = useSnackbar();
 
   const apiClient = axios.create({});
@@ -14,14 +14,14 @@ export const useAxios = () => {
       let errorMessage;
       if (axios.isAxiosError(error)) {
         if (error.response) {
-          errorMessage = error.response.data.message;
+          errorMessage = error.response.data.message ?? t("errors.genericServerError");
         } else if (error.request) {
           errorMessage = t("errors.noResponse");
         } else {
           errorMessage = error.message;
         }
       } else {
-        errorMessage = t("errors.unexpected");
+        errorMessage = t("errors.unknown");
       }
       snackbar.open("error", errorMessage);
       return Promise.reject(error);
