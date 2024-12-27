@@ -14,6 +14,7 @@ import NoteEditView from "./views/dashboard/NoteEditView";
 import UserEditView from "./views/dashboard/UserEditView";
 import UserPasswordView from "./views/dashboard/UserPasswordView";
 import ProjectDetailsEditView from "./views/dashboard/ProjectDetailsEditView";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const Router = () => {
   return (
@@ -37,7 +38,10 @@ const Router = () => {
         />
       </Route>
 
-      <Route path="dashboard" element={<DashboardLayout />}>
+      <Route
+        path="dashboard"
+        element={<ProtectedRoute route={<DashboardLayout />} />}
+      >
         <Route index element={<NotesListView />} />
         <Route path="notes/new" element={<NoteEditView newNote />} />
         <Route path="notes/:id" element={<NoteView />} />

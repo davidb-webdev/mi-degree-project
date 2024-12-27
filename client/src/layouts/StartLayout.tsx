@@ -3,12 +3,16 @@ import { Outlet, useNavigate } from "react-router";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import { useTranslation } from "react-i18next";
 import { SnackbarModal } from "../utils/useSnackbar";
+import { useAuth } from "../utils/useAuth";
 
 const StartLayout = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation("translation", {
     keyPrefix: "start.layout"
   });
+
+  if (user) navigate("/dashboard");
 
   return (
     <Box className="scrollable">
