@@ -6,13 +6,13 @@ import CloseButton from "../../components/CloseButton";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { SignInFormData } from "../../models/FormData";
 import { useSnackbar } from "../../utils/useSnackbar";
-import useAxios from "../../utils/useAxios";
+import { useAuth } from "../../utils/useAuth";
 
 const SignInView = () => {
   const [formData, setFormData] = useState(new SignInFormData("", ""));
   const navigate = useNavigate();
   const snackbar = useSnackbar();
-  const apiClient = useAxios();
+  const { signIn } = useAuth();
   const { t } = useTranslation("translation", { keyPrefix: "start.signIn" });
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -25,9 +25,9 @@ const SignInView = () => {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await apiClient.post("/api/signin", formData);
-    snackbar.open("success", t("success"));
+    await signIn(formData);
     navigate("/dashboard");
+    snackbar.open("success", t("success"));
   };
 
   return (

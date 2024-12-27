@@ -7,7 +7,7 @@ import {
   Snackbar
 } from "@mui/material";
 
-interface SnackbarContextInterface {
+interface SnackbarContextProps {
   message: string;
   visibility: boolean;
   severity: OverridableStringUnion<AlertColor, AlertPropsColorOverrides>;
@@ -18,7 +18,7 @@ interface SnackbarContextInterface {
   close: () => void;
 }
 
-const SnackbarContext = createContext<SnackbarContextInterface>({
+const SnackbarContext = createContext<SnackbarContextProps>({
   message: "",
   visibility: false,
   severity: "info",

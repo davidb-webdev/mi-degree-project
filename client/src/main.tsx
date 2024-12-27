@@ -8,18 +8,21 @@ import fireInspectTheme from "./utils/theme";
 import { NotesDrawerProvider } from "./utils/useNotesDrawer";
 import "./utils/i18n";
 import { SnackbarProvider } from "./utils/useSnackbar";
+import { AuthProvider } from "./utils/useAuth";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider theme={fireInspectTheme}>
-      <BrowserRouter>
-        <SnackbarProvider>
-          <NotesDrawerProvider>
-            <CssBaseline />
-            <Router />
-          </NotesDrawerProvider>
-        </SnackbarProvider>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <SnackbarProvider>
+            <NotesDrawerProvider>
+              <CssBaseline />
+              <Router />
+            </NotesDrawerProvider>
+          </SnackbarProvider>
+        </BrowserRouter>
+      </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>
 );
