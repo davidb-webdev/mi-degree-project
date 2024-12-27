@@ -13,11 +13,13 @@ app.use(express.json());
 app.use(
   cookieSession({
     secret: process.env.COOKIESESSION_SECRET,
-    maxAge: 1000 * 60 * 60 * 24
+    maxAge: 1000 * 60 * 60 * 24,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production"
   })
 );
 
-app.post("/signin", validate(signInSchema),signIn);
+app.post("/signin", validate(signInSchema), signIn);
 app.get("/signout", signOut);
 app.get("/auth", auth);
 app.post("/register", validate(registerSchema), register);
