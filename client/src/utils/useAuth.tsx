@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const apiClient = useAxios();
   const navigate = useNavigate();
   const snackbar = useSnackbar();
-  const { t } = useTranslation("translate", { keyPrefix: "auth" });
+  const { t } = useTranslation("translation", { keyPrefix: "auth" });
 
   useEffect(() => {
     const getAuth = async () => {
