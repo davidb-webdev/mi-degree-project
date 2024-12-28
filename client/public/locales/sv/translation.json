@@ -19,7 +19,10 @@
       "repeatPassword": "Upprepa lösenord",
       "submit": "Registrera användare",
       "or": "eller",
-      "signIn": "Logga in"
+      "signIn": "Logga in",
+      "passwordsMustMatch": "Lösenordsfälten måste vara samma",
+      "success": "Användarkonto registrerat",
+      "error": "Något gick fel, vänligen försök igen"
     },
     "signIn": {
       "title": "Logga in",
@@ -81,8 +84,7 @@
     "user": {
       "title": "Användarprofil",
       "edit": "Redigera användare",
-      "changePassword": "Ändra lösenord",
-      "signOut": "Logga ut"
+      "changePassword": "Ändra lösenord"
     },
     "userEdit": {
       "title": "Redigera användare",
@@ -97,6 +99,9 @@
       "currentPassword": "Nuvarande lösenord",
       "newPassword": "Nytt lösenord",
       "submit": "Spara lösenord"
+    },
+    "signOut": {
+      "signOut": "Logga ut"
     }
   },
   "models": {
@@ -113,5 +118,16 @@
       "InProgress": "Pågående",
       "Finished": "Avslutat"
     }
+  },
+  "axios": {
+    "errors": {
+      "genericServerError": "Servern svarade med en felkod, vänligen försök igen",
+      "noResponse": "Inget svar från servern, vänligen försök igen",
+      "unknown": "Ett okänt fel inträffade"
+    }
+  },
+  "auth": {
+    "signIn": "Du är nu inloggad",
+    "signOut": "Du är nu utloggad"
   }
 }

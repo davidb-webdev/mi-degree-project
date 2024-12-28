@@ -1,15 +1,24 @@
 import { Box, Button, Stack, Toolbar } from "@mui/material";
-import { Outlet, useNavigate } from "react-router";
+import { Navigate, Outlet, useNavigate } from "react-router";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import { useTranslation } from "react-i18next";
+import { SnackbarModal } from "../utils/useSnackbar";
+import { useAuth } from "../utils/useAuth";
 
 const StartLayout = () => {
+  const { auth } = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation("translation", {
     keyPrefix: "start.layout"
   });
 
-  return (
+  if (auth === undefined) {
+    return <>Loading...</>;
+  }
+
+  return auth ? (
+    <Navigate to="/dashboard" />
+  ) : (
     <Box className="scrollable">
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Button
@@ -34,6 +43,8 @@ const StartLayout = () => {
       </Toolbar>
 
       <Outlet />
+
+      <SnackbarModal />
     </Box>
   );
 };

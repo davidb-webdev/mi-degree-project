@@ -18,7 +18,7 @@ export const signIn = async (
     }
 
     req.session = {};
-    req.session.id = user._id;
+    req.session.email = user.email;
     res.json({ success: true });
   } catch (error: unknown) {
     next(error);
@@ -40,12 +40,20 @@ export const signOut = async (
 
 export const auth = async (
   req: Request,
-  res: TypedResponse<{ success: boolean }>,
+  res: TypedResponse<{ user: string }>,
   next: NextFunction
 ) => {
   try {
-    if (!req.session?.id) throw new UnauthorizedError("You are not signed in");
-    res.json({ success: true });
+    if (!req.session || !req.session.email) {
+      throw new UnauthorizedError("You are not signed in");
+    }
+    const user = await DatabaseConnection.getInstance().getUserByEmail(
+      req.session.email
+    );
+    if (!user) {
+      throw new UnauthorizedError("User not found");
+    }
+    res.json({ user: user.email });
   } catch (error: unknown) {
     next(error);
   }
@@ -53,7 +61,7 @@ export const auth = async (
 
 export const register = async (
   req: TypedRequestBody<{ name: string; email: string; password: string }>,
-  res: TypedResponse<{ userId: string }>,
+  res: TypedResponse<{ success: boolean }>,
   next: NextFunction
 ) => {
   try {
@@ -63,13 +71,13 @@ export const register = async (
     if (user) throw new BadRequestError("E-mail address already used");
 
     const hashedPassword = await hash(password, 10);
-    const userId = await DatabaseConnection.getInstance().saveUser({
+    await DatabaseConnection.getInstance().saveUser({
       name,
       email,
       password: hashedPassword
     });
 
-    res.json({ userId: userId.toString() });
+    res.json({ success: true });
   } catch (error: unknown) {
     next(error);
   }

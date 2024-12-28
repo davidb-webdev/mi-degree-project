@@ -1,13 +1,13 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 
-interface NotesDrawerContextInterface {
+interface NotesDrawerContextProps {
   open: boolean;
   toggle: () => void;
   width: string;
   setWidth: (_value: string) => void;
 }
 
-const NotesDrawerContext = createContext<NotesDrawerContextInterface>({
+const NotesDrawerContext = createContext<NotesDrawerContextProps>({
   open: false,
   toggle: () => {},
   width: "33vw",

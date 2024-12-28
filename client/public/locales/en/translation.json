@@ -19,7 +19,9 @@
       "repeatPassword": "Repeat password",
       "submit": "Register user",
       "or": "or",
-      "signIn": "Sign in"
+      "signIn": "Sign in",
+      "passwordsMustMatch": "Password fields must match",
+      "success": "User registered successfully"
     },
     "signIn": {
       "title": "Sign In",
@@ -81,8 +83,7 @@
     "user": {
       "title": "User Profile",
       "edit": "Edit user",
-      "changePassword": "Change password",
-      "signOut": "Sign out"
+      "changePassword": "Change password"
     },
     "userEdit": {
       "title": "Edit User",
@@ -97,6 +98,9 @@
       "currentPassword": "Current password",
       "newPassword": "New password",
       "submit": "Save password"
+    },
+    "signOut": {
+      "signOut": "Sign out"
     }
   },
   "models": {
@@ -113,5 +117,16 @@
       "InProgress": "In progress",
       "Finished": "Finished"
     }
+  },
+  "axios": {
+    "errors": {
+      "genericServerError": "The server responded with an error, please try again",
+      "noResponse": "No response from server, please try again",
+      "unknown": "An unknown error occurred"
+    }
+  },
+  "auth": {
+    "signIn": "Signed in successfully",
+    "signOut": "Signed out successfully"
   }
 }

@@ -35,12 +35,7 @@ const NoteView = () => {
       <Stack sx={{ mx: 3 }} spacing={2}>
         <Box>
           <Typography variant="subtitle2">{t("category")}</Typography>
-          <Typography
-            variant="body1"
-            sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}
-          >
-            <NoteCategoryTag label={note.category} />
-          </Typography>
+          <NoteCategoryTag label={note.category} />
         </Box>
 
         <Box>

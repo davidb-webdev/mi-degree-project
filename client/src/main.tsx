@@ -7,15 +7,21 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import fireInspectTheme from "./utils/theme";
 import { NotesDrawerProvider } from "./utils/useNotesDrawer";
 import "./utils/i18n";
+import { SnackbarProvider } from "./utils/useSnackbar";
+import { AuthProvider } from "./utils/useAuth";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider theme={fireInspectTheme}>
       <BrowserRouter>
-        <NotesDrawerProvider>
-          <CssBaseline />
-          <Router />
-        </NotesDrawerProvider>
+        <SnackbarProvider>
+          <AuthProvider>
+            <NotesDrawerProvider>
+              <CssBaseline />
+              <Router />
+            </NotesDrawerProvider>
+          </AuthProvider>
+        </SnackbarProvider>
       </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>
