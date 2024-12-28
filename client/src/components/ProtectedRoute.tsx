@@ -7,8 +7,13 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ route }: ProtectedRouteProps) => {
-  const { user } = useAuth();
-  return !user ? <Navigate to="/start" /> : <>{route}</>;
+  const { auth } = useAuth();
+
+  if (auth === undefined) {
+    return <>Loading...</>;
+  }
+
+  return auth ? <>{route}</> : <Navigate to="/start" />;
 };
 
 export default ProtectedRoute;

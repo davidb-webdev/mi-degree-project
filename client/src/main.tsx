@@ -13,16 +13,16 @@ import { AuthProvider } from "./utils/useAuth";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider theme={fireInspectTheme}>
-      <AuthProvider>
-        <BrowserRouter>
-          <SnackbarProvider>
+      <BrowserRouter>
+        <SnackbarProvider>
+          <AuthProvider>
             <NotesDrawerProvider>
               <CssBaseline />
               <Router />
             </NotesDrawerProvider>
-          </SnackbarProvider>
-        </BrowserRouter>
-      </AuthProvider>
+          </AuthProvider>
+        </SnackbarProvider>
+      </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>
 );

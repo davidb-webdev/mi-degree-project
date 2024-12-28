@@ -14,7 +14,8 @@ export const useAxios = () => {
       let errorMessage;
       if (axios.isAxiosError(error)) {
         if (error.response) {
-          errorMessage = error.response.data.message ?? t("errors.genericServerError");
+          errorMessage =
+            error.response.data.message ?? t("errors.genericServerError");
         } else if (error.request) {
           errorMessage = t("errors.noResponse");
         } else {

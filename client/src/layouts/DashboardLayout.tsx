@@ -17,11 +17,9 @@ import MenuDrawer from "../components/MenuDrawer";
 import { useNotesDrawer } from "../utils/useNotesDrawer";
 import { useTranslation } from "react-i18next";
 import { SnackbarModal } from "../utils/useSnackbar";
-import { useAuth } from "../utils/useAuth";
 
 const DashboardLayout = () => {
   const [showMenu, setShowMenu] = useState(false);
-  const { user } = useAuth();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
@@ -29,8 +27,6 @@ const DashboardLayout = () => {
   const { t } = useTranslation("translation", {
     keyPrefix: "dashboard.layout"
   });
-
-  if (!user) navigate("/start");
 
   return (
     <>

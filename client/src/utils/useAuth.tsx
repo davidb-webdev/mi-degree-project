@@ -7,41 +7,58 @@ import {
 } from "react";
 import useAxios from "./useAxios";
 import { SignInFormData } from "../models/FormData";
+import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
+import { useSnackbar } from "./useSnackbar";
 
 interface AuthContextProps {
-  user: { email: string } | undefined;
+  auth: boolean | undefined;
   signIn: ({}: SignInFormData) => void;
   signOut: () => void;
 }
 
 const AuthContext = createContext<AuthContextProps>({
-  user: undefined,
+  auth: undefined,
   signIn: () => {},
   signOut: () => {}
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState();
+  const [auth, setAuth] = useState<boolean | undefined>();
   const apiClient = useAxios();
+  const navigate = useNavigate();
+  const snackbar = useSnackbar();
+  const { t } = useTranslation("translate", { keyPrefix: "auth" });
 
   useEffect(() => {
     const getAuth = async () => {
-      const response = await apiClient.get("/api/auth");
-      setUser(response.data);
+      try {
+        await apiClient.get("/api/auth");
+        setAuth(true);
+      } catch (error) {
+        snackbar.close();
+        setAuth(false);
+      }
     };
     getAuth();
   }, []);
 
   const signIn = async (formData: SignInFormData) => {
     await apiClient.post("/api/signin", formData);
+    setAuth(true);
+    navigate("/dashboard");
+    snackbar.open("success", t("signIn"));
   };
 
   const signOut = async () => {
     await apiClient.get("/api/signout");
+    setAuth(false);
+    snackbar.open("success", t("signOut"));
+    navigate("/start");
   };
 
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut }}>
+    <AuthContext.Provider value={{ auth, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

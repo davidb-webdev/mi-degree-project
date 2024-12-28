@@ -1,17 +1,14 @@
 import { Button, Link, Stack, TextField, Typography } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
-import { Link as RouterLink, useNavigate } from "react-router";
+import { Link as RouterLink } from "react-router";
 import { useTranslation } from "react-i18next";
 import CloseButton from "../../components/CloseButton";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { SignInFormData } from "../../models/FormData";
-import { useSnackbar } from "../../utils/useSnackbar";
 import { useAuth } from "../../utils/useAuth";
 
 const SignInView = () => {
   const [formData, setFormData] = useState(new SignInFormData("", ""));
-  const navigate = useNavigate();
-  const snackbar = useSnackbar();
   const { signIn } = useAuth();
   const { t } = useTranslation("translation", { keyPrefix: "start.signIn" });
 
@@ -25,9 +22,7 @@ const SignInView = () => {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await signIn(formData);
-    navigate("/dashboard");
-    snackbar.open("success", t("success"));
+    signIn(formData);
   };
 
   return (
