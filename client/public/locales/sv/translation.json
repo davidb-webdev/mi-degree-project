@@ -30,8 +30,7 @@
       "password": "Lösenord",
       "submit": "Logga in",
       "or": "eller",
-      "register": "Registrera",
-      "success": "Du är nu inloggad"
+      "register": "Registrera"
     }
   },
   "dashboard": {
@@ -102,8 +101,7 @@
       "submit": "Spara lösenord"
     },
     "signOut": {
-      "signOut": "Logga ut",
-      "success": "Du är nu utloggad"
+      "signOut": "Logga ut"
     }
   },
   "models": {
@@ -127,5 +125,9 @@
       "noResponse": "Inget svar från servern, vänligen försök igen",
       "unknown": "Ett okänt fel inträffade"
     }
+  },
+  "auth": {
+    "signIn": "Du är nu inloggad",
+    "signOut": "Du är nu utloggad"
   }
 }

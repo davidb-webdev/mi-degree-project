@@ -29,8 +29,7 @@
       "password": "Password",
       "submit": "Sign in",
       "or": "or",
-      "register": "Register",
-      "success": "Signed in successfully"
+      "register": "Register"
     }
   },
   "dashboard": {
@@ -101,8 +100,7 @@
       "submit": "Save password"
     },
     "signOut": {
-      "signOut": "Sign out",
-      "success": "Signed out successfully"
+      "signOut": "Sign out"
     }
   },
   "models": {
@@ -126,5 +124,9 @@
       "noResponse": "No response from server, please try again",
       "unknown": "An unknown error occurred"
     }
+  },
+  "auth": {
+    "signIn": "Signed in successfully",
+    "signOut": "Signed out successfully"
   }
 }
