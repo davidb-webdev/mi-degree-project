@@ -68,10 +68,10 @@ export const postProject = async (
       createdAt: new Date(),
       editedAt: new Date()
     };
-    const result = await DatabaseConnection.getInstance().createProject(
+    const projectId = await DatabaseConnection.getInstance().createProject(
       project
     );
-    res.json({ id: result.id.toString() });
+    res.json({ id: projectId.toString() });
   } catch (error: unknown) {
     next(error);
   }
@@ -97,14 +97,14 @@ export const patchProject = async (
       throw new UnauthorizedError("User not found");
     }
 
-    const {title, description, status} = req.body;
+    const { title, description, status } = req.body;
     const project = {
       title,
       description,
       status,
       editedAt: new Date()
     };
-    const result = await DatabaseConnection.getInstance().updateProject(
+    await DatabaseConnection.getInstance().updateProject(
       req.params.id,
       project
     );

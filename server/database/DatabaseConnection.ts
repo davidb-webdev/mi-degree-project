@@ -2,6 +2,7 @@ import { Collection, MongoClient, ObjectId } from "mongodb";
 import { WithId } from "../models/Mongodb";
 import { User } from "../models/User";
 import { Project, ProjectStatus } from "../models/Project";
+import { BadRequestError } from "../models/Error";
 
 let instance: DatabaseConnection | null = null;
 
@@ -100,8 +101,8 @@ export default class DatabaseConnection {
       { $set: project }
     );
 
-    if (result.matchedCount < 1) {
-      throw new Error("Project not found, no changes were made");
+    if (result.upsertedCount < 1) {
+      throw new BadRequestError("Project not found, no changes were made");
     }
   }
 
@@ -112,7 +113,7 @@ export default class DatabaseConnection {
     const result = await collection.deleteOne({ _id: id });
 
     if (result.deletedCount < 1) {
-      throw new Error("Project not found, no changes were made");
+      throw new BadRequestError("Project not found, no changes were made");
     }
   }
 }
