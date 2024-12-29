@@ -12,7 +12,7 @@ import {
   patchProject,
   postProject
 } from "./controllers/projects.controller";
-import { postOrPatchProjectSchema } from "./schemas/projects.schema";
+import { patchProjectSchema } from "./schemas/projects.schema";
 import requireAuth from "./middleware/requireAuth";
 
 dotenv.config();
@@ -29,16 +29,11 @@ app.post("/register", validate(registerSchema), register);
 
 app.get("/projects", requireAuth, getProjects);
 app.get("/project/:id", requireAuth, getProject);
-app.post(
-  "/project/",
-  requireAuth,
-  validate(postOrPatchProjectSchema),
-  postProject
-);
+app.post("/project/", requireAuth, postProject);
 app.patch(
   "/project/:id",
   requireAuth,
-  validate(postOrPatchProjectSchema),
+  validate(patchProjectSchema),
   patchProject
 );
 app.delete("/project/:id", requireAuth, deleteProject);

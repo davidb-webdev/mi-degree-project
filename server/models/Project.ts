@@ -10,6 +10,7 @@ export interface Project {
 }
 
 export const ProjectStatuses = {
+  Draft: "Draft",
   InProgress: "InProgress",
   Finished: "Finished"
 } as const;

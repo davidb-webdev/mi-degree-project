@@ -1,7 +1,7 @@
 import { Collection, MongoClient, ObjectId } from "mongodb";
 import { WithId } from "../models/Mongodb";
 import { User } from "../models/User";
-import { Project } from "../models/Project";
+import { Project, ProjectStatus } from "../models/Project";
 
 let instance: DatabaseConnection | null = null;
 
@@ -73,5 +73,46 @@ export default class DatabaseConnection {
 
     const project = await collection.findOne({ _id: id });
     return project;
+  }
+
+  async createProject(project: Project) {
+    await this.connect();
+    const collection = this.getCollection<Project>("projects");
+
+    const result = await collection.insertOne(project);
+    return result.insertedId;
+  }
+
+  async updateProject(
+    id: string,
+    project: {
+      title: string;
+      description: string;
+      status: ProjectStatus;
+      editedAt: Date;
+    }
+  ) {
+    await this.connect();
+    const collection = this.getCollection<Project>("projects");
+
+    const result = await collection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: project }
+    );
+
+    if (result.matchedCount < 1) {
+      throw new Error("Project not found, no changes were made");
+    }
+  }
+
+  async deleteProject(id: ObjectId) {
+    await this.connect();
+    const collection = this.getCollection<Project>("projects");
+
+    const result = await collection.deleteOne({ _id: id });
+
+    if (result.deletedCount < 1) {
+      throw new Error("Project not found, no changes were made");
+    }
   }
 }

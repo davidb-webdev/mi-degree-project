@@ -7,7 +7,7 @@ import {
 } from "../models/Express";
 import { BadRequestError, UnauthorizedError } from "../models/Error";
 import { NextFunction, Request } from "express";
-import { Project, ProjectStatus } from "../models/Project";
+import { Project, ProjectStatus, ProjectStatuses } from "../models/Project";
 import { ObjectId } from "mongodb";
 
 export const getProjects = async (
@@ -48,16 +48,30 @@ export const getProject = async (
 };
 
 export const postProject = async (
-  req: TypedRequestBody<{
-    title: string;
-    description: string;
-    status: ProjectStatus;
-    owner: string;
-  }>,
+  req: Request,
   res: TypedResponse<{ id: string }>,
   next: NextFunction
 ) => {
   try {
+    const user = await DatabaseConnection.getInstance().getUserByEmail(
+      req.session!.email
+    );
+    if (!user) {
+      throw new UnauthorizedError("User not found");
+    }
+
+    const project: Project = {
+      title: "Draft",
+      description: "",
+      status: ProjectStatuses.Draft,
+      owner: user._id,
+      createdAt: new Date(),
+      editedAt: new Date()
+    };
+    const result = await DatabaseConnection.getInstance().createProject(
+      project
+    );
+    res.json({ id: result.id.toString() });
   } catch (error: unknown) {
     next(error);
   }
@@ -70,13 +84,30 @@ export const patchProject = async (
       title: string;
       description: string;
       status: ProjectStatus;
-      owner: string;
     }
   >,
   res: TypedResponse<{ success: boolean }>,
   next: NextFunction
 ) => {
   try {
+    const user = await DatabaseConnection.getInstance().getUserByEmail(
+      req.session!.email
+    );
+    if (!user) {
+      throw new UnauthorizedError("User not found");
+    }
+
+    const {title, description, status} = req.body;
+    const project = {
+      title,
+      description,
+      status,
+      editedAt: new Date()
+    };
+    const result = await DatabaseConnection.getInstance().updateProject(
+      req.params.id,
+      project
+    );
     res.json({ success: true });
   } catch (error: unknown) {
     next(error);
@@ -89,6 +120,9 @@ export const deleteProject = async (
   next: NextFunction
 ) => {
   try {
+    await DatabaseConnection.getInstance().deleteProject(
+      new ObjectId(req.params.id)
+    );
     res.json({ success: true });
   } catch (error: unknown) {
     next(error);
