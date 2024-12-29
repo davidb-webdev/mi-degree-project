@@ -78,7 +78,8 @@
       "title": "Title",
       "status": "Status",
       "description": "Description",
-      "submit": "Save project details"
+      "submit": "Save project details",
+      "success": "Project saved"
     },
     "user": {
       "title": "User Profile",

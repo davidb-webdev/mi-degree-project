@@ -79,7 +79,8 @@
       "title": "Titel",
       "status": "Status",
       "description": "Beskrivning",
-      "submit": "Spara projektdetaljer"
+      "submit": "Spara projektdetaljer",
+      "success": "Projektet sparades"
     },
     "user": {
       "title": "Användarprofil",
