@@ -1,17 +1,19 @@
 import Express from "express";
-import { Send, Query } from "express-serve-static-core";
+import { Send, Query, ParamsDictionary } from "express-serve-static-core";
 
 export interface TypedRequestBody<T> extends Express.Request {
   body: T;
 }
 
-export interface TypedRequestQuery<T extends Query> extends Express.Request {
-  query: T;
+export interface TypedRequestParams<T extends ParamsDictionary>
+  extends Express.Request {
+  params: T;
 }
 
-export interface TypedRequest<T, U extends Query> extends Express.Request {
+export interface TypedRequest<U extends ParamsDictionary, T>
+  extends Express.Request {
+  params: U;
   body: T;
-  query: U;
 }
 
 export interface TypedResponse<ResBody> extends Express.Response {

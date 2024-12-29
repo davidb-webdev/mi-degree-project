@@ -85,7 +85,8 @@ describe("Auth endpoints", () => {
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toEqual({
-      error: 'Validation error: "email" must be a valid email'
+      message: 'Validation error: "email" must be a valid email',
+      statusCode: 400
     });
   });
 
@@ -113,14 +114,51 @@ describe("Auth endpoints", () => {
       .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(400);
-    expect(res.body).toEqual({ error: "Wrong username or password" });
+    expect(res.body).toEqual({
+      message: "Wrong username or password",
+      statusCode: 400
+    });
   });
 
   //
   // ========== Sign out ==========
   //
 
-  test("signing out, expect success", async () => {
+  test("signing out while signed in, expect success", async () => {
+    const hashedPassword = await hash("1234567890", 10);
+    const mockCollection = {
+      findOne: jest.fn().mockResolvedValue({
+        _id: "12345",
+        name: "existing user",
+        email: "email@example.com",
+        password: hashedPassword
+      })
+    };
+    mockGetCollection.mockReturnValue(mockCollection);
+
+    const payload = {
+      email: "email@example.com",
+      password: "1234567890"
+    };
+
+    const signInRes = await request(app)
+      .post("/signin")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+
+    expect(signInRes.statusCode).toEqual(200);
+    expect(signInRes.body).toEqual({ success: true });
+
+    const cookies = signInRes.headers["set-cookie"];
+
+    const res = await request(app).get("/signout").set("Cookie", cookies);
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual({ success: true });
+  });
+
+  test("signing out while signed out, expect success", async () => {
     const res = await request(app).get("/signout");
 
     expect(res.statusCode).toEqual(200);
@@ -131,7 +169,7 @@ describe("Auth endpoints", () => {
   // ========== Auth ==========
   //
 
-  test("signing in, then authenticating, expect success", async () => {
+  test("authenticating while signed in, expect success", async () => {
     const hashedPassword = await hash("1234567890", 10);
     const mockCollection = {
       findOne: jest.fn().mockResolvedValue({
@@ -169,7 +207,10 @@ describe("Auth endpoints", () => {
     const res = await request(app).get("/auth");
 
     expect(res.statusCode).toEqual(401);
-    expect(res.body).toEqual({ error: "You are not signed in" });
+    expect(res.body).toEqual({
+      message: "You are not signed in",
+      statusCode: 401
+    });
   });
 
   //
@@ -196,7 +237,7 @@ describe("Auth endpoints", () => {
       .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual({ userId: "12345" });
+    expect(res.body).toEqual({ success: true });
   });
 
   test("registering a new user, email already used, expect failure", async () => {
@@ -224,7 +265,10 @@ describe("Auth endpoints", () => {
       .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(400);
-    expect(res.body).toHaveProperty("error", "E-mail address already used");
+    expect(res.body).toEqual({
+      message: "E-mail address already used",
+      statusCode: 400
+    });
   });
 
   test("registering a new user, incorrect input data, expect failure", async () => {
@@ -246,9 +290,9 @@ describe("Auth endpoints", () => {
       .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(400);
-    expect(res.body).toHaveProperty(
-      "error",
-      'Validation error: "password" is required'
-    );
+    expect(res.body).toEqual({
+      message: 'Validation error: "password" is required',
+      statusCode: 400
+    });
   });
 });

@@ -1,1 +1,3 @@
-export type WithDocument<T> = T & Document;
+import { ObjectId } from "mongodb";
+
+export type WithId<T> = T & { _id?: ObjectId };
