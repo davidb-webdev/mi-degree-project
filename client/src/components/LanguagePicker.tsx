@@ -6,8 +6,6 @@ const LanguagePicker = () => {
     keyPrefix: "dashboard.languagePicker"
   });
 
-  console.log("i18next.languages", i18n.languages);
-
   return (
     <SelectWithPredefinedList
       list="languages"
