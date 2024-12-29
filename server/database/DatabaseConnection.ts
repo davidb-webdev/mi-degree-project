@@ -1,6 +1,7 @@
-import { Collection, MongoClient } from "mongodb";
+import { Collection, MongoClient, ObjectId } from "mongodb";
 import { WithDocument } from "../models/Mongodb";
 import { User } from "../models/User";
+import { Project } from "../models/Project";
 
 let instance: DatabaseConnection | null = null;
 
@@ -56,5 +57,13 @@ export default class DatabaseConnection {
 
     const result = await collection.insertOne(user as WithDocument<User>);
     return result.insertedId;
+  }
+
+  async getProjectsByUserId(userId: ObjectId) {
+    await this.connect();
+    const collection = this.getCollection<WithDocument<Project>>("projects");
+
+    const projects = await collection.find({ owner: userId }).toArray();
+    return projects;
   }
 }
