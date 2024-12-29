@@ -1,5 +1,5 @@
 import { Collection, MongoClient, ObjectId } from "mongodb";
-import { WithDocument } from "../models/Mongodb";
+import { WithId } from "../models/Mongodb";
 import { User } from "../models/User";
 import { Project } from "../models/Project";
 
@@ -36,16 +36,16 @@ export default class DatabaseConnection {
     await this.client.connect();
   }
 
-  getCollection<T extends Document>(name: string): Collection<T> {
+  getCollection<T>(name: string): Collection<WithId<T>> {
     if (!this.client) {
       throw new Error("Database client is not connected");
     }
-    return this.client.db(process.env.DB_NAME).collection<T>(name);
+    return this.client.db(process.env.DB_NAME).collection<WithId<T>>(name);
   }
 
   async getUserByEmail(email: string) {
     await this.connect();
-    const collection = this.getCollection<WithDocument<User>>("users");
+    const collection = this.getCollection<User>("users");
 
     const user = await collection.findOne({ email });
     return user;
@@ -53,15 +53,15 @@ export default class DatabaseConnection {
 
   async saveUser(user: User) {
     await this.connect();
-    const collection = this.getCollection<WithDocument<User>>("users");
+    const collection = this.getCollection<User>("users");
 
-    const result = await collection.insertOne(user as WithDocument<User>);
+    const result = await collection.insertOne(user);
     return result.insertedId;
   }
 
   async getProjectsByUserId(userId: ObjectId) {
     await this.connect();
-    const collection = this.getCollection<WithDocument<Project>>("projects");
+    const collection = this.getCollection<Project>("projects");
 
     const projects = await collection.find({ owner: userId }).toArray();
     return projects;
@@ -69,9 +69,9 @@ export default class DatabaseConnection {
 
   async getProjectById(id: ObjectId) {
     await this.connect();
-    const collection = this.getCollection<WithDocument<Project>>("projects");
+    const collection = this.getCollection<Project>("projects");
 
-    const project = await collection.findOne({ id });
+    const project = await collection.findOne({ _id: id });
     return project;
   }
 }
