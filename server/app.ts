@@ -23,7 +23,7 @@ app.use(session);
 app.use(renewSession);
 
 app.post("/signin", validate(signInSchema), signIn);
-app.get("/signout", requireAuth, signOut);
+app.get("/signout", signOut);
 app.get("/auth", requireAuth, auth);
 app.post("/register", validate(registerSchema), register);
 
