@@ -8,20 +8,28 @@ import {
 import useAxios from "./useAxios";
 import { useSnackbar } from "./useSnackbar";
 import { Project } from "../models/Project";
+import { WithId } from "../models/General";
 
 interface ProjectContextProps {
-  projectData: Project | undefined;
-  setProjectId: (_value: string) => void;
+  project: WithId<Project> | undefined;
+  setProject: (_value: WithId<Project> | undefined) => void;
+  projectId: string | undefined;
+  setProjectId: (_value: string | undefined) => void;
+  refreshProject: () => void;
 }
 
 const ProjectContext = createContext<ProjectContextProps>({
-  projectData: undefined,
-  setProjectId: () => {}
+  project: undefined,
+  setProject: () => {},
+  projectId: undefined,
+  setProjectId: () => {},
+  refreshProject: () => {}
 });
 
 export const ProjectProvider = ({ children }: { children: ReactNode }) => {
   const [projectId, setProjectId] = useState<string | undefined>();
-  const [projectData, setProjectData] = useState<Project | undefined>();
+  const [project, setProject] = useState<WithId<Project> | undefined>();
+  const [reloadKey, setReloadKey] = useState(0);
   const apiClient = useAxios();
   const snackbar = useSnackbar();
 
@@ -30,17 +38,29 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
       try {
         if (!projectId) return;
         const response = await apiClient.get(`/api/project/${projectId}`);
-        setProjectData(response.data);
+        setProject(response.data);
       } catch (error) {
         snackbar.close();
-        setProjectData(undefined);
+        setProject(undefined);
       }
     };
     getProject();
-  }, [projectId]);
+  }, [projectId, reloadKey]);
+
+  const refreshProject = () => {
+    setReloadKey((prevKey) => prevKey + 1);
+  };
 
   return (
-    <ProjectContext.Provider value={{ projectData, setProjectId }}>
+    <ProjectContext.Provider
+      value={{
+        project,
+        setProject,
+        projectId,
+        setProjectId,
+        refreshProject
+      }}
+    >
       {children}
     </ProjectContext.Provider>
   );
