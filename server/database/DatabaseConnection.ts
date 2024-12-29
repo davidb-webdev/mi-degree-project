@@ -2,7 +2,7 @@ import { Collection, MongoClient, ObjectId } from "mongodb";
 import { WithId } from "../models/Mongodb";
 import { User } from "../models/User";
 import { Project, ProjectStatus } from "../models/Project";
-import { BadRequestError } from "../models/Error";
+import { BadRequestError, UnauthorizedError } from "../models/Error";
 
 let instance: DatabaseConnection | null = null;
 
@@ -49,6 +49,20 @@ export default class DatabaseConnection {
     const collection = this.getCollection<User>("users");
 
     const user = await collection.findOne({ email });
+    if (!user) {
+      throw new UnauthorizedError("User not found");
+    }
+    return user;
+  }
+
+  async verifyUnusedEmail(email: string) {
+    await this.connect();
+    const collection = this.getCollection<User>("users");
+
+    const user = await collection.findOne({ email });
+    if (user) {
+      throw new BadRequestError("E-mail address already used");
+    }
     return user;
   }
 
@@ -73,6 +87,7 @@ export default class DatabaseConnection {
     const collection = this.getCollection<Project>("projects");
 
     const project = await collection.findOne({ _id: id });
+    if (!project) throw new BadRequestError("Project not found");
     return project;
   }
 

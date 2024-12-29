@@ -13,7 +13,7 @@ export const signIn = async (
     const { email, password } = req.body;
     const user = await DatabaseConnection.getInstance().getUserByEmail(email);
 
-    if (!user || !user.password || !(await compare(password, user.password))) {
+    if (!(await compare(password, user.password))) {
       throw new BadRequestError("Wrong username or password");
     }
 
@@ -44,12 +44,7 @@ export const auth = async (
   next: NextFunction
 ) => {
   try {
-    const user = await DatabaseConnection.getInstance().getUserByEmail(
-      req.session!.email
-    );
-    if (!user) {
-      throw new UnauthorizedError("User not found");
-    }
+    await DatabaseConnection.getInstance().getUserByEmail(req.session!.email);
     res.json({ success: true });
   } catch (error: unknown) {
     next(error);
@@ -63,10 +58,7 @@ export const register = async (
 ) => {
   try {
     const { name, email, password } = req.body;
-
-    const user = await DatabaseConnection.getInstance().getUserByEmail(email);
-    if (user) throw new BadRequestError("E-mail address already used");
-
+    await DatabaseConnection.getInstance().verifyUnusedEmail(email);
     const hashedPassword = await hash(password, 10);
     await DatabaseConnection.getInstance().saveUser({
       name,

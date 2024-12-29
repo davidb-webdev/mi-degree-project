@@ -19,9 +19,6 @@ export const getProjects = async (
     const user = await DatabaseConnection.getInstance().getUserByEmail(
       req.session!.email
     );
-    if (!user) {
-      throw new UnauthorizedError("User not found");
-    }
     const projects = await DatabaseConnection.getInstance().getProjectsByUserId(
       user._id
     );
@@ -40,7 +37,6 @@ export const getProject = async (
     const project = await DatabaseConnection.getInstance().getProjectById(
       new ObjectId(req.params.id)
     );
-    if (!project) throw new BadRequestError("Project not found");
     res.json(project);
   } catch (error: unknown) {
     next(error);
@@ -56,9 +52,6 @@ export const postProject = async (
     const user = await DatabaseConnection.getInstance().getUserByEmail(
       req.session!.email
     );
-    if (!user) {
-      throw new UnauthorizedError("User not found");
-    }
 
     const project: Project = {
       title: "Draft",
@@ -93,9 +86,6 @@ export const patchProject = async (
     const user = await DatabaseConnection.getInstance().getUserByEmail(
       req.session!.email
     );
-    if (!user) {
-      throw new UnauthorizedError("User not found");
-    }
 
     const { title, description, status } = req.body;
     const project = {
