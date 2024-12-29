@@ -10,3 +10,7 @@ export const patchProjectSchema = Joi.object({
     .valid(...projectStatusValues)
     .required()
 });
+
+export const postProjectSchema = Joi.object({
+  title: Joi.string().required()
+});

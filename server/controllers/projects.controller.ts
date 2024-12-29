@@ -5,14 +5,14 @@ import {
   TypedRequestParams,
   TypedResponse
 } from "../models/Express";
-import { BadRequestError, UnauthorizedError } from "../models/Error";
 import { NextFunction, Request } from "express";
 import { Project, ProjectStatus, ProjectStatuses } from "../models/Project";
 import { ObjectId } from "mongodb";
+import { WithId } from "../models/Mongodb";
 
 export const getProjects = async (
   req: Request,
-  res: TypedResponse<Project[]>,
+  res: TypedResponse<WithId<Project>[]>,
   next: NextFunction
 ) => {
   try {
@@ -30,7 +30,7 @@ export const getProjects = async (
 
 export const getProject = async (
   req: TypedRequestParams<{ id: string }>,
-  res: TypedResponse<Project>,
+  res: TypedResponse<WithId<Project>>,
   next: NextFunction
 ) => {
   try {
@@ -44,7 +44,7 @@ export const getProject = async (
 };
 
 export const postProject = async (
-  req: Request,
+  req: TypedRequestBody<{ title: string }>,
   res: TypedResponse<{ id: string }>,
   next: NextFunction
 ) => {
@@ -54,7 +54,7 @@ export const postProject = async (
     );
 
     const project: Project = {
-      title: "Draft",
+      title: req.body.title,
       description: "",
       status: ProjectStatuses.Draft,
       owner: user._id,

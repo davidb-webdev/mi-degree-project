@@ -79,7 +79,8 @@
       "title": "Titel",
       "status": "Status",
       "description": "Beskrivning",
-      "submit": "Spara projektdetaljer"
+      "submit": "Spara projektdetaljer",
+      "success": "Projektet sparades"
     },
     "user": {
       "title": "Användarprofil",
@@ -102,6 +103,11 @@
     },
     "signOut": {
       "signOut": "Logga ut"
+    },
+    "menu": {
+      "projects": "Projekt",
+      "newProject": "Nytt projekt",
+      "draftTitle": "Utkast"
     }
   },
   "models": {
@@ -115,6 +121,7 @@
       "NoFireAlarm": "Inget brandlarm"
     },
     "projectStatuses": {
+      "Draft": "Utkast",
       "InProgress": "Pågående",
       "Finished": "Avslutat"
     }
