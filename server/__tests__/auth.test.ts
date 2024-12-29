@@ -85,7 +85,7 @@ describe("Auth endpoints", () => {
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toEqual({
-      error: 'Validation error: "email" must be a valid email'
+      message: 'Validation error: "email" must be a valid email', "statusCode": 400
     });
   });
 
@@ -113,7 +113,10 @@ describe("Auth endpoints", () => {
       .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(400);
-    expect(res.body).toEqual({ error: "Wrong username or password" });
+    expect(res.body).toEqual({
+      message: "Wrong username or password",
+      statusCode: 400
+    });
   });
 
   //
@@ -169,7 +172,10 @@ describe("Auth endpoints", () => {
     const res = await request(app).get("/auth");
 
     expect(res.statusCode).toEqual(401);
-    expect(res.body).toEqual({ error: "You are not signed in" });
+    expect(res.body).toEqual({
+      message: "You are not signed in",
+      statusCode: 401
+    });
   });
 
   //
@@ -196,7 +202,7 @@ describe("Auth endpoints", () => {
       .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual({ userId: "12345" });
+    expect(res.body).toEqual({ success: true });
   });
 
   test("registering a new user, email already used, expect failure", async () => {
@@ -224,7 +230,10 @@ describe("Auth endpoints", () => {
       .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(400);
-    expect(res.body).toHaveProperty("error", "E-mail address already used");
+    expect(res.body).toEqual({
+      message: "E-mail address already used",
+      statusCode: 400
+    });
   });
 
   test("registering a new user, incorrect input data, expect failure", async () => {
@@ -246,9 +255,9 @@ describe("Auth endpoints", () => {
       .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(400);
-    expect(res.body).toHaveProperty(
-      "error",
-      'Validation error: "password" is required'
-    );
+    expect(res.body).toEqual({
+      message: 'Validation error: "password" is required',
+      statusCode: 400
+    });
   });
 });
