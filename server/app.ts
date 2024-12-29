@@ -13,6 +13,7 @@ import {
   postProject
 } from "./controllers/projects.controller";
 import { postOrPatchProjectSchema } from "./schemas/projects.schema";
+import requireAuth from "./middleware/requireAuth";
 
 dotenv.config();
 const app = express();
@@ -22,15 +23,25 @@ app.use(session);
 app.use(renewSession);
 
 app.post("/signin", validate(signInSchema), signIn);
-app.get("/signout", signOut);
-app.get("/auth", auth);
+app.get("/signout", requireAuth, signOut);
+app.get("/auth", requireAuth, auth);
 app.post("/register", validate(registerSchema), register);
 
-app.get("/projects", getProjects);
-app.get("/project/:id", getProject);
-app.post("/project/", validate(postOrPatchProjectSchema), postProject);
-app.patch("/project/:id", validate(postOrPatchProjectSchema), patchProject);
-app.delete("/project/:id", deleteProject);
+app.get("/projects", requireAuth, getProjects);
+app.get("/project/:id", requireAuth, getProject);
+app.post(
+  "/project/",
+  requireAuth,
+  validate(postOrPatchProjectSchema),
+  postProject
+);
+app.patch(
+  "/project/:id",
+  requireAuth,
+  validate(postOrPatchProjectSchema),
+  patchProject
+);
+app.delete("/project/:id", requireAuth, deleteProject);
 
 app.use(errorHandler);
 

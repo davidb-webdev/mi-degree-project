@@ -44,11 +44,8 @@ export const auth = async (
   next: NextFunction
 ) => {
   try {
-    if (!req.session || !req.session.email) {
-      throw new UnauthorizedError("You are not signed in");
-    }
     const user = await DatabaseConnection.getInstance().getUserByEmail(
-      req.session.email
+      req.session!.email
     );
     if (!user) {
       throw new UnauthorizedError("User not found");

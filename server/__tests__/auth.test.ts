@@ -85,7 +85,8 @@ describe("Auth endpoints", () => {
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toEqual({
-      message: 'Validation error: "email" must be a valid email', "statusCode": 400
+      message: 'Validation error: "email" must be a valid email',
+      statusCode: 400
     });
   });
 
@@ -123,18 +124,55 @@ describe("Auth endpoints", () => {
   // ========== Sign out ==========
   //
 
-  test("signing out, expect success", async () => {
-    const res = await request(app).get("/signout");
+  test("signing out while signed in, expect success", async () => {
+    const hashedPassword = await hash("1234567890", 10);
+    const mockCollection = {
+      findOne: jest.fn().mockResolvedValue({
+        _id: "12345",
+        name: "existing user",
+        email: "email@example.com",
+        password: hashedPassword
+      })
+    };
+    mockGetCollection.mockReturnValue(mockCollection);
+
+    const payload = {
+      email: "email@example.com",
+      password: "1234567890"
+    };
+
+    const signInRes = await request(app)
+      .post("/signin")
+      .send(payload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+
+    expect(signInRes.statusCode).toEqual(200);
+    expect(signInRes.body).toEqual({ success: true });
+
+    const cookies = signInRes.headers["set-cookie"];
+
+    const res = await request(app).get("/signout").set("Cookie", cookies);
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual({ success: true });
+  });
+
+  test("signing out while signed out, expect failure", async () => {
+    const res = await request(app).get("/signout");
+
+    expect(res.statusCode).toEqual(401);
+    expect(res.body).toEqual({
+      message: "You are not signed in",
+      statusCode: 401
+    });
   });
 
   //
   // ========== Auth ==========
   //
 
-  test("signing in, then authenticating, expect success", async () => {
+  test("authenticating while signed in, expect success", async () => {
     const hashedPassword = await hash("1234567890", 10);
     const mockCollection = {
       findOne: jest.fn().mockResolvedValue({
