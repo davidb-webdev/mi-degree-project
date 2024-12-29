@@ -1,6 +1,7 @@
 import DatabaseConnection from "../database/DatabaseConnection";
 import {
   TypedRequest,
+  TypedRequestBody,
   TypedRequestParams,
   TypedResponse
 } from "../models/Express";
@@ -43,7 +44,7 @@ export const getProject = async (
 };
 
 export const postProject = async (
-  req: Request,
+  req: TypedRequestBody<{ title: string }>,
   res: TypedResponse<{ id: string }>,
   next: NextFunction
 ) => {
@@ -53,7 +54,7 @@ export const postProject = async (
     );
 
     const project: Project = {
-      title: "Draft",
+      title: req.body.title,
       description: "",
       status: ProjectStatuses.Draft,
       owner: user._id,

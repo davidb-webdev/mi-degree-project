@@ -369,10 +369,73 @@ describe("Projects endpoints", () => {
 
     const cookies = signInRes.headers["set-cookie"];
 
-    const res = await request(app).post("/project").set("Cookie", cookies);
+    const res = await request(app)
+      .post("/project")
+      .set("Cookie", cookies)
+      .send({ title: "Draft" })
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual({ id: "1" });
+  });
+
+  test("creating a project, signed in, incorrect input data, expect failure", async () => {
+    const password = "1234567890";
+    const hashedPassword = await hash(password, 10);
+    const user = {
+      _id: "user",
+      name: "user",
+      email: "email@example.com",
+      password: hashedPassword
+    };
+
+    const mockUserCollection = {
+      findOne: jest.fn().mockResolvedValue(user)
+    };
+    const mockProjectCollection = {
+      insertOne: jest.fn().mockResolvedValue({
+        insertedId: "1"
+      })
+    };
+
+    mockGetCollection.mockImplementation((collectionName) => {
+      if (collectionName === "users") {
+        return mockUserCollection;
+      } else if (collectionName === "projects") {
+        return mockProjectCollection;
+      }
+      return null;
+    });
+
+    const signInPayload = {
+      email: user.email,
+      password: password
+    };
+
+    const signInRes = await request(app)
+      .post("/signin")
+      .send(signInPayload)
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+
+    expect(signInRes.statusCode).toEqual(200);
+    expect(signInRes.body).toEqual({ success: true });
+
+    const cookies = signInRes.headers["set-cookie"];
+
+    const res = await request(app)
+      .post("/project")
+      .set("Cookie", cookies)
+      .send({})
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toEqual({
+      message: 'Validation error: "title" is required',
+      statusCode: 400
+    });
   });
 
   test("creating a project, not signed in, expect failure", async () => {
@@ -403,7 +466,11 @@ describe("Projects endpoints", () => {
       return null;
     });
 
-    const res = await request(app).post("/project");
+    const res = await request(app)
+      .post("/project")
+      .send({ title: "Draft" })
+      .set("Content-Type", "application/json")
+      .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(401);
     expect(res.body).toEqual({
@@ -531,7 +598,10 @@ describe("Projects endpoints", () => {
       .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(400);
-    expect(res.body).toEqual({ message: "Project not found, no changes were made", statusCode: 400 });
+    expect(res.body).toEqual({
+      message: "Project not found, no changes were made",
+      statusCode: 400
+    });
   });
 
   test("updating a project, signed in, incorrect input data, expect failure", async () => {
@@ -739,7 +809,10 @@ describe("Projects endpoints", () => {
     const res = await request(app).delete("/project/1").set("Cookie", cookies);
 
     expect(res.statusCode).toEqual(400);
-    expect(res.body).toEqual({ message: "Project not found, no changes were made", statusCode: 400 });
+    expect(res.body).toEqual({
+      message: "Project not found, no changes were made",
+      statusCode: 400
+    });
   });
 
   test("deleting a project, not signed in, expect failure", async () => {
@@ -771,6 +844,9 @@ describe("Projects endpoints", () => {
     const res = await request(app).delete("/project/1");
 
     expect(res.statusCode).toEqual(401);
-    expect(res.body).toEqual({ message: "You are not signed in", statusCode: 401 });
+    expect(res.body).toEqual({
+      message: "You are not signed in",
+      statusCode: 401
+    });
   });
 });

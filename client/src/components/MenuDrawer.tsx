@@ -30,7 +30,7 @@ const MenuDrawer = ({ showMenu, toggleMenu }: MenuDrawerProps) => {
   });
 
   const onNewProject = async () => {
-    const response = await apiClient.post<{ id: string }>("/api/project");
+    const response = await apiClient.post<{ id: string }>("/api/project", {title: t("draftTitle")});
     refreshProjects();
     setProjectId(response.data.id);
     navigate("/dashboard/details/new");

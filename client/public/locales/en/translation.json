@@ -105,7 +105,8 @@
     },
     "menu": {
       "projects": "Projects",
-      "newProject": "New project"
+      "newProject": "New project",
+      "draftTitle": "Draft"
     }
   },
   "models": {

@@ -106,7 +106,8 @@
     },
     "menu": {
       "projects": "Projekt",
-      "newProject": "Nytt projekt"
+      "newProject": "Nytt projekt",
+      "draftTitle": "Utkast"
     }
   },
   "models": {
