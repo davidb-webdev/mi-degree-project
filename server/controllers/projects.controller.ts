@@ -1,18 +1,17 @@
 import DatabaseConnection from "../database/DatabaseConnection";
 import {
   TypedRequest,
-  TypedRequestBody,
   TypedRequestParams,
   TypedResponse
 } from "../models/Express";
-import { BadRequestError, UnauthorizedError } from "../models/Error";
 import { NextFunction, Request } from "express";
 import { Project, ProjectStatus, ProjectStatuses } from "../models/Project";
 import { ObjectId } from "mongodb";
+import { WithId } from "../models/Mongodb";
 
 export const getProjects = async (
   req: Request,
-  res: TypedResponse<Project[]>,
+  res: TypedResponse<WithId<Project>[]>,
   next: NextFunction
 ) => {
   try {
@@ -30,7 +29,7 @@ export const getProjects = async (
 
 export const getProject = async (
   req: TypedRequestParams<{ id: string }>,
-  res: TypedResponse<Project>,
+  res: TypedResponse<WithId<Project>>,
   next: NextFunction
 ) => {
   try {
