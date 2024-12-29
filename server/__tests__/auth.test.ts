@@ -158,14 +158,11 @@ describe("Auth endpoints", () => {
     expect(res.body).toEqual({ success: true });
   });
 
-  test("signing out while signed out, expect failure", async () => {
+  test("signing out while signed out, expect success", async () => {
     const res = await request(app).get("/signout");
 
-    expect(res.statusCode).toEqual(401);
-    expect(res.body).toEqual({
-      message: "You are not signed in",
-      statusCode: 401
-    });
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual({ success: true });
   });
 
   //
