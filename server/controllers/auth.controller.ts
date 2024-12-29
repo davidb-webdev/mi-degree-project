@@ -40,7 +40,7 @@ export const signOut = async (
 
 export const auth = async (
   req: Request,
-  res: TypedResponse<{ user: string }>,
+  res: TypedResponse<{ success: boolean }>,
   next: NextFunction
 ) => {
   try {
@@ -53,7 +53,7 @@ export const auth = async (
     if (!user) {
       throw new UnauthorizedError("User not found");
     }
-    res.json({ user: user.email });
+    res.json({ success: true });
   } catch (error: unknown) {
     next(error);
   }
