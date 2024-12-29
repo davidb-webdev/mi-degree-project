@@ -22,7 +22,7 @@ const DashboardToolbar = ({ setShowMenu }: DashboardToolbarProps) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
   const notesDrawer = useNotesDrawer();
-	const project = useProject();
+  const { project } = useProject();
   const { t } = useTranslation("translation", {
     keyPrefix: "dashboard.layout"
   });
@@ -34,7 +34,7 @@ const DashboardToolbar = ({ setShowMenu }: DashboardToolbarProps) => {
       </IconButton>
 
       <Typography noWrap variant="body1" sx={{ flexGrow: 1 }} fontWeight="bold">
-        {project.projectData?.title}
+        {project?.title}
       </Typography>
 
       <Button

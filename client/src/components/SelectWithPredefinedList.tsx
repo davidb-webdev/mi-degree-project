@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { NoteCategories } from "../models/Note";
 import { useTranslation } from "react-i18next";
 import { ProjectStatuses } from "../models/Project";
@@ -6,13 +6,15 @@ import { Languages } from "../models/Language";
 
 interface SelectWithPredefinedListProps {
   list: "noteCategories" | "projectStatuses" | "languages";
+  name: string;
   label: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (event: SelectChangeEvent) => void;
 }
 
 const SelectWithPredefinedList = ({
   list,
+  name,
   label,
   value,
   onChange
@@ -42,8 +44,9 @@ const SelectWithPredefinedList = ({
       <InputLabel id="categoryLabel">{label}</InputLabel>
       <Select
         label={label}
+        name={name}
         labelId="categoryLabel"
-        onChange={(event) => onChange(event.target.value)}
+        onChange={onChange}
         value={value}
       >
         {Object.keys(importedList).map((key) => (

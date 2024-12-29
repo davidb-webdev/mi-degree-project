@@ -53,6 +53,10 @@ const Router = () => {
           <Route path="user/changepassword" element={<UserPasswordView />} />
           <Route path="details" element={<ProjectDetailsView />} />
           <Route path="details/edit" element={<ProjectDetailsEditView />} />
+          <Route
+            path="details/new"
+            element={<ProjectDetailsEditView newProject />}
+          />
         </Route>
       </Route>
 
