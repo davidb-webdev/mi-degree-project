@@ -102,6 +102,10 @@
     },
     "signOut": {
       "signOut": "Logga ut"
+    },
+    "menu": {
+      "projects": "Projekt",
+      "newProject": "Nytt projekt"
     }
   },
   "models": {
@@ -115,6 +119,7 @@
       "NoFireAlarm": "Inget brandlarm"
     },
     "projectStatuses": {
+      "Draft": "Utkast",
       "InProgress": "Pågående",
       "Finished": "Avslutat"
     }

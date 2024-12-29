@@ -101,6 +101,10 @@
     },
     "signOut": {
       "signOut": "Sign out"
+    },
+    "menu": {
+      "projects": "Projects",
+      "newProject": "New project"
     }
   },
   "models": {
@@ -114,6 +118,7 @@
       "NoFireAlarm": "No Fire Alarm"
     },
     "projectStatuses": {
+      "Draft": "Draft",
       "InProgress": "In progress",
       "Finished": "Finished"
     }
