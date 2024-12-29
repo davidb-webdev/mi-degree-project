@@ -116,7 +116,9 @@ export default class DatabaseConnection {
       { $set: project }
     );
 
-    if (result.upsertedCount < 1) {
+    console.log("result", result);
+
+    if (result.modifiedCount < 1) {
       throw new BadRequestError("Project not found, no changes were made");
     }
   }

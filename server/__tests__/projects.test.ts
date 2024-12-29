@@ -430,7 +430,7 @@ describe("Projects endpoints", () => {
       findOne: jest.fn().mockResolvedValue(user)
     };
     const mockProjectCollection = {
-      updateOne: jest.fn().mockResolvedValue({ upsertedCount: 1 })
+      updateOne: jest.fn().mockResolvedValue({ modifiedCount: 1 })
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
@@ -489,7 +489,7 @@ describe("Projects endpoints", () => {
       findOne: jest.fn().mockResolvedValue(user)
     };
     const mockProjectCollection = {
-      updateOne: jest.fn().mockResolvedValue({ upsertedCount: 0 })
+      updateOne: jest.fn().mockResolvedValue({ modifiedCount: 0 })
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
@@ -548,7 +548,7 @@ describe("Projects endpoints", () => {
       findOne: jest.fn().mockResolvedValue(user)
     };
     const mockProjectCollection = {
-      updateOne: jest.fn().mockResolvedValue({ upsertedCount: 1 })
+      updateOne: jest.fn().mockResolvedValue({ modifiedCount: 1 })
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
@@ -611,7 +611,7 @@ describe("Projects endpoints", () => {
       findOne: jest.fn().mockResolvedValue(user)
     };
     const mockProjectCollection = {
-      updateOne: jest.fn().mockResolvedValue({ upsertedCount: 1 })
+      updateOne: jest.fn().mockResolvedValue({ modifiedCount: 1 })
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
