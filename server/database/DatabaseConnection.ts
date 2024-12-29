@@ -66,4 +66,12 @@ export default class DatabaseConnection {
     const projects = await collection.find({ owner: userId }).toArray();
     return projects;
   }
+
+  async getProjectById(id: ObjectId) {
+    await this.connect();
+    const collection = this.getCollection<WithDocument<Project>>("projects");
+
+    const project = await collection.findOne({ id });
+    return project;
+  }
 }
