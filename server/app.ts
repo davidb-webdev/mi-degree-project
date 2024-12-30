@@ -3,8 +3,10 @@ import dotenv from "dotenv";
 import errorHandler from "./middleware/errorHandler";
 import validate from "./middleware/validate";
 import { renewSession, session } from "./middleware/session";
-import { signInSchema, registerSchema } from "./schemas/auth.schema";
+import requireAuth from "./middleware/requireAuth";
+
 import { auth, register, signIn, signOut } from "./controllers/auth.controller";
+import { signInSchema, registerSchema } from "./schemas/auth.schema";
 import {
   deleteProject,
   getProject,
@@ -16,8 +18,21 @@ import {
   patchProjectSchema,
   postProjectSchema
 } from "./schemas/projects.schema";
-import requireAuth from "./middleware/requireAuth";
-import { deleteNote, getNote, getNotes, patchNote, postNote } from "./controllers/notes.controller";
+import {
+  deleteFloor,
+  getFloor,
+  getFloors,
+  patchFloor,
+  postFloor
+} from "./controllers/floors.controller";
+import { patchFloorSchema, postFloorSchema } from "./schemas/floors.schema";
+import {
+  deleteNote,
+  getNote,
+  getNotes,
+  patchNote,
+  postNote
+} from "./controllers/notes.controller";
 import { patchNoteSchema, postNoteSchema } from "./schemas/notes.schema";
 
 dotenv.config();
@@ -42,6 +57,12 @@ app.patch(
   patchProject
 );
 app.delete("/project/:id", requireAuth, deleteProject);
+
+app.get("/floors/:prjectId", requireAuth, getFloors);
+app.get("/floor/:id", requireAuth, getFloor);
+app.post("/floor/", requireAuth, validate(postFloorSchema), postFloor);
+app.patch("/floor/:id", requireAuth, validate(patchFloorSchema), patchFloor);
+app.delete("/floor/:id", requireAuth, deleteFloor);
 
 app.get("/notes/:floorId", requireAuth, getNotes);
 app.get("/note/:id", requireAuth, getNote);
