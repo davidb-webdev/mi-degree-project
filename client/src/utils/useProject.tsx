@@ -9,25 +9,22 @@ import useAxios from "./useAxios";
 import { useSnackbar } from "./useSnackbar";
 import { Project } from "../models/Project";
 import { WithId } from "../models/General";
+import { useCustomParams } from "./useCustomParams";
 
 interface ProjectContextProps {
   project: WithId<Project> | undefined;
   setProject: (_value: WithId<Project> | undefined) => void;
-  projectId: string | undefined;
-  setProjectId: (_value: string | undefined) => void;
   refreshProject: () => void;
 }
 
 const ProjectContext = createContext<ProjectContextProps>({
   project: undefined,
   setProject: () => {},
-  projectId: undefined,
-  setProjectId: () => {},
   refreshProject: () => {}
 });
 
 export const ProjectProvider = ({ children }: { children: ReactNode }) => {
-  const [projectId, setProjectId] = useState<string | undefined>();
+  const { getParam } = useCustomParams();
   const [project, setProject] = useState<WithId<Project> | undefined>();
   const [reloadKey, setReloadKey] = useState(0);
   const apiClient = useAxios();
@@ -36,8 +33,7 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const getProject = async () => {
       try {
-        if (!projectId) return;
-        const response = await apiClient.get(`/api/project/${projectId}`);
+        const response = await apiClient.get(`/api/project/${getParam("p")}`);
         setProject(response.data);
       } catch (error) {
         snackbar.close();
@@ -45,7 +41,7 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
       }
     };
     getProject();
-  }, [projectId, reloadKey]);
+  }, [getParam("p"), reloadKey]);
 
   const refreshProject = () => {
     setReloadKey((prevKey) => prevKey + 1);
@@ -56,8 +52,6 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
       value={{
         project,
         setProject,
-        projectId,
-        setProjectId,
         refreshProject
       }}
     >
