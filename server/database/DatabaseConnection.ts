@@ -179,7 +179,6 @@ export default class DatabaseConnection {
       title: string;
       description: string;
       category: NoteCategory;
-      floorId: ObjectId;
       xCoordinate: number;
       yCoordinate: number;
       editedAt: Date;

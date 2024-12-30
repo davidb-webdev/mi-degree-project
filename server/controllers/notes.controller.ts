@@ -70,7 +70,6 @@ export const patchNote = async (
       title: string;
       description: string;
       category: NoteCategory;
-      floorId: string;
       xCoordinate: number;
       yCoordinate: number;
     }
@@ -79,13 +78,12 @@ export const patchNote = async (
   next: NextFunction
 ) => {
   try {
-    const { title, description, category, floorId, xCoordinate, yCoordinate } =
+    const { title, description, category, xCoordinate, yCoordinate } =
       req.body;
     const note = {
       title,
       description,
       category,
-      floorId: new ObjectId(floorId),
       xCoordinate,
       yCoordinate,
       editedAt: new Date()

@@ -58,7 +58,7 @@ app.patch(
 );
 app.delete("/project/:id", requireAuth, deleteProject);
 
-app.get("/floors/:prjectId", requireAuth, getFloors);
+app.get("/floors/:projectId", requireAuth, getFloors);
 app.get("/floor/:id", requireAuth, getFloor);
 app.post("/floor/", requireAuth, validate(postFloorSchema), postFloor);
 app.patch("/floor/:id", requireAuth, validate(patchFloorSchema), patchFloor);

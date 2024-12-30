@@ -9,7 +9,6 @@ export const patchNoteSchema = Joi.object({
   category: Joi.string()
     .valid(...noteCategoryValues)
     .required(),
-  floorId: Joi.string().required(),
   xCoordinate: Joi.number().required(),
   yCoordinate: Joi.number().required()
 });
