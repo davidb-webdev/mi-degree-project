@@ -9,29 +9,30 @@ import { NextFunction } from "express";
 import { ObjectId } from "mongodb";
 import { WithId } from "../models/Mongodb";
 import { Note, NoteCategories, NoteCategory } from "../models/Note";
+import { Floor } from "../models/Floor";
 
-export const getNotes = async (
-  req: TypedRequestParams<{ floorId: string }>,
-  res: TypedResponse<WithId<Note>[]>,
+export const getFloors = async (
+  req: TypedRequestParams<{ projectId: string }>,
+  res: TypedResponse<WithId<Floor>[]>,
   next: NextFunction
 ) => {
   try {
-    const notes = await DatabaseConnection.getInstance().getNotesByFloorId(
-      new ObjectId(req.params.floorId)
+    const floors = await DatabaseConnection.getInstance().getFloorsByProjectId(
+      new ObjectId(req.params.projectId)
     );
-    res.json(notes);
+    res.json(floors);
   } catch (error: unknown) {
     next(error);
   }
 };
 
-export const getNote = async (
+export const getFloor = async (
   req: TypedRequestParams<{ id: string }>,
-  res: TypedResponse<WithId<Note>>,
+  res: TypedResponse<WithId<Floor>>,
   next: NextFunction
 ) => {
   try {
-    const note = await DatabaseConnection.getInstance().getNoteById(
+    const note = await DatabaseConnection.getInstance().getFloorById(
       new ObjectId(req.params.id)
     );
     res.json(note);
@@ -40,70 +41,58 @@ export const getNote = async (
   }
 };
 
-export const postNote = async (
-  req: TypedRequestBody<{ title: string; floorId: string }>,
+export const postFloor = async (
+  req: TypedRequestBody<{ title: string; projectId: string }>,
   res: TypedResponse<{ id: string }>,
   next: NextFunction
 ) => {
   try {
-    const note: Note = {
+    const floor: Floor = {
       title: req.body.title,
-      description: "",
-      category: NoteCategories.BlockedEscapeRoute,
-      floorId: new ObjectId(req.body.floorId),
-      xCoordinate: 0,
-      yCoordinate: 0,
+      projectId: new ObjectId(req.body.projectId),
+      floorPlanPath: "",
       createdAt: new Date(),
       editedAt: new Date()
     };
-    const noteId = await DatabaseConnection.getInstance().createNote(note);
-    res.json({ id: noteId.toString() });
+    const floorId = await DatabaseConnection.getInstance().createFloor(floor);
+    res.json({ id: floorId.toString() });
   } catch (error: unknown) {
     next(error);
   }
 };
 
-export const patchNote = async (
+export const patchFloor = async (
   req: TypedRequest<
     { id: string },
     {
       title: string;
-      description: string;
-      category: NoteCategory;
-      floorId: string;
-      xCoordinate: number;
-      yCoordinate: number;
+      floorPlanPath: string;
     }
   >,
   res: TypedResponse<{ success: boolean }>,
   next: NextFunction
 ) => {
   try {
-    const { title, description, category, floorId, xCoordinate, yCoordinate } =
-      req.body;
-    const note = {
+    const { title, floorPlanPath } = req.body;
+    const floor = {
       title,
-      description,
-      category,
-      floorId: new ObjectId(floorId),
-      xCoordinate,
-      yCoordinate,
+      floorPlanPath,
       editedAt: new Date()
     };
-    await DatabaseConnection.getInstance().updateNote(req.params.id, note);
+    await DatabaseConnection.getInstance().updateFloor(req.params.id, floor);
     res.json({ success: true });
   } catch (error: unknown) {
     next(error);
   }
 };
 
-export const deleteNote = async (
+export const deleteFloor = async (
   req: TypedRequestParams<{ id: string }>,
   res: TypedResponse<{ success: boolean }>,
   next: NextFunction
 ) => {
   try {
-    await DatabaseConnection.getInstance().deleteNote(
+    await DatabaseConnection.getInstance().deleteFloor(
       new ObjectId(req.params.id)
     );
     res.json({ success: true });

@@ -83,10 +83,6 @@ export const patchProject = async (
   next: NextFunction
 ) => {
   try {
-    const user = await DatabaseConnection.getInstance().getUserByEmail(
-      req.session!.email
-    );
-
     const { title, description, status } = req.body;
     const project = {
       title,
