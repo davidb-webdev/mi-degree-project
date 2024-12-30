@@ -17,6 +17,8 @@ import {
   postProjectSchema
 } from "./schemas/projects.schema";
 import requireAuth from "./middleware/requireAuth";
+import { deleteNote, getNote, getNotes, patchNote, postNote } from "./controllers/notes.controller";
+import { patchNoteSchema, postNoteSchema } from "./schemas/notes.schema";
 
 dotenv.config();
 const app = express();
@@ -40,6 +42,12 @@ app.patch(
   patchProject
 );
 app.delete("/project/:id", requireAuth, deleteProject);
+
+app.get("/notes/:floorId", requireAuth, getNotes);
+app.get("/note/:id", requireAuth, getNote);
+app.post("/note/", requireAuth, validate(postNoteSchema), postNote);
+app.patch("/note/:id", requireAuth, validate(patchNoteSchema), patchNote);
+app.delete("/note/:id", requireAuth, deleteNote);
 
 app.use(errorHandler);
 
