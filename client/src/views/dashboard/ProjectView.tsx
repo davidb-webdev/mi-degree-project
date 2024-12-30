@@ -1,13 +1,7 @@
-import { useProject } from "../../utils/useProject";
+import FloorView from "./FloorView";
 
 const ProjectView = () => {
-  const project = useProject();
-
-  return (
-    <>
-      {project.projectData?.title}
-    </>
-  );
+  return <FloorView />;
 };
 
 export default ProjectView;
