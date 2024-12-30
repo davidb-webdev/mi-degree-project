@@ -1,6 +1,5 @@
 import { Button, Stack, TextField } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
-import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import SelectWithPredefinedList from "../../components/SelectWithPredefinedList";
 import CloseButton from "../../components/CloseButton";
@@ -9,22 +8,16 @@ import { useSnackbar } from "../../utils/useSnackbar";
 import useAxios from "../../utils/useAxios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useProjects } from "../../utils/useProjects";
+import { useCustomParams } from "../../utils/useCustomParams";
+import { Project, ProjectStatuses } from "../../models/Project";
 
-interface ProjectDetailsEditViewProps {
-  newProject?: boolean;
-}
-
-const ProjectDetailsEditView = ({
-  newProject
-}: ProjectDetailsEditViewProps) => {
-  const [formData, setFormData] = useState({
-    title: "",
-    status: "Draft",
-    description: ""
-  });
-  const { project, projectId, refreshProject } = useProject();
+const ProjectDetailsEditView = () => {
+  const { project, setProject } = useProject();
+  const [formData, setFormData] = useState(
+    new Project("", "", ProjectStatuses.Draft)
+  );
   const { refreshProjects } = useProjects();
-  const navigate = useNavigate();
+  const { navigateWithParams } = useCustomParams();
   const snackbar = useSnackbar();
   const apiClient = useAxios();
   const { t } = useTranslation("translation", {
@@ -32,14 +25,12 @@ const ProjectDetailsEditView = ({
   });
 
   useEffect(() => {
-    if (!newProject) {
-      setFormData({
-        title: project?.title ?? "",
-        status: project?.status ?? "Draft",
-        description: project?.description ?? ""
-      });
-    }
-  }, [projectId]);
+    setFormData({
+      title: project?.title ?? "",
+      status: project?.status ?? ProjectStatuses.Draft,
+      description: project?.description ?? ""
+    });
+  }, [project]);
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -52,10 +43,10 @@ const ProjectDetailsEditView = ({
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await apiClient.patch(`/api/project/${project!._id}`, formData);
+    setProject({ ...project!, ...formData });
     refreshProjects();
-    refreshProject();
     snackbar.open("success", t("success"));
-    navigate("/dashboard/details");
+    navigateWithParams("/dashboard/details");
   };
 
   return (

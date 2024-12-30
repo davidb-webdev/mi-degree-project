@@ -43,9 +43,9 @@ const Router = () => {
         element={<ProtectedRoute route={<DashboardLayout />} />}
       >
         <Route index element={<NotesListView />} />
-        <Route path="notes/new" element={<NoteEditView newNote />} />
-        <Route path="notes/:id" element={<NoteView />} />
-        <Route path="notes/:id/edit" element={<NoteEditView />} />
+        <Route path="note" element={<NoteView />} />
+        <Route path="note/new" element={<NoteEditView newNote />} />
+        <Route path="note/edit" element={<NoteEditView />} />
 
         <Route element={<DialogLayout baseUrl="/dashboard" />}>
           <Route path="user" element={<UserView />} />
@@ -53,10 +53,7 @@ const Router = () => {
           <Route path="user/changepassword" element={<UserPasswordView />} />
           <Route path="details" element={<ProjectDetailsView />} />
           <Route path="details/edit" element={<ProjectDetailsEditView />} />
-          <Route
-            path="details/new"
-            element={<ProjectDetailsEditView newProject />}
-          />
+          <Route path="details/new" element={<ProjectDetailsEditView />} />
         </Route>
       </Route>
 

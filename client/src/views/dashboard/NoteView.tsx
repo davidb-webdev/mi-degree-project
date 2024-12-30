@@ -1,30 +1,26 @@
 import { Box, Button, Skeleton, Stack, Typography } from "@mui/material";
-import { Note } from "../../models/Note";
 import ModalToolbar from "../../components/ModalToolbar";
-import { useLocation, useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import NoteCategoryTag from "../../components/NoteCategoryTag";
+import { useNote } from "../../utils/useNote";
+import { useCustomParams } from "../../utils/useCustomParams";
 
 const NoteView = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { note } = useNote();
+  const { navigateWithParams } = useCustomParams();
   const { t } = useTranslation("translation", {
     keyPrefix: "dashboard.note"
   });
 
-  const note: Note = {
-    title: "Note 1",
-    category: "BlockedEscapeRoute",
-    description: "TODO"
-  };
-
-  return (
+  return !note ? (
+    <></>
+  ) : (
     <>
       <ModalToolbar
         title={note.title}
         backPath="/dashboard"
         actionButton={
-          <Button onClick={() => navigate(`${location.pathname}/edit`)}>
+          <Button onClick={() => navigateWithParams(`/dashboard/note/edit`)}>
             {t("edit")}
           </Button>
         }

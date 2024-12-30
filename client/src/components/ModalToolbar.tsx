@@ -1,8 +1,8 @@
 import { Box, IconButton, Toolbar, Typography } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { useNavigate } from "react-router";
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { useCustomParams } from "../utils/useCustomParams";
 
 interface ModalToolbarProps {
   backPath?: string;
@@ -11,7 +11,7 @@ interface ModalToolbarProps {
 }
 
 const ModalToolbar = ({ backPath, actionButton, title }: ModalToolbarProps) => {
-  const navigate = useNavigate();
+  const { navigateWithParams } = useCustomParams();
   const { t } = useTranslation("translation", {
     keyPrefix: "dashboard.modalToolbar"
   });
@@ -23,7 +23,10 @@ const ModalToolbar = ({ backPath, actionButton, title }: ModalToolbarProps) => {
     >
       <Box minWidth={40}>
         {backPath && (
-          <IconButton onClick={() => navigate(backPath)} aria-label={t("back")}>
+          <IconButton
+            onClick={() => navigateWithParams(backPath)}
+            aria-label={t("back")}
+          >
             <ArrowBackIosNewIcon />
           </IconButton>
         )}

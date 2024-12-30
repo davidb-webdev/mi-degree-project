@@ -9,19 +9,22 @@ import { NotesDrawerProvider } from "./utils/useNotesDrawer";
 import "./utils/i18n";
 import { SnackbarProvider } from "./utils/useSnackbar";
 import { AuthProvider } from "./utils/useAuth";
+import { CustomParamsProvider } from "./utils/useCustomParams";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider theme={fireInspectTheme}>
       <BrowserRouter>
-        <SnackbarProvider>
-          <AuthProvider>
-            <NotesDrawerProvider>
-              <CssBaseline />
-              <Router />
-            </NotesDrawerProvider>
-          </AuthProvider>
-        </SnackbarProvider>
+        <CustomParamsProvider>
+          <SnackbarProvider>
+            <AuthProvider>
+              <NotesDrawerProvider>
+                <CssBaseline />
+                <Router />
+              </NotesDrawerProvider>
+            </AuthProvider>
+          </SnackbarProvider>
+        </CustomParamsProvider>
       </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>
