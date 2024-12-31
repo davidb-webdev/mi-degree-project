@@ -13,14 +13,17 @@ import { useCustomParams } from "./useCustomParams";
 
 interface FloorsContextProps {
   floors: WithId<Floor>[];
+  refreshFloors: () => void;
 }
 
 const FloorsContext = createContext<FloorsContextProps>({
-  floors: []
+  floors: [],
+  refreshFloors: () => {}
 });
 
 export const FloorsProvider = ({ children }: { children: ReactNode }) => {
   const [floors, setFloors] = useState<WithId<Floor>[]>([]);
+  const [reloadKey, setReloadKey] = useState(0);
   const apiClient = useAxios();
   const snackbar = useSnackbar();
   const { getParam, addParam } = useCustomParams();
@@ -44,10 +47,14 @@ export const FloorsProvider = ({ children }: { children: ReactNode }) => {
       }
     };
     getFloors();
-  }, [getParam("p")]);
+  }, [getParam("p"), reloadKey]);
+
+  const refreshFloors = () => {
+    setReloadKey((prevKey) => prevKey + 1);
+  };
 
   return (
-    <FloorsContext.Provider value={{ floors }}>
+    <FloorsContext.Provider value={{ floors, refreshFloors }}>
       {children}
     </FloorsContext.Provider>
   );
