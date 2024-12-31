@@ -9,6 +9,7 @@ import { NextFunction, Request } from "express";
 import { Project, ProjectStatus, ProjectStatuses } from "../models/Project";
 import { ObjectId } from "mongodb";
 import { WithId } from "../models/Mongodb";
+import { Floor } from "../models/Floor";
 
 export const getProjects = async (
   req: Request,
@@ -45,7 +46,7 @@ export const getProject = async (
 
 export const postProject = async (
   req: TypedRequestBody<{ title: string }>,
-  res: TypedResponse<{ id: string }>,
+  res: TypedResponse<{ projectId: string; floorId: string }>,
   next: NextFunction
 ) => {
   try {
@@ -64,7 +65,18 @@ export const postProject = async (
     const projectId = await DatabaseConnection.getInstance().createProject(
       project
     );
-    res.json({ id: projectId.toString() });
+
+    // Automatically create a floor
+    const floor: Floor = {
+      title: "1",
+      projectId,
+      floorPlanPath: "",
+      createdAt: new Date(),
+      editedAt: new Date()
+    };
+    const floorId = await DatabaseConnection.getInstance().createFloor(floor);
+
+    res.json({ projectId: projectId.toString(), floorId: floorId.toString() });
   } catch (error: unknown) {
     next(error);
   }

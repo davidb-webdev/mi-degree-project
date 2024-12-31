@@ -343,12 +343,19 @@ describe("Projects endpoints", () => {
         insertedId: "1"
       })
     };
+    const mockFloorCollection = {
+      insertOne: jest.fn().mockResolvedValue({
+        insertedId: "1"
+      })
+    };
 
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
       } else if (collectionName === "projects") {
         return mockProjectCollection;
+      } else if (collectionName === "floors") {
+        return mockFloorCollection;
       }
       return null;
     });
@@ -377,7 +384,7 @@ describe("Projects endpoints", () => {
       .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual({ id: "1" });
+    expect(res.body).toEqual({ projectId: "1", floorId: "1" });
   });
 
   test("creating a project, signed in, incorrect input data, expect failure", async () => {
@@ -398,12 +405,19 @@ describe("Projects endpoints", () => {
         insertedId: "1"
       })
     };
+    const mockFloorCollection = {
+      insertOne: jest.fn().mockResolvedValue({
+        insertedId: "1"
+      })
+    };
 
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
       } else if (collectionName === "projects") {
         return mockProjectCollection;
+      } else if (collectionName === "floors") {
+        return mockFloorCollection;
       }
       return null;
     });
@@ -456,12 +470,19 @@ describe("Projects endpoints", () => {
         insertedId: "1"
       })
     };
+    const mockFloorCollection = {
+      insertOne: jest.fn().mockResolvedValue({
+        insertedId: "1"
+      })
+    };
 
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
       } else if (collectionName === "projects") {
         return mockProjectCollection;
+      } else if (collectionName === "floors") {
+        return mockFloorCollection;
       }
       return null;
     });
