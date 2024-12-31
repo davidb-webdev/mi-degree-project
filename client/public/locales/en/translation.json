@@ -72,6 +72,10 @@
       "editLocation": "Edit location on floor plan",
       "success": "Note saved"
     },
+    "project": {
+      "floor": "Floor plan",
+      "editFloors": "Edit floor plans"
+    },
     "projectDetails": {
       "status": "Status",
       "description": "Description",
@@ -111,6 +115,18 @@
       "newProject": "New project",
       "draftTitle": "Draft",
       "deleteProject": "Delete project"
+    },
+    "floors": {
+      "floors": "Floors",
+      "deleteFloor": "Delete floor",
+      "newFloor": "New floor",
+      "draftTitle": "Floor"
+    },
+    "floorEdit": {
+      "success": "Floor saved",
+      "title": "Title",
+      "uploadPlan": "Upload floor plan",
+      "submit": "Save floor"
     }
   },
   "models": {
