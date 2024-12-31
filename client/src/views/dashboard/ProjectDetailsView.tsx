@@ -1,6 +1,5 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
-import { useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
 import CloseButton from "../../components/CloseButton";
 import { useProject } from "../../utils/useProject";
@@ -13,9 +12,6 @@ const ProjectDetailsView = () => {
   const { t } = useTranslation("translation", {
     keyPrefix: "dashboard.projectDetails"
   });
-  const location = useLocation();
-  const parentLevel =
-    location.pathname.split("/").slice(0, -1).join("/") || "/";
 
   return !project ? (
     <></>
@@ -23,7 +19,7 @@ const ProjectDetailsView = () => {
     <>
       <ModalToolbar
         title={project.title}
-        actionButton={<CloseButton to={parentLevel} />}
+        actionButton={<CloseButton to="/dashboard" />}
       />
 
       <Stack sx={{ mx: 3, mb: 3 }} spacing={2}>

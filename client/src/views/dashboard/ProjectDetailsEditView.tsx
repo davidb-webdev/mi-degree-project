@@ -11,10 +11,16 @@ import { useProjects } from "../../utils/useProjects";
 import { useCustomParams } from "../../utils/useCustomParams";
 import { Project, ProjectStatus, ProjectStatuses } from "../../models/Project";
 
-const ProjectDetailsEditView = () => {
+interface ProjectDetailsEditViewProps {
+  newProject?: boolean;
+}
+
+const ProjectDetailsEditView = ({
+  newProject
+}: ProjectDetailsEditViewProps) => {
   const { project, setProject } = useProject();
   const [formData, setFormData] = useState(
-    new Project("", "", ProjectStatuses.Draft)
+    project ?? new Project("", "", ProjectStatuses.Draft)
   );
   const { refreshProjects } = useProjects();
   const { navigateWithParams } = useCustomParams();
@@ -25,11 +31,15 @@ const ProjectDetailsEditView = () => {
   });
 
   useEffect(() => {
-    setFormData({
-      title: project?.title ?? "",
-      status: project?.status ?? ProjectStatuses.Draft,
-      description: project?.description ?? ""
-    });
+    if (newProject) {
+      setFormData(
+        new Project(
+          project?.title ?? "",
+          project?.description ?? "",
+          project?.status ?? ProjectStatuses.Draft
+        )
+      );
+    }
   }, [project]);
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -98,7 +108,7 @@ const ProjectDetailsEditView = () => {
           required
         />
 
-        <Button type="submit" variant="contained" onClick={() => onSubmit}>
+        <Button type="submit" variant="contained">
           {t("submit")}
         </Button>
       </Stack>
