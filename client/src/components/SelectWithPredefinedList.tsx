@@ -41,11 +41,11 @@ const SelectWithPredefinedList = ({
 
   return (
     <FormControl fullWidth>
-      <InputLabel id="categoryLabel">{label}</InputLabel>
+      <InputLabel id="selectWithPredefinedListLabel">{label}</InputLabel>
       <Select
         label={label}
         name={name}
-        labelId="categoryLabel"
+        labelId="selectWithPredefinedListLabel"
         onChange={onChange}
         value={value}
       >
