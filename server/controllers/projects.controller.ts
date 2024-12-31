@@ -66,7 +66,6 @@ export const postProject = async (
       project
     );
 
-    // Automatically create a floor
     const floor: Floor = {
       title: "1",
       projectId,
