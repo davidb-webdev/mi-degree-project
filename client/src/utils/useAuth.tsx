@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const getAuth = async () => {
       try {
-        await apiClient.get("/api/auth");
+        await apiClient.get<{ success: boolean }>("/api/auth");
         setAuth(true);
       } catch (error) {
         snackbar.close();
@@ -44,14 +44,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const signIn = async (formData: SignInFormData) => {
-    await apiClient.post("/api/signin", formData);
+    await apiClient.post<{ success: boolean }>("/api/signin", formData);
     setAuth(true);
     navigate("/dashboard");
     snackbar.open("success", t("signIn"));
   };
 
   const signOut = async () => {
-    await apiClient.get("/api/signout");
+    await apiClient.get<{ success: boolean }>("/api/signout");
     setAuth(false);
     snackbar.open("success", t("signOut"));
     navigate("/start");

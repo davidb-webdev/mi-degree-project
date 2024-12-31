@@ -33,7 +33,7 @@ const RegisterView = () => {
       return;
     }
     const payload = { name, email, password };
-    await apiClient.post("/api/register", payload);
+    await apiClient.post<{ success: boolean }>("/api/register", payload);
     snackbar.open("success", t("success"));
     navigate("/");
   };

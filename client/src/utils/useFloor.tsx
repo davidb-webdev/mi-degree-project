@@ -32,16 +32,20 @@ export const FloorProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const getFloor = async () => {
-      try {
-        const response = await apiClient.get(`/api/floor/${getParam("f")}`);
-        setFloor(response.data);
-      } catch (error) {
-        snackbar.close();
-        setFloor(undefined);
+      if (getParam("f")) {
+        try {
+          const response = await apiClient.get<WithId<Floor>>(
+            `/api/floor/${getParam("f")}`
+          );
+          setFloor(response.data);
+        } catch (error) {
+          snackbar.close();
+          setFloor(undefined);
+        }
       }
     };
     getFloor();
-  }, [getParam("p"), getParam("f"), reloadKey]);
+  }, [getParam("f"), reloadKey]);
 
   const refreshFloor = () => {
     setReloadKey((prevKey) => prevKey + 1);

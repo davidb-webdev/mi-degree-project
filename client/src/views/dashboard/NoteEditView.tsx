@@ -49,7 +49,10 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await apiClient.patch(`/api/note/${note!._id}`, formData);
+    await apiClient.patch<{ success: boolean }>(
+      `/api/note/${note!._id}`,
+      formData
+    );
     setNote({ ...note!, ...formData });
     snackbar.open("success", t("success"));
     navigateWithParams(`/dashboard/note/`);
@@ -61,7 +64,9 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
         backButton={
           newNote
             ? async () => {
-                await apiClient.delete(`/api/note/${note!._id}`);
+                await apiClient.delete<{ success: boolean }>(
+                  `/api/note/${note!._id}`
+                );
                 navigateAndUpdateParams("/dashboard", {}, ["n"]);
               }
             : "/dashboard/note"

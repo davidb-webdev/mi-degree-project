@@ -30,12 +30,16 @@ export const NotesProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const getNotes = async () => {
-      try {
-        const response = await apiClient.get(`/api/notes/${getParam("f")}`);
-        setNotes(response.data);
-      } catch (error) {
-        snackbar.close();
-        setNotes([]);
+      if (getParam("p") && getParam("f")) {
+        try {
+          const response = await apiClient.get<WithId<Note>[]>(
+            `/api/notes/${getParam("f")}`
+          );
+          setNotes(response.data);
+        } catch (error) {
+          snackbar.close();
+          setNotes([]);
+        }
       }
     };
     getNotes();

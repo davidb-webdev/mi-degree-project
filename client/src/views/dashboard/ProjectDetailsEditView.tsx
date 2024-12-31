@@ -42,7 +42,10 @@ const ProjectDetailsEditView = () => {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await apiClient.patch(`/api/project/${project!._id}`, formData);
+    await apiClient.patch<{ success: boolean }>(
+      `/api/project/${project!._id}`,
+      formData
+    );
     setProject({ ...project!, ...formData });
     refreshProjects();
     snackbar.open("success", t("success"));

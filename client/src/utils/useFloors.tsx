@@ -26,16 +26,24 @@ export const FloorsProvider = ({ children }: { children: ReactNode }) => {
   const [reloadKey, setReloadKey] = useState(0);
   const apiClient = useAxios();
   const snackbar = useSnackbar();
-  const { getParam } = useCustomParams();
+  const { getParam, addParam } = useCustomParams();
 
   useEffect(() => {
     const getFloors = async () => {
-      try {
-        const response = await apiClient.get(`/api/floors/${getParam("p")}`);
-        setFloors(response.data);
-      } catch (error) {
-        snackbar.close();
-        setFloors([]);
+      if (getParam("p")) {
+        try {
+          const response = await apiClient.get<WithId<Floor>[]>(
+            `/api/floors/${getParam("p")}`
+          );
+          setFloors(response.data);
+          if (!getParam("f") && response.data.length > 0) {
+            const firstFloor = response.data[0];
+            addParam("f", firstFloor._id);
+          }
+        } catch (error) {
+          snackbar.close();
+          setFloors([]);
+        }
       }
     };
     getFloors();

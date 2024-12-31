@@ -32,16 +32,20 @@ export const NoteProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const getNote = async () => {
-      try {
-        const response = await apiClient.get(`/api/note/${getParam("n")}`);
-        setNote(response.data);
-      } catch (error) {
-        snackbar.close();
-        setNote(undefined);
+      if (getParam("n")) {
+        try {
+          const response = await apiClient.get<WithId<Note>>(
+            `/api/note/${getParam("n")}`
+          );
+          setNote(response.data);
+        } catch (error) {
+          snackbar.close();
+          setNote(undefined);
+        }
       }
     };
     getNote();
-  }, [reloadKey]);
+  }, [getParam("n"), reloadKey]);
 
   const refreshNote = () => {
     setReloadKey((prevKey) => prevKey + 1);

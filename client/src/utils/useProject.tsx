@@ -32,12 +32,16 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const getProject = async () => {
-      try {
-        const response = await apiClient.get(`/api/project/${getParam("p")}`);
-        setProject(response.data);
-      } catch (error) {
-        snackbar.close();
-        setProject(undefined);
+      if (getParam("p")) {
+        try {
+          const response = await apiClient.get<WithId<Project>>(
+            `/api/project/${getParam("p")}`
+          );
+          setProject(response.data);
+        } catch (error) {
+          snackbar.close();
+          setProject(undefined);
+        }
       }
     };
     getProject();
