@@ -2,7 +2,7 @@ import Joi from "joi";
 
 export const patchFloorSchema = Joi.object({
   title: Joi.string().required(),
-  floorPlanPath: Joi.string().required()
+  floorPlanPath: Joi.string().allow("").required()
 });
 
 export const postFloorSchema = Joi.object({
