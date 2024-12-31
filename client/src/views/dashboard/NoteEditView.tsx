@@ -1,10 +1,9 @@
 import { Button, Stack, TextField } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
-import { useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useNote } from "../../utils/useNote";
 import { useCustomParams } from "../../utils/useCustomParams";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import useAxios from "../../utils/useAxios";
 import { useSnackbar } from "../../utils/useSnackbar";
 import { Note, NoteCategories } from "../../models/Note";
@@ -15,17 +14,30 @@ interface EditNoteViewProps {
 }
 
 const EditNoteView = ({ newNote }: EditNoteViewProps) => {
+  const { note, setNote } = useNote();
   const [formData, setFormData] = useState(
-    new Note("", NoteCategories.BlockedEscapeRoute, "", 1, 1)
+    note ?? new Note("", NoteCategories.BlockedEscapeRoute, "", 1, 1)
   );
   const apiClient = useAxios();
   const snackbar = useSnackbar();
-  const { note, setNote } = useNote();
-  const { navigateWithParams } = useCustomParams();
-  const location = useLocation();
+  const { navigateWithParams, navigateAndUpdateParams } = useCustomParams();
   const { t } = useTranslation("translation", {
     keyPrefix: "dashboard.noteEdit"
   });
+
+  useEffect(() => {
+    if (newNote) {
+      setFormData(
+        new Note(
+          note?.title ?? "",
+          note?.category ?? NoteCategories.BlockedEscapeRoute,
+          note?.description ?? "",
+          note?.xCoordinate ?? 0,
+          note?.yCoordinate ?? 0
+        )
+      );
+    }
+  }, [note]);
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -46,15 +58,15 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
   return note ? (
     <form onSubmit={onSubmit}>
       <ModalToolbar
-        title={newNote ? t("newNote") : note.title}
-        backPath={
+        backButton={
           newNote
-            ? "/dashboard"
-            : `${location.pathname.slice(
-                0,
-                location.pathname.lastIndexOf("/")
-              )}`
+            ? async () => {
+                await apiClient.delete(`/api/note/${note!._id}`);
+                navigateAndUpdateParams("/dashboard", {}, ["n"]);
+              }
+            : "/dashboard/note"
         }
+        title={note.title}
         actionButton={<Button type="submit">{t("save")}</Button>}
       />
 
@@ -74,7 +86,7 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
           onChange={(event) =>
             handleFormChange(event as ChangeEvent<HTMLInputElement>)
           }
-          value={note.category}
+          value={formData.category}
         />
 
         <TextField

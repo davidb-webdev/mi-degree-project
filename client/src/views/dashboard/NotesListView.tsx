@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router";
 import {
   Box,
   Button,
@@ -11,11 +10,12 @@ import ModalToolbar from "../../components/ModalToolbar";
 import { useTranslation } from "react-i18next";
 import { useNotes } from "../../utils/useNotes";
 import { useCustomParams } from "../../utils/useCustomParams";
+import useAxios from "../../utils/useAxios";
 
 const NotesListView = () => {
   const { notes } = useNotes();
-  const { navigateAndUpdateParams } = useCustomParams();
-  const navigate = useNavigate();
+  const { getParam, navigateAndUpdateParams } = useCustomParams();
+  const apiClient = useAxios();
   const { t } = useTranslation("translation", {
     keyPrefix: "dashboard.notesList"
   });
@@ -25,7 +25,23 @@ const NotesListView = () => {
       <ModalToolbar
         title={t("title")}
         actionButton={
-          <Button onClick={() => navigate("/dashboard/note/new")}>
+          <Button
+            onClick={async () => {
+              const requestBody: { title: string; floorId: string } = {
+                title: t("draftTitle"),
+                floorId: getParam("f") ?? ""
+              };
+              const response = await apiClient.post<{ id: string }>(
+                "/api/note",
+                requestBody
+              );
+              navigateAndUpdateParams(
+                "/dashboard/note/new",
+                { n: response.data.id },
+                []
+              );
+            }}
+          >
             {t("add")}
           </Button>
         }

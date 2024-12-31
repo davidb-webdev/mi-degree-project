@@ -12,7 +12,7 @@ const UserPasswordView = () => {
     <>
       <ModalToolbar
         title={t("title")}
-        backPath="/dashboard/user"
+        backButton="/dashboard/user"
         actionButton={<CloseButton to="/dashboard" />}
       />
 

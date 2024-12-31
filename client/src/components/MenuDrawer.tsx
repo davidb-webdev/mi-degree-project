@@ -27,19 +27,22 @@ const MenuDrawer = ({ showMenu, toggleMenu }: MenuDrawerProps) => {
   const { t } = useTranslation("translation", {
     keyPrefix: "dashboard.menu"
   });
-  const { getParam, navigateAndUpdateParams } =
-    useCustomParams();
+  const { getParam, navigateAndUpdateParams } = useCustomParams();
 
   const onNewProject = async () => {
-    const response = await apiClient.post<{ id: string }>("/api/project", {
+    const response = await apiClient.post<{
+      projectId: string;
+      floorId: string;
+    }>("/api/project", {
       title: t("draftTitle")
     });
     toggleMenu();
     refreshProjects();
-    navigateAndUpdateParams("/dashboard/details/new", { p: response.data.id }, [
-      "f",
-      "n"
-    ]);
+    navigateAndUpdateParams(
+      "/dashboard/details/new",
+      { p: response.data.projectId, f: response.data.floorId },
+      ["f", "n"]
+    );
   };
 
   const onDeleteProject = async (id: string) => {

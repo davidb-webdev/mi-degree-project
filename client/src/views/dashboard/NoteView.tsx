@@ -7,7 +7,7 @@ import { useCustomParams } from "../../utils/useCustomParams";
 
 const NoteView = () => {
   const { note } = useNote();
-  const { navigateWithParams } = useCustomParams();
+  const { navigateWithParams, navigateAndUpdateParams } = useCustomParams();
   const { t } = useTranslation("translation", {
     keyPrefix: "dashboard.note"
   });
@@ -18,9 +18,9 @@ const NoteView = () => {
     <>
       <ModalToolbar
         title={note.title}
-        backPath="/dashboard"
+        backButton={() => navigateAndUpdateParams("/dashboard", {}, ["n"])}
         actionButton={
-          <Button onClick={() => navigateWithParams(`/dashboard/note/edit`)}>
+          <Button onClick={() => navigateWithParams("/dashboard/note/edit")}>
             {t("edit")}
           </Button>
         }

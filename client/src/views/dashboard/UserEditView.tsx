@@ -8,16 +8,11 @@ const UserEditView = () => {
     keyPrefix: "dashboard.userEdit"
   });
 
-  const user: User = {
-    name: "Name Lastname",
-    email: "email@example.com"
-  };
-
   return (
     <>
       <ModalToolbar
         title={t("title")}
-        backPath="/dashboard/user"
+        backButton="/dashboard/user"
         actionButton={<CloseButton to="/dashboard" />}
       />
 

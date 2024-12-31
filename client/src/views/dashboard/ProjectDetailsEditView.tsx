@@ -53,7 +53,7 @@ const ProjectDetailsEditView = () => {
     <form onSubmit={onSubmit}>
       <ModalToolbar
         title={formData.title}
-        backPath="/dashboard/details"
+        backButton="/dashboard/details"
         actionButton={<CloseButton to="/dashboard" />}
       />
 

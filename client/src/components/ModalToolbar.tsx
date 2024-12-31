@@ -5,12 +5,16 @@ import { useTranslation } from "react-i18next";
 import { useCustomParams } from "../utils/useCustomParams";
 
 interface ModalToolbarProps {
-  backPath?: string;
-  actionButton?: ReactNode;
+  backButton?: string | (() => void);
   title: string;
+  actionButton?: ReactNode;
 }
 
-const ModalToolbar = ({ backPath, actionButton, title }: ModalToolbarProps) => {
+const ModalToolbar = ({
+  backButton,
+  title,
+  actionButton
+}: ModalToolbarProps) => {
   const { navigateWithParams } = useCustomParams();
   const { t } = useTranslation("translation", {
     keyPrefix: "dashboard.modalToolbar"
@@ -22,9 +26,13 @@ const ModalToolbar = ({ backPath, actionButton, title }: ModalToolbarProps) => {
       sx={{ gap: 2, px: 2, justifyContent: "space-between" }}
     >
       <Box minWidth={40}>
-        {backPath && (
+        {backButton && (
           <IconButton
-            onClick={() => navigateWithParams(backPath)}
+            onClick={
+              typeof backButton === "string"
+                ? () => navigateWithParams(backButton)
+                : backButton
+            }
             aria-label={t("back")}
           >
             <ArrowBackIosNewIcon />
