@@ -54,7 +54,8 @@
       "title": "Notes",
       "add": "Add",
       "export": "Export to document",
-      "draftTitle": "Draft"
+      "draftTitle": "Draft",
+      "deleteNote": "Delete note"
     },
     "note": {
       "edit": "Edit",
@@ -108,7 +109,8 @@
     "menu": {
       "projects": "Projects",
       "newProject": "New project",
-      "draftTitle": "Draft"
+      "draftTitle": "Draft",
+      "deleteProject": "Delete project"
     }
   },
   "models": {

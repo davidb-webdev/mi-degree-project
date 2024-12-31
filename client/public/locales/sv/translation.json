@@ -21,8 +21,7 @@
       "or": "eller",
       "signIn": "Logga in",
       "passwordsMustMatch": "Lösenordsfälten måste vara samma",
-      "success": "Användarkonto registrerat",
-      "error": "Något gick fel, vänligen försök igen"
+      "success": "Användarkonto registrerat"
     },
     "signIn": {
       "title": "Logga in",
@@ -55,7 +54,8 @@
       "title": "Anteckningar",
       "add": "Lägg till",
       "export": "Exportera till dokument",
-      "draftTitle": "Utkast"
+      "draftTitle": "Utkast",
+      "deleteNote": "Radera anteckning"
     },
     "note": {
       "edit": "Redigera",
@@ -109,7 +109,8 @@
     "menu": {
       "projects": "Projekt",
       "newProject": "Nytt projekt",
-      "draftTitle": "Utkast"
+      "draftTitle": "Utkast",
+      "deleteProject": "Radera projekt"
     }
   },
   "models": {
