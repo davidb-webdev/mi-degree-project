@@ -15,6 +15,8 @@ import UserEditView from "./views/dashboard/UserEditView";
 import UserPasswordView from "./views/dashboard/UserPasswordView";
 import ProjectDetailsEditView from "./views/dashboard/ProjectDetailsEditView";
 import ProtectedRoute from "./components/ProtectedRoute";
+import FloorsView from "./views/dashboard/FloorsView";
+import FloorEditView from "./views/dashboard/FloorEditView";
 
 const Router = () => {
   return (
@@ -53,7 +55,13 @@ const Router = () => {
           <Route path="user/changepassword" element={<UserPasswordView />} />
           <Route path="details" element={<ProjectDetailsView />} />
           <Route path="details/edit" element={<ProjectDetailsEditView />} />
-          <Route path="details/new" element={<ProjectDetailsEditView />} />
+          <Route
+            path="details/new"
+            element={<ProjectDetailsEditView newProject />}
+          />
+          <Route path="floors" element={<FloorsView />} />
+          <Route path="floor/edit" element={<FloorEditView />} />
+          <Route path="floor/new" element={<FloorEditView />} />
         </Route>
       </Route>
 
