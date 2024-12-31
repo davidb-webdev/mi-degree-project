@@ -14,19 +14,16 @@ import { useCustomParams } from "./useCustomParams";
 interface ProjectContextProps {
   project: WithId<Project> | undefined;
   setProject: (_value: WithId<Project> | undefined) => void;
-  refreshProject: () => void;
 }
 
 const ProjectContext = createContext<ProjectContextProps>({
   project: undefined,
-  setProject: () => {},
-  refreshProject: () => {}
+  setProject: () => {}
 });
 
 export const ProjectProvider = ({ children }: { children: ReactNode }) => {
   const { getParam } = useCustomParams();
   const [project, setProject] = useState<WithId<Project> | undefined>();
-  const [reloadKey, setReloadKey] = useState(0);
   const apiClient = useAxios();
   const snackbar = useSnackbar();
 
@@ -45,18 +42,13 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
       }
     };
     getProject();
-  }, [getParam("p"), reloadKey]);
-
-  const refreshProject = () => {
-    setReloadKey((prevKey) => prevKey + 1);
-  };
+  }, [getParam("p")]);
 
   return (
     <ProjectContext.Provider
       value={{
         project,
-        setProject,
-        refreshProject
+        setProject
       }}
     >
       {children}

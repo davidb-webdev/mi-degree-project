@@ -13,17 +13,14 @@ import { useCustomParams } from "./useCustomParams";
 
 interface NotesContextProps {
   notes: WithId<Note>[];
-  refreshNotes: () => void;
 }
 
 const NotesContext = createContext<NotesContextProps>({
-  notes: [],
-  refreshNotes: () => {}
+  notes: []
 });
 
 export const NotesProvider = ({ children }: { children: ReactNode }) => {
   const [notes, setNotes] = useState<WithId<Note>[]>([]);
-  const [reloadKey, setReloadKey] = useState(0);
   const apiClient = useAxios();
   const snackbar = useSnackbar();
   const { getParam } = useCustomParams();
@@ -43,14 +40,10 @@ export const NotesProvider = ({ children }: { children: ReactNode }) => {
       }
     };
     getNotes();
-  }, [getParam("p"), getParam("f"), reloadKey]);
-
-  const refreshNotes = () => {
-    setReloadKey((prevKey) => prevKey + 1);
-  };
+  }, [getParam("p"), getParam("f")]);
 
   return (
-    <NotesContext.Provider value={{ notes, refreshNotes }}>
+    <NotesContext.Provider value={{ notes }}>
       {children}
     </NotesContext.Provider>
   );
