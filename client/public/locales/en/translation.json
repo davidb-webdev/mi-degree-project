@@ -53,7 +53,8 @@
     "notesList": {
       "title": "Notes",
       "add": "Add",
-      "export": "Export to document"
+      "export": "Export to document",
+      "draftTitle": "Draft"
     },
     "note": {
       "edit": "Edit",
@@ -67,7 +68,8 @@
       "category": "Category",
       "description": "Description",
       "addPhotos": "Add photos",
-      "editLocation": "Edit location on floor plan"
+      "editLocation": "Edit location on floor plan",
+      "success": "Note saved"
     },
     "projectDetails": {
       "status": "Status",

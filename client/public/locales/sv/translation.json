@@ -54,7 +54,8 @@
     "notesList": {
       "title": "Anteckningar",
       "add": "Lägg till",
-      "export": "Exportera till dokument"
+      "export": "Exportera till dokument",
+      "draftTitle": "Utkast"
     },
     "note": {
       "edit": "Redigera",
@@ -68,7 +69,8 @@
       "category": "Kategori",
       "description": "Beskrivning",
       "addPhotos": "Lägg till bilder",
-      "editLocation": "Redigera plats på planritning"
+      "editLocation": "Redigera plats på planritning",
+      "success": "Anteckningen sparades"
     },
     "projectDetails": {
       "status": "Status",
