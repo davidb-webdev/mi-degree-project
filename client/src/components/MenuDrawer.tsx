@@ -84,7 +84,7 @@ const MenuDrawer = ({ showMenu, toggleMenu }: MenuDrawerProps) => {
               disablePadding
               secondaryAction={
                 <IconButton
-                  aria-label="delete"
+                  aria-label={t("deleteProject")}
                   onClick={() => onDeleteProject(project._id)}
                 >
                   <DeleteIcon />
