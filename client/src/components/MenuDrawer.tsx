@@ -46,7 +46,7 @@ const MenuDrawer = ({ showMenu, toggleMenu }: MenuDrawerProps) => {
   };
 
   const onDeleteProject = async (id: string) => {
-    await apiClient.delete<{ id: string }>(`/api/project/${id}`);
+    await apiClient.delete<{ success: boolean }>(`/api/project/${id}`);
     if (getParam("p") === id) {
       navigate("/dashboard");
     }
