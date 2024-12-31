@@ -9,7 +9,7 @@ import useAxios from "../../utils/useAxios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useProjects } from "../../utils/useProjects";
 import { useCustomParams } from "../../utils/useCustomParams";
-import { Project, ProjectStatuses } from "../../models/Project";
+import { Project, ProjectStatus, ProjectStatuses } from "../../models/Project";
 
 const ProjectDetailsEditView = () => {
   const { project, setProject } = useProject();
@@ -42,9 +42,19 @@ const ProjectDetailsEditView = () => {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const { title, description, status } = formData;
+    const requestBody: {
+      title: string;
+      description: string;
+      status: ProjectStatus;
+    } = {
+      title,
+      description,
+      status
+    };
     await apiClient.patch<{ success: boolean }>(
       `/api/project/${project!._id}`,
-      formData
+      requestBody
     );
     setProject({ ...project!, ...formData });
     refreshProjects();

@@ -6,7 +6,7 @@ import { useCustomParams } from "../../utils/useCustomParams";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import useAxios from "../../utils/useAxios";
 import { useSnackbar } from "../../utils/useSnackbar";
-import { Note, NoteCategories } from "../../models/Note";
+import { Note, NoteCategories, NoteCategory } from "../../models/Note";
 import SelectWithPredefinedList from "../../components/SelectWithPredefinedList";
 
 interface EditNoteViewProps {
@@ -49,9 +49,23 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const { title, description, category, xCoordinate, yCoordinate } = formData;
+    const requestBody: {
+      title: string;
+      description: string;
+      category: NoteCategory;
+      xCoordinate: number;
+      yCoordinate: number;
+    } = {
+      title,
+      description,
+      category,
+      xCoordinate,
+      yCoordinate
+    };
     await apiClient.patch<{ success: boolean }>(
       `/api/note/${note!._id}`,
-      formData
+      requestBody
     );
     setNote({ ...note!, ...formData });
     snackbar.open("success", t("success"));

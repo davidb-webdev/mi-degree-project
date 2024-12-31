@@ -43,8 +43,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     getAuth();
   }, []);
 
-  const signIn = async (formData: SignInFormData) => {
-    await apiClient.post<{ success: boolean }>("/api/signin", formData);
+  const signIn = async (requestBody: SignInFormData) => {
+    await apiClient.post<{ success: boolean }>("/api/signin", requestBody);
     setAuth(true);
     navigate("/dashboard");
     snackbar.open("success", t("signIn"));
