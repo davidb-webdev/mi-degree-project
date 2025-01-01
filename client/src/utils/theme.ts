@@ -10,7 +10,7 @@ const fireInspectTheme = createTheme({
     },
     secondary: {
       light: "#e4a446",
-      main: "#d47e2e",
+      main: "#238b21",
       dark: "#bf5d27",
       contrastText: "#fff"
     }

@@ -8,11 +8,15 @@ import {
 import floorPlan from "../../assets/images/fp.png";
 import { useRef } from "react";
 import PlaceIcon from "@mui/icons-material/Place";
-import { Box } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { useNotes } from "../../utils/useNotes";
 
 const FloorPlanView = () => {
+  const { notes } = useNotes();
+  const { getParam, navigateAndUpdateParams } = useCustomParams();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const transformComponentRef = useRef<ReactZoomPanPinchRef | null>(null);
-  const { getParam } = useCustomParams();
 
   const zoomToImage = () => {
     if (transformComponentRef.current) {
@@ -25,9 +29,6 @@ const FloorPlanView = () => {
   ) : (
     <TransformWrapper
       centerOnInit
-      centerZoomedOut
-      limitToBounds
-      disablePadding
       minScale={0.3}
       maxScale={3}
       initialScale={0.5}
@@ -35,26 +36,50 @@ const FloorPlanView = () => {
       doubleClick={{ disabled: true }}
     >
       <TransformComponent
-        wrapperStyle={{ width: "100%", height: "calc(100% - 98px)" }}
+        wrapperStyle={{
+          width: "100%",
+          height: isMobile ? "calc(100% - 98px)" : "calc(100% - 64px)"
+        }}
       >
-        <Box sx={{ position: "relative", width: "500px", height: "500px" }}>
+        <Box sx={{ position: "relative" }}>
           <img
             src={floorPlan}
             id="fp"
             alt="Floor plan"
             onLoad={zoomToImage}
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: "500px", height: "500px", display: "block" }}
           />
-          <KeepScale>
-            <PlaceIcon
+
+          {notes.map((note) => (
+            <Box
               sx={{
                 position: "absolute",
-                top: "200px",
-                left: "200px",
-                backgroundColor: "red"
+                top: `${note.yCoordinate}%`,
+                left: `${note.xCoordinate}%`,
+                transform: "translate(-50%, -60%)"
               }}
-            />
-          </KeepScale>
+            >
+              <KeepScale>
+                <PlaceIcon
+                  onClick={() =>
+                    navigateAndUpdateParams(
+                      `dashboard/note`,
+                      { n: note._id },
+                      []
+                    )
+                  }
+                  sx={{
+                    width: "40px",
+                    height: "40px",
+                    color:
+                      getParam("n") === note._id
+                        ? theme.palette.secondary.main
+                        : theme.palette.primary.main
+                  }}
+                />
+              </KeepScale>
+            </Box>
+          ))}
         </Box>
       </TransformComponent>
     </TransformWrapper>
