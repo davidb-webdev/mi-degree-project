@@ -10,10 +10,10 @@ import {
 } from "@mui/material";
 import { NavLink, useNavigate } from "react-router";
 import { useProjects } from "../utils/useProjects";
-import { useProject } from "../utils/useProject";
 import { useTranslation } from "react-i18next";
 import useAxios from "../utils/useAxios";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useCustomParams } from "../utils/useCustomParams";
 
 interface MenuDrawerProps {
   showMenu: boolean;
@@ -21,30 +21,36 @@ interface MenuDrawerProps {
 }
 
 const MenuDrawer = ({ showMenu, toggleMenu }: MenuDrawerProps) => {
-  const { projects, refreshProjects } = useProjects();
-  const { projectId, setProjectId, setProject } = useProject();
-  const apiClient = useAxios();
   const navigate = useNavigate();
+  const { projects, refreshProjects } = useProjects();
+  const apiClient = useAxios();
   const { t } = useTranslation("translation", {
     keyPrefix: "dashboard.menu"
   });
+  const { getParam, navigateAndUpdateParams } = useCustomParams();
 
   const onNewProject = async () => {
-    const response = await apiClient.post<{ id: string }>("/api/project", {title: t("draftTitle")});
-    refreshProjects();
-    setProjectId(response.data.id);
-    navigate("/dashboard/details/new");
+    const response = await apiClient.post<{
+      projectId: string;
+      floorId: string;
+    }>("/api/project", {
+      title: t("draftTitle")
+    });
     toggleMenu();
+    refreshProjects();
+    navigateAndUpdateParams(
+      "/dashboard/details/new",
+      { p: response.data.projectId, f: response.data.floorId },
+      ["f", "n"]
+    );
   };
 
   const onDeleteProject = async (id: string) => {
-    await apiClient.delete<{ id: string }>(`/api/project/${id}`);
-    refreshProjects();
-
-    if (projectId === id) {
-      setProjectId(undefined);
-      setProject(undefined);
+    await apiClient.delete<{ success: boolean }>(`/api/project/${id}`);
+    if (getParam("p") === id) {
+      navigate("/dashboard");
     }
+    refreshProjects();
   };
 
   return (
@@ -78,7 +84,7 @@ const MenuDrawer = ({ showMenu, toggleMenu }: MenuDrawerProps) => {
               disablePadding
               secondaryAction={
                 <IconButton
-                  aria-label="delete"
+                  aria-label={t("deleteProject")}
                   onClick={() => onDeleteProject(project._id)}
                 >
                   <DeleteIcon />
@@ -87,7 +93,7 @@ const MenuDrawer = ({ showMenu, toggleMenu }: MenuDrawerProps) => {
             >
               <ListItemButton
                 onClick={() => {
-                  setProjectId(project._id);
+                  navigate(`/dashboard?p=${project._id}`);
                   toggleMenu();
                 }}
               >

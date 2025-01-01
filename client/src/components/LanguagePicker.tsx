@@ -10,7 +10,8 @@ const LanguagePicker = () => {
     <SelectWithPredefinedList
       list="languages"
       label={t("language")}
-      onChange={(value) => i18n.changeLanguage(value)}
+      name="language"
+      onChange={(event) => i18n.changeLanguage(event.target.value)}
       value={i18n.resolvedLanguage || "en"}
     />
   );

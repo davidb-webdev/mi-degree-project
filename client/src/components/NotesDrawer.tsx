@@ -19,7 +19,7 @@ const NotesDrawer = ({ children }: NotesDrawerProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { t } = useTranslation("translation", {
-    keyPrefix: "dashboard.layout"
+    keyPrefix: "dashboard.notesDrawer"
   });
 
   const iOS =

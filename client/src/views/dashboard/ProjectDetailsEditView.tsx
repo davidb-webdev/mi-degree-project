@@ -1,6 +1,5 @@
 import { Button, Stack, TextField } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
-import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import SelectWithPredefinedList from "../../components/SelectWithPredefinedList";
 import CloseButton from "../../components/CloseButton";
@@ -9,6 +8,8 @@ import { useSnackbar } from "../../utils/useSnackbar";
 import useAxios from "../../utils/useAxios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useProjects } from "../../utils/useProjects";
+import { useCustomParams } from "../../utils/useCustomParams";
+import { Project, ProjectStatus, ProjectStatuses } from "../../models/Project";
 
 interface ProjectDetailsEditViewProps {
   newProject?: boolean;
@@ -17,14 +18,12 @@ interface ProjectDetailsEditViewProps {
 const ProjectDetailsEditView = ({
   newProject
 }: ProjectDetailsEditViewProps) => {
-  const [formData, setFormData] = useState({
-    title: "",
-    status: "Draft",
-    description: ""
-  });
-  const { project, projectId, refreshProject } = useProject();
+  const { project, setProject } = useProject();
+  const [formData, setFormData] = useState(
+    project ?? new Project("", "", ProjectStatuses.Draft)
+  );
   const { refreshProjects } = useProjects();
-  const navigate = useNavigate();
+  const { navigateWithParams } = useCustomParams();
   const snackbar = useSnackbar();
   const apiClient = useAxios();
   const { t } = useTranslation("translation", {
@@ -32,14 +31,16 @@ const ProjectDetailsEditView = ({
   });
 
   useEffect(() => {
-    if (!newProject) {
-      setFormData({
-        title: project?.title ?? "",
-        status: project?.status ?? "Draft",
-        description: project?.description ?? ""
-      });
+    if (newProject) {
+      setFormData(
+        new Project(
+          project?.title ?? "",
+          project?.description ?? "",
+          project?.status ?? ProjectStatuses.Draft
+        )
+      );
     }
-  }, [projectId]);
+  }, [project]);
 
   const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -51,18 +52,31 @@ const ProjectDetailsEditView = ({
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await apiClient.patch(`/api/project/${project!._id}`, formData);
+    const { title, description, status } = formData;
+    const requestBody: {
+      title: string;
+      description: string;
+      status: ProjectStatus;
+    } = {
+      title,
+      description,
+      status
+    };
+    await apiClient.patch<{ success: boolean }>(
+      `/api/project/${project!._id}`,
+      requestBody
+    );
+    setProject({ ...project!, ...formData });
     refreshProjects();
-    refreshProject();
     snackbar.open("success", t("success"));
-    navigate("/dashboard/details");
+    navigateWithParams("/dashboard/details");
   };
 
   return (
     <form onSubmit={onSubmit}>
       <ModalToolbar
         title={formData.title}
-        backPath="/dashboard/details"
+        backButton="/dashboard/details"
         actionButton={<CloseButton to="/dashboard" />}
       />
 
@@ -94,7 +108,7 @@ const ProjectDetailsEditView = ({
           required
         />
 
-        <Button type="submit" variant="contained" onClick={() => onSubmit}>
+        <Button type="submit" variant="contained">
           {t("submit")}
         </Button>
       </Stack>

@@ -21,8 +21,7 @@
       "or": "eller",
       "signIn": "Logga in",
       "passwordsMustMatch": "Lösenordsfälten måste vara samma",
-      "success": "Användarkonto registrerat",
-      "error": "Något gick fel, vänligen försök igen"
+      "success": "Användarkonto registrerat"
     },
     "signIn": {
       "title": "Logga in",
@@ -54,7 +53,9 @@
     "notesList": {
       "title": "Anteckningar",
       "add": "Lägg till",
-      "export": "Exportera till dokument"
+      "export": "Exportera till dokument",
+      "draftTitle": "Utkast",
+      "deleteNote": "Radera anteckning"
     },
     "note": {
       "edit": "Redigera",
@@ -64,11 +65,16 @@
     "noteEdit": {
       "newNote": "Ny anteckning",
       "save": "Spara",
-      "title": "Titel",
+      "title": "Rubrik",
       "category": "Kategori",
       "description": "Beskrivning",
       "addPhotos": "Lägg till bilder",
-      "editLocation": "Redigera plats på planritning"
+      "editLocation": "Ändra plats på planritning",
+      "success": "Anteckningen sparades"
+    },
+    "project": {
+      "floor": "Våningsplan",
+      "editFloors": "Ändra våningsplan"
     },
     "projectDetails": {
       "status": "Status",
@@ -76,7 +82,7 @@
       "edit": "Redigera detaljer"
     },
     "projectDetailsEdit": {
-      "title": "Titel",
+      "title": "Benämning",
       "status": "Status",
       "description": "Beskrivning",
       "submit": "Spara projektdetaljer",
@@ -107,7 +113,20 @@
     "menu": {
       "projects": "Projekt",
       "newProject": "Nytt projekt",
-      "draftTitle": "Utkast"
+      "draftTitle": "Utkast",
+      "deleteProject": "Radera projekt"
+    },
+    "floors": {
+      "floors": "Våningsplan",
+      "deleteFloor": "Radera våningsplan",
+      "newFloor": "Nytt våningsplan",
+      "draftTitle": "Våningsplan"
+    },
+    "floorEdit": {
+      "success": "Våningsplanet sparades",
+      "title": "Benämning",
+      "uploadPlan": "Ladda upp planritning",
+      "submit": "Spara våningsplan"
     }
   },
   "models": {

@@ -53,7 +53,9 @@
     "notesList": {
       "title": "Notes",
       "add": "Add",
-      "export": "Export to document"
+      "export": "Export to document",
+      "draftTitle": "Draft",
+      "deleteNote": "Delete note"
     },
     "note": {
       "edit": "Edit",
@@ -67,7 +69,12 @@
       "category": "Category",
       "description": "Description",
       "addPhotos": "Add photos",
-      "editLocation": "Edit location on floor plan"
+      "editLocation": "Edit location on floor plan",
+      "success": "Note saved"
+    },
+    "project": {
+      "floor": "Floor plan",
+      "editFloors": "Edit floor plans"
     },
     "projectDetails": {
       "status": "Status",
@@ -106,7 +113,20 @@
     "menu": {
       "projects": "Projects",
       "newProject": "New project",
-      "draftTitle": "Draft"
+      "draftTitle": "Draft",
+      "deleteProject": "Delete project"
+    },
+    "floors": {
+      "floors": "Floors",
+      "deleteFloor": "Delete floor",
+      "newFloor": "New floor",
+      "draftTitle": "Floor"
+    },
+    "floorEdit": {
+      "success": "Floor saved",
+      "title": "Title",
+      "uploadPlan": "Upload floor plan",
+      "submit": "Save floor"
     }
   },
   "models": {

@@ -9,56 +9,46 @@ import useAxios from "./useAxios";
 import { useSnackbar } from "./useSnackbar";
 import { Project } from "../models/Project";
 import { WithId } from "../models/General";
+import { useCustomParams } from "./useCustomParams";
 
 interface ProjectContextProps {
   project: WithId<Project> | undefined;
   setProject: (_value: WithId<Project> | undefined) => void;
-  projectId: string | undefined;
-  setProjectId: (_value: string | undefined) => void;
-  refreshProject: () => void;
 }
 
 const ProjectContext = createContext<ProjectContextProps>({
   project: undefined,
-  setProject: () => {},
-  projectId: undefined,
-  setProjectId: () => {},
-  refreshProject: () => {}
+  setProject: () => {}
 });
 
 export const ProjectProvider = ({ children }: { children: ReactNode }) => {
-  const [projectId, setProjectId] = useState<string | undefined>();
+  const { getParam } = useCustomParams();
   const [project, setProject] = useState<WithId<Project> | undefined>();
-  const [reloadKey, setReloadKey] = useState(0);
   const apiClient = useAxios();
   const snackbar = useSnackbar();
 
   useEffect(() => {
     const getProject = async () => {
-      try {
-        if (!projectId) return;
-        const response = await apiClient.get(`/api/project/${projectId}`);
-        setProject(response.data);
-      } catch (error) {
-        snackbar.close();
-        setProject(undefined);
+      if (getParam("p")) {
+        try {
+          const response = await apiClient.get<WithId<Project>>(
+            `/api/project/${getParam("p")}`
+          );
+          setProject(response.data);
+        } catch (error) {
+          snackbar.close();
+          setProject(undefined);
+        }
       }
     };
     getProject();
-  }, [projectId, reloadKey]);
-
-  const refreshProject = () => {
-    setReloadKey((prevKey) => prevKey + 1);
-  };
+  }, [getParam("p")]);
 
   return (
     <ProjectContext.Provider
       value={{
         project,
-        setProject,
-        projectId,
-        setProjectId,
-        refreshProject
+        setProject
       }}
     >
       {children}

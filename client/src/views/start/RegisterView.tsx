@@ -32,8 +32,12 @@ const RegisterView = () => {
       snackbar.open("error", t("passwordsMustMatch"));
       return;
     }
-    const payload = { name, email, password };
-    await apiClient.post("/api/register", payload);
+    const requestBody: { name: string; email: string; password: string } = {
+      name,
+      email,
+      password
+    };
+    await apiClient.post<{ success: boolean }>("/api/register", requestBody);
     snackbar.open("success", t("success"));
     navigate("/");
   };

@@ -3,9 +3,9 @@ export class Project {
     public title: string,
     public description: string,
     public status: ProjectStatus,
-    public owner: string,
-    public createdAt: Date,
-    public editedAt: Date,
+    public owner?: string,
+    public createdAt?: Date,
+    public editedAt?: Date,
     public _id?: string
   ) {}
 }

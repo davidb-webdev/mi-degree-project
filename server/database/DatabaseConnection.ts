@@ -3,6 +3,8 @@ import { WithId } from "../models/Mongodb";
 import { User } from "../models/User";
 import { Project, ProjectStatus } from "../models/Project";
 import { BadRequestError, UnauthorizedError } from "../models/Error";
+import { Note, NoteCategory } from "../models/Note";
+import { Floor } from "../models/Floor";
 
 let instance: DatabaseConnection | null = null;
 
@@ -82,6 +84,22 @@ export default class DatabaseConnection {
     return projects;
   }
 
+  async getNotesByFloorId(floorId: ObjectId) {
+    await this.connect();
+    const collection = this.getCollection<Note>("notes");
+
+    const notes = await collection.find({ floorId }).toArray();
+    return notes;
+  }
+
+  async getFloorsByProjectId(projectId: ObjectId) {
+    await this.connect();
+    const collection = this.getCollection<Floor>("floors");
+
+    const floors = await collection.find({ projectId }).toArray();
+    return floors;
+  }
+
   async getProjectById(id: ObjectId) {
     await this.connect();
     const collection = this.getCollection<Project>("projects");
@@ -91,11 +109,45 @@ export default class DatabaseConnection {
     return project;
   }
 
+  async getNoteById(id: ObjectId) {
+    await this.connect();
+    const collection = this.getCollection<Note>("notes");
+
+    const note = await collection.findOne({ _id: id });
+    if (!note) throw new BadRequestError("Note not found");
+    return note;
+  }
+
+  async getFloorById(id: ObjectId) {
+    await this.connect();
+    const collection = this.getCollection<Floor>("floors");
+
+    const floor = await collection.findOne({ _id: id });
+    if (!floor) throw new BadRequestError("Floor not found");
+    return floor;
+  }
+
   async createProject(project: Project) {
     await this.connect();
     const collection = this.getCollection<Project>("projects");
 
     const result = await collection.insertOne(project);
+    return result.insertedId;
+  }
+
+  async createNote(note: Note) {
+    await this.connect();
+    const collection = this.getCollection<Note>("notes");
+
+    const result = await collection.insertOne(note);
+    return result.insertedId;
+  }
+
+  async createFloor(floor: Floor) {
+    await this.connect();
+    const collection = this.getCollection<Floor>("floors");
+
+    const result = await collection.insertOne(floor);
     return result.insertedId;
   }
 
@@ -116,10 +168,53 @@ export default class DatabaseConnection {
       { $set: project }
     );
 
-    console.log("result", result);
-
     if (result.modifiedCount < 1) {
       throw new BadRequestError("Project not found, no changes were made");
+    }
+  }
+
+  async updateNote(
+    id: string,
+    note: {
+      title: string;
+      description: string;
+      category: NoteCategory;
+      xCoordinate: number;
+      yCoordinate: number;
+      editedAt: Date;
+    }
+  ) {
+    await this.connect();
+    const collection = this.getCollection<Note>("notes");
+
+    const result = await collection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: note }
+    );
+
+    if (result.modifiedCount < 1) {
+      throw new BadRequestError("Note not found, no changes were made");
+    }
+  }
+
+  async updateFloor(
+    id: string,
+    floor: {
+      title: string;
+      floorPlanPath: string;
+      editedAt: Date;
+    }
+  ) {
+    await this.connect();
+    const collection = this.getCollection<Floor>("floors");
+
+    const result = await collection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: floor }
+    );
+
+    if (result.modifiedCount < 1) {
+      throw new BadRequestError("Floor not found, no changes were made");
     }
   }
 
@@ -131,6 +226,28 @@ export default class DatabaseConnection {
 
     if (result.deletedCount < 1) {
       throw new BadRequestError("Project not found, no changes were made");
+    }
+  }
+
+  async deleteNote(id: ObjectId) {
+    await this.connect();
+    const collection = this.getCollection<Note>("notes");
+
+    const result = await collection.deleteOne({ _id: id });
+
+    if (result.deletedCount < 1) {
+      throw new BadRequestError("Note not found, no changes were made");
+    }
+  }
+
+  async deleteFloor(id: ObjectId) {
+    await this.connect();
+    const collection = this.getCollection<Floor>("floors");
+
+    const result = await collection.deleteOne({ _id: id });
+
+    if (result.deletedCount < 1) {
+      throw new BadRequestError("Floor not found, no changes were made");
     }
   }
 }

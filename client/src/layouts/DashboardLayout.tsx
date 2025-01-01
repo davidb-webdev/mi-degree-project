@@ -9,6 +9,10 @@ import { SnackbarModal } from "../utils/useSnackbar";
 import { ProjectProvider } from "../utils/useProject";
 import DashboardToolbar from "../components/DashboardToolbar";
 import { ProjectsProvider } from "../utils/useProjects";
+import { FloorsProvider } from "../utils/useFloors";
+import { FloorProvider } from "../utils/useFloor";
+import { NotesProvider } from "../utils/useNotes";
+import { NoteProvider } from "../utils/useNote";
 
 const DashboardLayout = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -19,32 +23,40 @@ const DashboardLayout = () => {
   return (
     <ProjectsProvider>
       <ProjectProvider>
-        <Box
-          sx={{
-            backgroundColor: theme.palette.primary.light,
-            height: "100dvh",
-            mr: !isMobile && notesDrawer.open ? notesDrawer.width : 0,
-            transition: theme.transitions.create(["margin", "width"], {
-              easing: theme.transitions.easing.sharp,
-              duration: theme.transitions.duration.leavingScreen
-            })
-          }}
-        >
-          <DashboardToolbar setShowMenu={setShowMenu} />
+        <FloorsProvider>
+          <FloorProvider>
+            <NotesProvider>
+              <NoteProvider>
+                <Box
+                  sx={{
+                    backgroundColor: theme.palette.primary.light,
+                    height: "100dvh",
+                    mr: !isMobile && notesDrawer.open ? notesDrawer.width : 0,
+                    transition: theme.transitions.create(["margin", "width"], {
+                      easing: theme.transitions.easing.sharp,
+                      duration: theme.transitions.duration.leavingScreen
+                    })
+                  }}
+                >
+                  <DashboardToolbar setShowMenu={setShowMenu} />
 
-          <ProjectView />
-        </Box>
+                  <ProjectView />
+                </Box>
 
-        <MenuDrawer
-          showMenu={showMenu}
-          toggleMenu={() => setShowMenu(!showMenu)}
-        />
+                <MenuDrawer
+                  showMenu={showMenu}
+                  toggleMenu={() => setShowMenu(!showMenu)}
+                />
 
-        <NotesDrawer>
-          <Outlet />
-        </NotesDrawer>
+                <NotesDrawer>
+                  <Outlet />
+                </NotesDrawer>
 
-        <SnackbarModal />
+                <SnackbarModal />
+              </NoteProvider>
+            </NotesProvider>
+          </FloorProvider>
+        </FloorsProvider>
       </ProjectProvider>
     </ProjectsProvider>
   );

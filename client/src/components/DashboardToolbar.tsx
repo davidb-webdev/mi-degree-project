@@ -8,10 +8,10 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotesIcon from "@mui/icons-material/Notes";
-import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useNotesDrawer } from "../utils/useNotesDrawer";
 import { useProject } from "../utils/useProject";
+import { useCustomParams } from "../utils/useCustomParams";
 
 interface DashboardToolbarProps {
   setShowMenu: (_value: boolean) => void;
@@ -20,7 +20,7 @@ interface DashboardToolbarProps {
 const DashboardToolbar = ({ setShowMenu }: DashboardToolbarProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const navigate = useNavigate();
+  const { navigateWithParams } = useCustomParams();
   const notesDrawer = useNotesDrawer();
   const { project } = useProject();
   const { t } = useTranslation("translation", {
@@ -38,7 +38,7 @@ const DashboardToolbar = ({ setShowMenu }: DashboardToolbarProps) => {
       </Typography>
 
       <Button
-        onClick={() => navigate("/dashboard/details")}
+        onClick={() => navigateWithParams("/dashboard/details")}
         sx={{ mr: isMobile ? 2 : 0 }}
       >
         {t("details")}

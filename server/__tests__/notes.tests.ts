@@ -2,11 +2,10 @@ import request from "supertest";
 import app from "../app";
 import DatabaseConnection from "../database/DatabaseConnection";
 import { hash } from "bcrypt";
-import { ProjectStatuses } from "../models/Project";
 
 jest.mock("mongodb");
 
-describe("Projects endpoints", () => {
+describe("Notes endpoints", () => {
   let mockGetCollection: jest.Mock;
   let mockConnect: jest.Mock;
 
@@ -30,10 +29,10 @@ describe("Projects endpoints", () => {
   });
 
   //
-  // ========== Get projects ==========
+  // ========== Get notes ==========
   //
 
-  test("getting projects, signed in, expect success", async () => {
+  test("getting notes, signed in, expect success", async () => {
     const password = "1234567890";
     const hashedPassword = await hash(password, 10);
     const user = {
@@ -42,39 +41,43 @@ describe("Projects endpoints", () => {
       email: "email@example.com",
       password: hashedPassword
     };
-    const project1 = {
-      _id: "1",
-      title: "Project 1",
-      description: "Project description 1",
-      status: ProjectStatuses.InProgress,
-      owner: "user",
+    const note1 = {
+      _id: "n1",
+      title: "Note 1",
+      category: "BlockedEscapeRoute",
+      description: "Desc",
+      floorId: "f1",
+      xCoordinate: 1,
+      yCoordinate: 1,
       createdAt: 1,
       editedAt: 1
     };
-    const project2 = {
-      _id: "2",
-      title: "Project 2",
-      description: "Project description 2",
-      status: ProjectStatuses.Finished,
-      owner: "user",
-      createdAt: 2,
-      editedAt: 2
+    const note2 = {
+      _id: "n2",
+      title: "Note 1",
+      category: "BlockedEscapeRoute",
+      description: "Desc",
+      floorId: "f1",
+      xCoordinate: 1,
+      yCoordinate: 1,
+      createdAt: 1,
+      editedAt: 1
     };
 
     const mockUserCollection = {
       findOne: jest.fn().mockResolvedValue(user)
     };
-    const mockProjectCollection = {
+    const mockNoteCollection = {
       find: jest.fn().mockReturnValue({
-        toArray: jest.fn().mockResolvedValue([project1, project2])
+        toArray: jest.fn().mockResolvedValue([note1, note2])
       })
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
-      } else if (collectionName === "projects") {
-        return mockProjectCollection;
+      } else if (collectionName === "notes") {
+        return mockNoteCollection;
       }
       return null;
     });
@@ -95,18 +98,18 @@ describe("Projects endpoints", () => {
 
     const cookies = signInRes.headers["set-cookie"];
 
-    const res = await request(app).get("/projects").set("Cookie", cookies);
+    const res = await request(app).get("/notes/f1").set("Cookie", cookies);
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(
       expect.arrayContaining([
-        expect.objectContaining(project1),
-        expect.objectContaining(project2)
+        expect.objectContaining(note1),
+        expect.objectContaining(note2)
       ])
     );
   });
 
-  test("getting projects, not signed in, expect failure", async () => {
+  test("getting notes, not signed in, expect failure", async () => {
     const password = "1234567890";
     const hashedPassword = await hash(password, 10);
     const user = {
@@ -115,44 +118,48 @@ describe("Projects endpoints", () => {
       email: "email@example.com",
       password: hashedPassword
     };
-    const project1 = {
-      _id: "1",
-      title: "Project 1",
-      description: "Project description 1",
-      status: ProjectStatuses.InProgress,
-      owner: "user",
+    const note1 = {
+      _id: "n1",
+      title: "Note 1",
+      category: "BlockedEscapeRoute",
+      description: "Desc",
+      floorId: "f1",
+      xCoordinate: 1,
+      yCoordinate: 1,
       createdAt: 1,
       editedAt: 1
     };
-    const project2 = {
-      _id: "2",
-      title: "Project 2",
-      description: "Project description 2",
-      status: ProjectStatuses.Finished,
-      owner: "user",
-      createdAt: 2,
-      editedAt: 2
+    const note2 = {
+      _id: "n2",
+      title: "Note 1",
+      category: "BlockedEscapeRoute",
+      description: "Desc",
+      floorId: "f1",
+      xCoordinate: 1,
+      yCoordinate: 1,
+      createdAt: 1,
+      editedAt: 1
     };
 
     const mockUserCollection = {
       findOne: jest.fn().mockResolvedValue(user)
     };
-    const mockProjectCollection = {
+    const mockNoteCollection = {
       find: jest.fn().mockReturnValue({
-        toArray: jest.fn().mockResolvedValue([project1, project2])
+        toArray: jest.fn().mockResolvedValue([note1, note2])
       })
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
-      } else if (collectionName === "projects") {
-        return mockProjectCollection;
+      } else if (collectionName === "notes") {
+        return mockNoteCollection;
       }
       return null;
     });
 
-    const res = await request(app).get("/projects");
+    const res = await request(app).get("/notes/f1");
 
     expect(res.statusCode).toEqual(401);
     expect(res.body).toEqual({
@@ -162,10 +169,10 @@ describe("Projects endpoints", () => {
   });
 
   //
-  // ========== Get project ==========
+  // ========== Get note ==========
   //
 
-  test("getting a project, signed in, expect success", async () => {
+  test("getting a note, signed in, expect success", async () => {
     const password = "1234567890";
     const hashedPassword = await hash(password, 10);
     const user = {
@@ -174,12 +181,14 @@ describe("Projects endpoints", () => {
       email: "email@example.com",
       password: hashedPassword
     };
-    const project1 = {
-      _id: "1",
-      title: "Project 1",
-      description: "Project description 1",
-      status: ProjectStatuses.InProgress,
-      owner: "user",
+    const note1 = {
+      _id: "n1",
+      title: "Note 1",
+      category: "BlockedEscapeRoute",
+      description: "Desc",
+      floorId: "f1",
+      xCoordinate: 1,
+      yCoordinate: 1,
       createdAt: 1,
       editedAt: 1
     };
@@ -187,15 +196,15 @@ describe("Projects endpoints", () => {
     const mockUserCollection = {
       findOne: jest.fn().mockResolvedValue(user)
     };
-    const mockProjectCollection = {
-      findOne: jest.fn().mockResolvedValue(project1)
+    const mockNoteCollection = {
+      findOne: jest.fn().mockResolvedValue(note1)
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
-      } else if (collectionName === "projects") {
-        return mockProjectCollection;
+      } else if (collectionName === "notes") {
+        return mockNoteCollection;
       }
       return null;
     });
@@ -216,13 +225,13 @@ describe("Projects endpoints", () => {
 
     const cookies = signInRes.headers["set-cookie"];
 
-    const res = await request(app).get("/project/1").set("Cookie", cookies);
+    const res = await request(app).get("/note/n1").set("Cookie", cookies);
 
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual(project1);
+    expect(res.body).toEqual(note1);
   });
 
-  test("getting a project, signed in, incorrect id, expect failure", async () => {
+  test("getting a note, signed in, incorrect id, expect failure", async () => {
     const password = "1234567890";
     const hashedPassword = await hash(password, 10);
     const user = {
@@ -235,15 +244,15 @@ describe("Projects endpoints", () => {
     const mockUserCollection = {
       findOne: jest.fn().mockResolvedValue(user)
     };
-    const mockProjectCollection = {
+    const mockNoteCollection = {
       findOne: jest.fn().mockResolvedValue(null)
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
-      } else if (collectionName === "projects") {
-        return mockProjectCollection;
+      } else if (collectionName === "notes") {
+        return mockNoteCollection;
       }
       return null;
     });
@@ -264,13 +273,13 @@ describe("Projects endpoints", () => {
 
     const cookies = signInRes.headers["set-cookie"];
 
-    const res = await request(app).get("/project/3").set("Cookie", cookies);
+    const res = await request(app).get("/note/3").set("Cookie", cookies);
 
     expect(res.statusCode).toEqual(400);
-    expect(res.body).toEqual({ message: "Project not found", statusCode: 400 });
+    expect(res.body).toEqual({ message: "Note not found", statusCode: 400 });
   });
 
-  test("getting a project, not signed in, expect failure", async () => {
+  test("getting a note, not signed in, expect failure", async () => {
     const password = "1234567890";
     const hashedPassword = await hash(password, 10);
     const user = {
@@ -279,12 +288,14 @@ describe("Projects endpoints", () => {
       email: "email@example.com",
       password: hashedPassword
     };
-    const project1 = {
-      _id: "1",
-      title: "Project 1",
-      description: "Project description 1",
-      status: ProjectStatuses.InProgress,
-      owner: "user",
+    const note1 = {
+      _id: "n1",
+      title: "Note 1",
+      category: "BlockedEscapeRoute",
+      description: "Desc",
+      floorId: "f1",
+      xCoordinate: 1,
+      yCoordinate: 1,
       createdAt: 1,
       editedAt: 1
     };
@@ -292,15 +303,15 @@ describe("Projects endpoints", () => {
     const mockUserCollection = {
       findOne: jest.fn().mockResolvedValue(user)
     };
-    const mockProjectCollection = {
-      findOne: jest.fn().mockResolvedValue(project1)
+    const mockNoteCollection = {
+      findOne: jest.fn().mockResolvedValue(note1)
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
-      } else if (collectionName === "projects") {
-        return mockProjectCollection;
+      } else if (collectionName === "notes") {
+        return mockNoteCollection;
       }
       return null;
     });
@@ -310,7 +321,7 @@ describe("Projects endpoints", () => {
       password: password
     };
 
-    const res = await request(app).get("/project/1");
+    const res = await request(app).get("/notes/1");
 
     expect(res.statusCode).toEqual(401);
     expect(res.body).toEqual({
@@ -320,10 +331,10 @@ describe("Projects endpoints", () => {
   });
 
   //
-  // ========== Create project ==========
+  // ========== Create note ==========
   //
 
-  test("creating a project, signed in, expect success", async () => {
+  test("creating a note, signed in, expect success", async () => {
     const password = "1234567890";
     const hashedPassword = await hash(password, 10);
     const user = {
@@ -336,12 +347,7 @@ describe("Projects endpoints", () => {
     const mockUserCollection = {
       findOne: jest.fn().mockResolvedValue(user)
     };
-    const mockProjectCollection = {
-      insertOne: jest.fn().mockResolvedValue({
-        insertedId: "1"
-      })
-    };
-    const mockFloorCollection = {
+    const mockNoteCollection = {
       insertOne: jest.fn().mockResolvedValue({
         insertedId: "1"
       })
@@ -350,10 +356,8 @@ describe("Projects endpoints", () => {
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
-      } else if (collectionName === "projects") {
-        return mockProjectCollection;
-      } else if (collectionName === "floors") {
-        return mockFloorCollection;
+      } else if (collectionName === "notes") {
+        return mockNoteCollection;
       }
       return null;
     });
@@ -375,17 +379,17 @@ describe("Projects endpoints", () => {
     const cookies = signInRes.headers["set-cookie"];
 
     const res = await request(app)
-      .post("/project")
+      .post("/note")
       .set("Cookie", cookies)
-      .send({ title: "Draft" })
+      .send({ title: "Draft", floorId: "f1" })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual({ projectId: "1", floorId: "1" });
+    expect(res.body).toEqual({ id: "1" });
   });
 
-  test("creating a project, signed in, incorrect input data, expect failure", async () => {
+  test("creating a note, signed in, incorrect input data, expect failure", async () => {
     const password = "1234567890";
     const hashedPassword = await hash(password, 10);
     const user = {
@@ -398,12 +402,7 @@ describe("Projects endpoints", () => {
     const mockUserCollection = {
       findOne: jest.fn().mockResolvedValue(user)
     };
-    const mockProjectCollection = {
-      insertOne: jest.fn().mockResolvedValue({
-        insertedId: "1"
-      })
-    };
-    const mockFloorCollection = {
+    const mockNoteCollection = {
       insertOne: jest.fn().mockResolvedValue({
         insertedId: "1"
       })
@@ -412,10 +411,8 @@ describe("Projects endpoints", () => {
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
-      } else if (collectionName === "projects") {
-        return mockProjectCollection;
-      } else if (collectionName === "floors") {
-        return mockFloorCollection;
+      } else if (collectionName === "notes") {
+        return mockNoteCollection;
       }
       return null;
     });
@@ -437,9 +434,9 @@ describe("Projects endpoints", () => {
     const cookies = signInRes.headers["set-cookie"];
 
     const res = await request(app)
-      .post("/project")
+      .post("/note")
       .set("Cookie", cookies)
-      .send({})
+      .send({ floorId: "f1" })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json");
 
@@ -450,7 +447,7 @@ describe("Projects endpoints", () => {
     });
   });
 
-  test("creating a project, not signed in, expect failure", async () => {
+  test("creating a note, not signed in, expect failure", async () => {
     const password = "1234567890";
     const hashedPassword = await hash(password, 10);
     const user = {
@@ -463,12 +460,7 @@ describe("Projects endpoints", () => {
     const mockUserCollection = {
       findOne: jest.fn().mockResolvedValue(user)
     };
-    const mockProjectCollection = {
-      insertOne: jest.fn().mockResolvedValue({
-        insertedId: "1"
-      })
-    };
-    const mockFloorCollection = {
+    const mockNoteCollection = {
       insertOne: jest.fn().mockResolvedValue({
         insertedId: "1"
       })
@@ -477,16 +469,14 @@ describe("Projects endpoints", () => {
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
-      } else if (collectionName === "projects") {
-        return mockProjectCollection;
-      } else if (collectionName === "floors") {
-        return mockFloorCollection;
+      } else if (collectionName === "notes") {
+        return mockNoteCollection;
       }
       return null;
     });
 
     const res = await request(app)
-      .post("/project")
+      .post("/note")
       .send({ title: "Draft" })
       .set("Content-Type", "application/json")
       .set("Accept", "application/json");
@@ -499,10 +489,10 @@ describe("Projects endpoints", () => {
   });
 
   //
-  // ========== Update project ==========
+  // ========== Update note ==========
   //
 
-  test("updating a project, signed in, expect success", async () => {
+  test("updating a note, signed in, expect success", async () => {
     const password = "1234567890";
     const hashedPassword = await hash(password, 10);
     const user = {
@@ -515,15 +505,15 @@ describe("Projects endpoints", () => {
     const mockUserCollection = {
       findOne: jest.fn().mockResolvedValue(user)
     };
-    const mockProjectCollection = {
+    const mockNoteCollection = {
       updateOne: jest.fn().mockResolvedValue({ modifiedCount: 1 })
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
-      } else if (collectionName === "projects") {
-        return mockProjectCollection;
+      } else if (collectionName === "notes") {
+        return mockNoteCollection;
       }
       return null;
     });
@@ -533,10 +523,12 @@ describe("Projects endpoints", () => {
       password: password
     };
 
-    const patchProjectPayload = {
+    const patchNotePayload = {
       title: "New title",
-      description: "New description",
-      status: "InProgress"
+      description: "Desc",
+      category: "BlockedEscapeRoute",
+      xCoordinate: 1,
+      yCoordinate: 1
     };
 
     const signInRes = await request(app)
@@ -551,8 +543,8 @@ describe("Projects endpoints", () => {
     const cookies = signInRes.headers["set-cookie"];
 
     const res = await request(app)
-      .patch("/project/1")
-      .send(patchProjectPayload)
+      .patch("/note/1")
+      .send(patchNotePayload)
       .set("Cookie", cookies)
       .set("Content-Type", "application/json")
       .set("Accept", "application/json");
@@ -561,7 +553,7 @@ describe("Projects endpoints", () => {
     expect(res.body).toEqual({ success: true });
   });
 
-  test("updating a project, signed in, incorrect project id, expect failure", async () => {
+  test("updating a note, signed in, incorrect note id, expect failure", async () => {
     const password = "1234567890";
     const hashedPassword = await hash(password, 10);
     const user = {
@@ -574,15 +566,15 @@ describe("Projects endpoints", () => {
     const mockUserCollection = {
       findOne: jest.fn().mockResolvedValue(user)
     };
-    const mockProjectCollection = {
+    const mockNoteCollection = {
       updateOne: jest.fn().mockResolvedValue({ modifiedCount: 0 })
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
-      } else if (collectionName === "projects") {
-        return mockProjectCollection;
+      } else if (collectionName === "notes") {
+        return mockNoteCollection;
       }
       return null;
     });
@@ -592,10 +584,12 @@ describe("Projects endpoints", () => {
       password: password
     };
 
-    const patchProjectPayload = {
+    const patchNotePayload = {
       title: "New title",
-      description: "New description",
-      status: "InProgress"
+      description: "Desc",
+      category: "BlockedEscapeRoute",
+      xCoordinate: 1,
+      yCoordinate: 1
     };
 
     const signInRes = await request(app)
@@ -610,20 +604,20 @@ describe("Projects endpoints", () => {
     const cookies = signInRes.headers["set-cookie"];
 
     const res = await request(app)
-      .patch("/project/1")
-      .send(patchProjectPayload)
+      .patch("/note/1")
+      .send(patchNotePayload)
       .set("Cookie", cookies)
       .set("Content-Type", "application/json")
       .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toEqual({
-      message: "Project not found, no changes were made",
+      message: "Note not found, no changes were made",
       statusCode: 400
     });
   });
 
-  test("updating a project, signed in, incorrect input data, expect failure", async () => {
+  test("updating a note, signed in, incorrect input data, expect failure", async () => {
     const password = "1234567890";
     const hashedPassword = await hash(password, 10);
     const user = {
@@ -636,15 +630,15 @@ describe("Projects endpoints", () => {
     const mockUserCollection = {
       findOne: jest.fn().mockResolvedValue(user)
     };
-    const mockProjectCollection = {
+    const mockNoteCollection = {
       updateOne: jest.fn().mockResolvedValue({ modifiedCount: 1 })
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
-      } else if (collectionName === "projects") {
-        return mockProjectCollection;
+      } else if (collectionName === "notes") {
+        return mockNoteCollection;
       }
       return null;
     });
@@ -654,10 +648,11 @@ describe("Projects endpoints", () => {
       password: password
     };
 
-    const patchProjectPayload = {
+    const patchNotePayload = {
       title: "New title",
-      description: "New description",
-      status: null
+      description: "Desc",
+      xCoordinate: 1,
+      yCoordinate: 1
     };
 
     const signInRes = await request(app)
@@ -672,21 +667,20 @@ describe("Projects endpoints", () => {
     const cookies = signInRes.headers["set-cookie"];
 
     const res = await request(app)
-      .patch("/project/1")
-      .send(patchProjectPayload)
+      .patch("/note/1")
+      .send(patchNotePayload)
       .set("Cookie", cookies)
       .set("Content-Type", "application/json")
       .set("Accept", "application/json");
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toEqual({
-      message:
-        'Validation error: "status" must be one of [Draft, InProgress, Finished],"status" must be a string',
+      message: 'Validation error: "category" is required',
       statusCode: 400
     });
   });
 
-  test("updating a project, not signed in, expect failure", async () => {
+  test("updating a note, not signed in, expect failure", async () => {
     const password = "1234567890";
     const hashedPassword = await hash(password, 10);
     const user = {
@@ -699,28 +693,30 @@ describe("Projects endpoints", () => {
     const mockUserCollection = {
       findOne: jest.fn().mockResolvedValue(user)
     };
-    const mockProjectCollection = {
+    const mockNoteCollection = {
       updateOne: jest.fn().mockResolvedValue({ modifiedCount: 1 })
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
-      } else if (collectionName === "projects") {
-        return mockProjectCollection;
+      } else if (collectionName === "notes") {
+        return mockNoteCollection;
       }
       return null;
     });
 
-    const patchProjectPayload = {
+    const patchNotePayload = {
       title: "New title",
-      description: "New description",
-      status: null
+      description: "Desc",
+      category: "BlockedEscapeRoute",
+      xCoordinate: 1,
+      yCoordinate: 1
     };
 
     const res = await request(app)
-      .patch("/project/1")
-      .send(patchProjectPayload)
+      .patch("/note/1")
+      .send(patchNotePayload)
       .set("Content-Type", "application/json")
       .set("Accept", "application/json");
 
@@ -732,10 +728,10 @@ describe("Projects endpoints", () => {
   });
 
   //
-  // ========== Delete project ==========
+  // ========== Delete note ==========
   //
 
-  test("deleting a project, signed in, expect success", async () => {
+  test("deleting a note, signed in, expect success", async () => {
     const password = "1234567890";
     const hashedPassword = await hash(password, 10);
     const user = {
@@ -748,15 +744,15 @@ describe("Projects endpoints", () => {
     const mockUserCollection = {
       findOne: jest.fn().mockResolvedValue(user)
     };
-    const mockProjectCollection = {
+    const mockNoteCollection = {
       deleteOne: jest.fn().mockResolvedValue({ deletedCount: 1 })
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
-      } else if (collectionName === "projects") {
-        return mockProjectCollection;
+      } else if (collectionName === "notes") {
+        return mockNoteCollection;
       }
       return null;
     });
@@ -777,13 +773,13 @@ describe("Projects endpoints", () => {
 
     const cookies = signInRes.headers["set-cookie"];
 
-    const res = await request(app).delete("/project/1").set("Cookie", cookies);
+    const res = await request(app).delete("/note/1").set("Cookie", cookies);
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual({ success: true });
   });
 
-  test("deleting a project, signed in, incorrect project id, expect failure", async () => {
+  test("deleting a note, signed in, incorrect note id, expect failure", async () => {
     const password = "1234567890";
     const hashedPassword = await hash(password, 10);
     const user = {
@@ -796,15 +792,15 @@ describe("Projects endpoints", () => {
     const mockUserCollection = {
       findOne: jest.fn().mockResolvedValue(user)
     };
-    const mockProjectCollection = {
+    const mockNoteCollection = {
       deleteOne: jest.fn().mockResolvedValue({ deletedCount: 0 })
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
-      } else if (collectionName === "projects") {
-        return mockProjectCollection;
+      } else if (collectionName === "notes") {
+        return mockNoteCollection;
       }
       return null;
     });
@@ -825,16 +821,16 @@ describe("Projects endpoints", () => {
 
     const cookies = signInRes.headers["set-cookie"];
 
-    const res = await request(app).delete("/project/1").set("Cookie", cookies);
+    const res = await request(app).delete("/note/1").set("Cookie", cookies);
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toEqual({
-      message: "Project not found, no changes were made",
+      message: "Note not found, no changes were made",
       statusCode: 400
     });
   });
 
-  test("deleting a project, not signed in, expect failure", async () => {
+  test("deleting a note, not signed in, expect failure", async () => {
     const password = "1234567890";
     const hashedPassword = await hash(password, 10);
     const user = {
@@ -847,20 +843,20 @@ describe("Projects endpoints", () => {
     const mockUserCollection = {
       findOne: jest.fn().mockResolvedValue(user)
     };
-    const mockProjectCollection = {
+    const mockNoteCollection = {
       deleteOne: jest.fn().mockResolvedValue({ deletedCount: 1 })
     };
 
     mockGetCollection.mockImplementation((collectionName) => {
       if (collectionName === "users") {
         return mockUserCollection;
-      } else if (collectionName === "projects") {
-        return mockProjectCollection;
+      } else if (collectionName === "notes") {
+        return mockNoteCollection;
       }
       return null;
     });
 
-    const res = await request(app).delete("/project/1");
+    const res = await request(app).delete("/note/1");
 
     expect(res.statusCode).toEqual(401);
     expect(res.body).toEqual({

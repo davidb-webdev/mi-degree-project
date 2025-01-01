@@ -1,25 +1,26 @@
-import { Outlet, useNavigate } from "react-router";
+import { Outlet } from "react-router";
 import { Box, Dialog, useTheme } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useCustomParams } from "../utils/useCustomParams";
 
 interface ModalLayoutProps {
   baseUrl: string;
 }
 
 const DialogLayout = ({ baseUrl }: ModalLayoutProps) => {
-  const navigate = useNavigate();
+  const { navigateWithParams } = useCustomParams();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Dialog
       open={true}
-      onClose={() => navigate(baseUrl)}
+      onClose={() => navigateWithParams(baseUrl)}
       fullScreen={isMobile}
       keepMounted
       aria-describedby="modalTitle"
     >
-      <Box minWidth="300px">
+      <Box sx={{ maxWidth: "300px" }}>
         <Outlet />
       </Box>
     </Dialog>
