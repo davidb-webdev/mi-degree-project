@@ -2,7 +2,9 @@ import {
   FormControl,
   MenuItem,
   Select,
-  SelectChangeEvent
+  SelectChangeEvent,
+  useMediaQuery,
+  useTheme
 } from "@mui/material";
 import FloorPlanView from "./FloorPlanView";
 import { useFloors } from "../../utils/useFloors";
@@ -12,6 +14,8 @@ import { useTranslation } from "react-i18next";
 const ProjectView = () => {
   const { floors } = useFloors();
   const { getParam, navigateAndUpdateParams } = useCustomParams();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { t } = useTranslation("translation", {
     keyPrefix: "dashboard.project"
   });
@@ -28,13 +32,21 @@ const ProjectView = () => {
 
   return (
     <>
-      <FormControl fullWidth>
+      <FormControl
+        sx={{
+          position: "absolute",
+          bottom: isMobile ? "4.5rem" : "1.5rem",
+          left: "1.5rem",
+          zIndex: 100
+        }}
+      >
         <Select
           name="floor"
           labelId="floorLabel"
           onChange={(event) => onChange(event)}
           value={getParam("f") ?? ""}
           inputProps={{ "aria-label": t("floor") }}
+          sx={{ backgroundColor: theme.palette.primary.light }}
         >
           {floors.map((floor) => (
             <MenuItem value={floor._id} key={floor._id}>
