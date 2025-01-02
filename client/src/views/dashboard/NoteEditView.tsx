@@ -8,6 +8,7 @@ import useAxios from "../../utils/useAxios";
 import { useSnackbar } from "../../utils/useSnackbar";
 import { Note, NoteCategories, NoteCategory } from "../../models/Note";
 import SelectWithPredefinedList from "../../components/SelectWithPredefinedList";
+import { useNotes } from "../../utils/useNotes";
 
 interface EditNoteViewProps {
   newNote?: boolean;
@@ -15,6 +16,7 @@ interface EditNoteViewProps {
 
 const EditNoteView = ({ newNote }: EditNoteViewProps) => {
   const { note, setNote } = useNote();
+  const { refreshNotes } = useNotes();
   const [formData, setFormData] = useState(
     note ?? new Note("", NoteCategories.BlockedEscapeRoute, "", 1, 1)
   );
@@ -81,6 +83,7 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
                 await apiClient.delete<{ success: boolean }>(
                   `/api/note/${note!._id}`
                 );
+                refreshNotes();
                 navigateAndUpdateParams("/dashboard", {}, ["n"]);
               }
             : "/dashboard/note"

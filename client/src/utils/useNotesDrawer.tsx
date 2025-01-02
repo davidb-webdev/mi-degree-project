@@ -1,6 +1,13 @@
 import { useMediaQuery, useTheme } from "@mui/material";
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState
+} from "react";
 import { useLocation } from "react-router";
+import { useCustomParams } from "./useCustomParams";
 
 interface NotesDrawerContextProps {
   open: boolean;
@@ -17,13 +24,20 @@ const NotesDrawerContext = createContext<NotesDrawerContextProps>({
 });
 
 export const NotesDrawerProvider = ({ children }: { children: ReactNode }) => {
+  const [width, setWidth] = useState("33vw");
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = useState(
     location.pathname.includes("/note/") ? true : !isMobile
   );
-  const [width, setWidth] = useState("33vw");
+  const { getParam } = useCustomParams();
+
+  useEffect(() => {
+    if (location.pathname.includes("dashboard/note")) {
+      setOpen(location.pathname.includes("dashboard/note"));
+    }
+  }, [getParam("n")]);
 
   const toggle = () => {
     setOpen((prevOpen) => !prevOpen);
