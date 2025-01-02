@@ -41,7 +41,12 @@ export const getNote = async (
 };
 
 export const postNote = async (
-  req: TypedRequestBody<{ title: string; floorId: string }>,
+  req: TypedRequestBody<{
+    title: string;
+    floorId: string;
+    xCoordinate?: number;
+    yCoordinate?: number;
+  }>,
   res: TypedResponse<{ id: string }>,
   next: NextFunction
 ) => {
@@ -51,8 +56,8 @@ export const postNote = async (
       description: "",
       category: NoteCategories.BlockedEscapeRoute,
       floorId: new ObjectId(req.body.floorId),
-      xCoordinate: 0,
-      yCoordinate: 0,
+      xCoordinate: req.body.xCoordinate ?? 0,
+      yCoordinate: req.body.yCoordinate ?? 0,
       createdAt: new Date(),
       editedAt: new Date()
     };
@@ -78,8 +83,7 @@ export const patchNote = async (
   next: NextFunction
 ) => {
   try {
-    const { title, description, category, xCoordinate, yCoordinate } =
-      req.body;
+    const { title, description, category, xCoordinate, yCoordinate } = req.body;
     const note = {
       title,
       description,
