@@ -29,13 +29,11 @@ export const generateDocument = async (
   const project = await DatabaseConnection.getInstance().getProjectById(
     new ObjectId(projectId)
   );
-	
-  // TODO: Get user info (name)
 
   let docFloorPlans: Paragraph[] = [];
   let docNotes: Paragraph[] = [];
   for (const floor of floors) {
-    const meta = imageSize("files/floorplans/fp.png"); // TODO: Get real images
+    const meta = imageSize(floor.floorPlanPath);
     let calculatedHeight = 0;
     let fileType = "jpg";
     if (
@@ -58,20 +56,25 @@ export const generateDocument = async (
     docFloorPlans.push(
       new Paragraph({
         text: floor.title,
-        heading: HeadingLevel.HEADING_2
+        heading: HeadingLevel.HEADING_2,
+        spacing: {
+            before: 200,
+        }
       }),
       new Paragraph({
         children: [
           new ImageRun({
             type: fileType as "jpg" | "png" | "gif" | "bmp",
-            // data: fs.readFileSync(floor.floorPlanPath), // TODO: Get real images
-            data: fs.readFileSync("files/floorplans/fp.png"),
+            data: fs.readFileSync(floor.floorPlanPath),
             transformation: {
               width: 400,
               height: calculatedHeight ?? 300
             }
           })
-        ]
+        ],
+        spacing: {
+          after: 100
+        }
       })
     );
 
@@ -83,17 +86,22 @@ export const generateDocument = async (
       docNotes.push(
         new Paragraph({
           text: note.title,
-          heading: HeadingLevel.HEADING_2
+          heading: HeadingLevel.HEADING_2,
+          spacing: {
+            before: 100
+          }
         }),
         new Paragraph({
-          text: note.description
+          text: note.description,
+          spacing: {
+            after: 100
+          }
         })
       );
     }
   }
 
   const doc = new Document({
-    creator: "TODO",
     title: project.title,
     description: translation.title,
     sections: [
@@ -105,29 +113,41 @@ export const generateDocument = async (
           }),
           new Paragraph({
             text: project.title,
-            heading: HeadingLevel.HEADING_1
+            heading: HeadingLevel.HEADING_1,
+            spacing: {
+                before: 100,
+            }
           }),
           new Paragraph({
-            text: `${translation.inspector}: TODO`
+            text: `${translation.inspector}: `
           }),
           new Paragraph({
             text: `${translation.date}: `
           }),
           new Paragraph({
             text: translation.projectDescription,
-            heading: HeadingLevel.HEADING_2
+            heading: HeadingLevel.HEADING_2,
+            spacing: {
+              before: 100
+            }
           }),
           new Paragraph({
             text: project.description
           }),
           new Paragraph({
             text: translation.floorPlans,
-            heading: HeadingLevel.HEADING_1
+            heading: HeadingLevel.HEADING_1,
+            spacing: {
+                before: 100,
+            }
           }),
           ...docFloorPlans,
           new Paragraph({
             text: translation.notes,
-            heading: HeadingLevel.HEADING_1
+            heading: HeadingLevel.HEADING_1,
+            spacing: {
+                before: 100,
+            }
           }),
           ...docNotes
         ]
