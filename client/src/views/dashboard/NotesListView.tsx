@@ -18,7 +18,7 @@ const NotesListView = () => {
   const { notes, refreshNotes } = useNotes();
   const { getParam, navigateAndUpdateParams } = useCustomParams();
   const apiClient = useAxios();
-  const { t } = useTranslation("translation", {
+  const { t, i18n } = useTranslation("translation", {
     keyPrefix: "dashboard.notesList"
   });
 
@@ -79,11 +79,26 @@ const NotesListView = () => {
         ))}
       </List>
 
-      <Box sx={{ position: "absolute", bottom: 0, width: "100%", p: 2 }}>
-        <Button fullWidth variant="contained">
-          {t("export")}
-        </Button>
-      </Box>
+      {getParam("p") && (
+        <Box sx={{ position: "absolute", bottom: 0, width: "100%", p: 2 }}>
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={async () => {
+              const requestBody = {
+                projectId: getParam("p"),
+                language: i18n.resolvedLanguage
+              };
+              await apiClient.post<{ success: boolean }>(
+                `/api/document`,
+                requestBody
+              );
+            }}
+          >
+            {t("export")}
+          </Button>
+        </Box>
+      )}
     </>
   );
 };

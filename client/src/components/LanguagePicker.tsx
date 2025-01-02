@@ -12,7 +12,7 @@ const LanguagePicker = () => {
       label={t("language")}
       name="language"
       onChange={(event) => i18n.changeLanguage(event.target.value)}
-      value={i18n.resolvedLanguage || "en"}
+      value={i18n.resolvedLanguage || "sv"}
     />
   );
 };
