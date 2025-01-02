@@ -1,0 +1,170 @@
+{
+  "start": {
+    "layout": {
+      "register": "Registrera",
+      "signIn": "Logga in"
+    },
+    "intro": {
+      "p1": "p1",
+      "p2": "p2",
+      "p3": "p3",
+      "register": "Registrera",
+      "signIn": "Logga in"
+    },
+    "register": {
+      "title": "Registrera användare",
+      "name": "Namn",
+      "email": "E-post",
+      "password": "Lösenord",
+      "repeatPassword": "Upprepa lösenord",
+      "submit": "Registrera användare",
+      "or": "eller",
+      "signIn": "Logga in",
+      "passwordsMustMatch": "Lösenordsfälten måste vara samma",
+      "success": "Användarkonto registrerat"
+    },
+    "signIn": {
+      "title": "Logga in",
+      "email": "E-post",
+      "password": "Lösenord",
+      "submit": "Logga in",
+      "or": "eller",
+      "register": "Registrera"
+    }
+  },
+  "dashboard": {
+    "layout": {
+      "openMenu": "Öppna menyn",
+      "openNotes": "Öppna anteckningar",
+      "details": "Detaljer"
+    },
+    "modalToolbar": {
+      "back": "Tillbaka"
+    },
+    "closeButton": {
+      "close": "Stäng"
+    },
+    "languagePicker": {
+      "language": "Språk"
+    },
+    "notesDrawer": {
+      "title": "Anteckningar"
+    },
+    "notesList": {
+      "title": "Anteckningar",
+      "add": "Lägg till",
+      "export": "Exportera till dokument",
+      "draftTitle": "Utkast",
+      "deleteNote": "Radera anteckning"
+    },
+    "note": {
+      "edit": "Redigera",
+      "category": "Kategori",
+      "description": "Beskrivning"
+    },
+    "noteEdit": {
+      "newNote": "Ny anteckning",
+      "save": "Spara",
+      "title": "Rubrik",
+      "category": "Kategori",
+      "description": "Beskrivning",
+      "addPhotos": "Lägg till bilder",
+      "editLocation": "Ändra plats på planritning",
+      "success": "Anteckningen sparades"
+    },
+    "project": {
+      "floor": "Våningsplan",
+      "editFloors": "Ändra våningsplan",
+      "floorPlanHint": {
+        "mobile": "Håll inne i två sekunder på planskissen för att lägga till en ny anteckning",
+        "desktop": "Högerklicka på planskissen för att lägga till en ny anteckning"
+      },
+      "uploadBlurb": "Börja med att ladda upp en planritning",
+      "selectFile": "Välj fil",
+      "upload": "Ladda upp"
+    },
+    "projectDetails": {
+      "status": "Status",
+      "description": "Beskrivning",
+      "edit": "Redigera detaljer"
+    },
+    "projectDetailsEdit": {
+      "title": "Benämning",
+      "status": "Status",
+      "description": "Beskrivning",
+      "submit": "Spara projektdetaljer",
+      "success": "Projektet sparades"
+    },
+    "user": {
+      "title": "Användarprofil",
+      "edit": "Redigera användare",
+      "changePassword": "Ändra lösenord"
+    },
+    "userEdit": {
+      "title": "Redigera användare",
+      "replaceAvatar": "Byt bild",
+      "addPicture": "Lägg till bild",
+      "name": "Namn",
+      "email": "E-post",
+      "submit": "Spara användare"
+    },
+    "userPassword": {
+      "title": "Ändra lösenord",
+      "currentPassword": "Nuvarande lösenord",
+      "newPassword": "Nytt lösenord",
+      "submit": "Spara lösenord"
+    },
+    "signOut": {
+      "signOut": "Logga ut"
+    },
+    "menu": {
+      "projects": "Projekt",
+      "newProject": "Nytt projekt",
+      "draftTitle": "Utkast",
+      "deleteProject": "Radera projekt",
+      "userProfile": "Användarprofil"
+    },
+    "floorPlan": {
+      "draftTitle": "Utkast"
+    },
+    "floors": {
+      "floors": "Våningsplan",
+      "deleteFloor": "Radera våningsplan",
+      "newFloor": "Nytt våningsplan",
+      "draftTitle": "Våningsplan"
+    },
+    "floorEdit": {
+      "success": "Våningsplanet sparades",
+      "title": "Benämning",
+      "uploadPlan": "Ladda upp planritning",
+      "submit": "Spara våningsplan"
+    }
+  },
+  "models": {
+    "languages": {
+      "en": "Engelska",
+      "sv": "Svenska"
+    },
+    "noteCategories": {
+      "BlockedEscapeRoute": "Blockerad utrymningsväg",
+      "FireHazard": "Brandrisk",
+      "NoFireAlarm": "Inget brandlarm"
+    },
+    "projectStatuses": {
+      "Draft": "Utkast",
+      "InProgress": "Pågående",
+      "Finished": "Avslutat"
+    }
+  },
+  "axios": {
+    "errors": {
+      "genericServerError": "Servern svarade med en felkod, vänligen försök igen",
+      "noResponse": "Inget svar från servern, vänligen försök igen",
+      "unknown": "Ett okänt fel inträffade"
+    }
+  },
+  "auth": {
+    "signIn": "Du är nu inloggad",
+    "signOut": "Du är nu utloggad"
+  }
+}

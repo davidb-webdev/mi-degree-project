@@ -1,0 +1,170 @@
+{
+  "start": {
+    "layout": {
+      "register": "Register",
+      "signIn": "Sign in"
+    },
+    "intro": {
+      "p1": "p1",
+      "p2": "p2",
+      "p3": "p3",
+      "register": "Register",
+      "signIn": "Sign in"
+    },
+    "register": {
+      "title": "Register User",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "repeatPassword": "Repeat password",
+      "submit": "Register user",
+      "or": "or",
+      "signIn": "Sign in",
+      "passwordsMustMatch": "Password fields must match",
+      "success": "User registered successfully"
+    },
+    "signIn": {
+      "title": "Sign In",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "or": "or",
+      "register": "Register"
+    }
+  },
+  "dashboard": {
+    "layout": {
+      "openMenu": "Open menu",
+      "openNotes": "Open notes",
+      "details": "Details"
+    },
+    "modalToolbar": {
+      "back": "Back"
+    },
+    "closeButton": {
+      "close": "Close"
+    },
+    "languagePicker": {
+      "language": "Language"
+    },
+    "notesDrawer": {
+      "title": "Notes"
+    },
+    "notesList": {
+      "title": "Notes",
+      "add": "Add",
+      "export": "Export to document",
+      "draftTitle": "Draft",
+      "deleteNote": "Delete note"
+    },
+    "note": {
+      "edit": "Edit",
+      "category": "Category",
+      "description": "Description"
+    },
+    "noteEdit": {
+      "newNote": "New note",
+      "save": "Save",
+      "title": "Title",
+      "category": "Category",
+      "description": "Description",
+      "addPhotos": "Add photos",
+      "editLocation": "Edit location on floor plan",
+      "success": "Note saved"
+    },
+    "project": {
+      "floor": "Floor plan",
+      "editFloors": "Edit floor plans",
+      "floorPlanHint": {
+        "mobile": "Long-press on the floor plan to add a new note",
+        "desktop": "Right-click on the floor plan to add a new note"
+      },
+      "uploadBlurb": "Begin by uploading a floor plan",
+      "selectFile": "Select file",
+      "upload": "Upload"
+    },
+    "projectDetails": {
+      "status": "Status",
+      "description": "Description",
+      "edit": "Edit details"
+    },
+    "projectDetailsEdit": {
+      "title": "Title",
+      "status": "Status",
+      "description": "Description",
+      "submit": "Save project details",
+      "success": "Project saved"
+    },
+    "user": {
+      "title": "User Profile",
+      "edit": "Edit user",
+      "changePassword": "Change password"
+    },
+    "userEdit": {
+      "title": "Edit User",
+      "replaceAvatar": "Replace picture",
+      "addPicture": "Add picture",
+      "name": "Name",
+      "email": "Email",
+      "submit": "Save user"
+    },
+    "userPassword": {
+      "title": "Change Password",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "submit": "Save password"
+    },
+    "signOut": {
+      "signOut": "Sign out"
+    },
+    "menu": {
+      "projects": "Projects",
+      "newProject": "New project",
+      "draftTitle": "Draft",
+      "deleteProject": "Delete project",
+      "userProfile": "User profile"
+    },
+    "floorPlan": {
+      "draftTitle": "Draft"
+    },
+    "floors": {
+      "floors": "Floors",
+      "deleteFloor": "Delete floor",
+      "newFloor": "New floor",
+      "draftTitle": "Floor"
+    },
+    "floorEdit": {
+      "success": "Floor saved",
+      "title": "Title",
+      "uploadPlan": "Upload floor plan",
+      "submit": "Save floor"
+    }
+  },
+  "models": {
+    "languages": {
+      "en": "English",
+      "sv": "Swedish"
+    },
+    "noteCategories": {
+      "BlockedEscapeRoute": "Blocked Escape Route",
+      "FireHazard": "Fire Hazard",
+      "NoFireAlarm": "No Fire Alarm"
+    },
+    "projectStatuses": {
+      "Draft": "Draft",
+      "InProgress": "In progress",
+      "Finished": "Finished"
+    }
+  },
+  "axios": {
+    "errors": {
+      "genericServerError": "The server responded with an error, please try again",
+      "noResponse": "No response from server, please try again",
+      "unknown": "An unknown error occurred"
+    }
+  },
+  "auth": {
+    "signIn": "Signed in successfully",
+    "signOut": "Signed out successfully"
+  }
+}
