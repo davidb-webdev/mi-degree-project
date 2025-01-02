@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from "react";
+import { MouseEvent, TouchEvent, useState } from "react";
 
 interface FloorPlanImageProps {
   src: string;
@@ -7,6 +7,7 @@ interface FloorPlanImageProps {
   onContext?: (x: number, y: number) => void;
   onLongPress?: (x: number, y: number) => void;
   longPressDuration?: number;
+  moveThreshold?: number;
 }
 
 const FloorPlanImage = ({
@@ -15,11 +16,14 @@ const FloorPlanImage = ({
   onClick,
   onContext,
   onLongPress,
-  longPressDuration = 500
+  longPressDuration = 2000,
+  moveThreshold = 10
 }: FloorPlanImageProps) => {
   const [isLongPress, setIsLongPress] = useState(false);
 
   let pressTimer: number | undefined = undefined;
+  let startX = 0;
+  let startY = 0;
 
   const handleImageContext = (event: MouseEvent<HTMLImageElement>) => {
     if (onContext !== undefined) {
@@ -36,12 +40,15 @@ const FloorPlanImage = ({
     }
   };
 
-  const handleTouchStart = (e: React.TouchEvent<HTMLImageElement>) => {
-    const touch = e.touches[0];
-    const rect = e.currentTarget.getBoundingClientRect();
+  const handleTouchStart = (event: TouchEvent<HTMLImageElement>) => {
+    const touch = event.touches[0];
+    startX = touch.clientX;
+    startY = touch.clientY;
+    const rect = event.currentTarget.getBoundingClientRect();
 
     pressTimer = setTimeout(() => {
       setIsLongPress(true);
+      pressTimer = undefined;
       if (onLongPress !== undefined) {
         const imageWidth = rect.width;
         const imageHeight = rect.height;
@@ -54,8 +61,23 @@ const FloorPlanImage = ({
     }, longPressDuration);
   };
 
+  const handleTouchMove = (event: TouchEvent<HTMLImageElement>) => {
+    const touch = event.touches[0];
+    const deltaX = Math.abs(touch.clientX - startX);
+    const deltaY = Math.abs(touch.clientY - startY);
+
+    if (deltaX > moveThreshold || deltaY > moveThreshold) {
+      clearTimeout(pressTimer);
+      setIsLongPress(false);
+      pressTimer = undefined;
+    }
+  };
+
   const handleTouchEnd = () => {
-    clearTimeout(pressTimer);
+    if (pressTimer) {
+      clearTimeout(pressTimer);
+      pressTimer = undefined;
+    }
     if (!isLongPress) {
       if (onClick !== undefined) {
         onClick();
@@ -65,29 +87,32 @@ const FloorPlanImage = ({
   };
 
   const handleTouchCancel = () => {
-    clearTimeout(pressTimer);
+    if (pressTimer) {
+      clearTimeout(pressTimer);
+      pressTimer = undefined;
+    }
     setIsLongPress(false);
   };
 
   return (
-    <>
-      <img
-        src={src}
-        id={`fp-${src}`}
-        alt="Floor plan"
-        style={{
-          width: "500px",
-          height: "500px",
-          display: "block",
-          pointerEvents: "auto"
-        }}
-        onLoad={onLoad}
-        onContextMenu={handleImageContext}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onTouchCancel={handleTouchCancel}
-      />
-    </>
+    <img
+      src={src}
+      id={`fp-${src}`}
+      alt="Floor plan"
+      style={{
+        width: "500px",
+        height: "500px",
+        display: "block",
+        pointerEvents: "all",
+        touchAction: "auto"
+      }}
+      onLoad={onLoad}
+      onContextMenu={handleImageContext}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchCancel}
+    />
   );
 };
 
