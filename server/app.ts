@@ -35,6 +35,7 @@ import {
 } from "./controllers/notes.controller";
 import { patchNoteSchema, postNoteSchema } from "./schemas/notes.schema";
 import { postDocument } from "./controllers/document";
+import { postDocumentSchema } from "./schemas/document.schema";
 
 dotenv.config();
 const app = express();
@@ -71,7 +72,7 @@ app.post("/note", requireAuth, validate(postNoteSchema), postNote);
 app.patch("/note/:id", requireAuth, validate(patchNoteSchema), patchNote);
 app.delete("/note/:id", requireAuth, deleteNote);
 
-app.post("/document", postDocument);
+app.post("/document", validate(postDocumentSchema), postDocument);
 
 app.use(errorHandler);
 
