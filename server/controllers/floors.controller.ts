@@ -8,7 +8,6 @@ import {
 import { NextFunction } from "express";
 import { ObjectId } from "mongodb";
 import { WithId } from "../models/Mongodb";
-import { Note, NoteCategories, NoteCategory } from "../models/Note";
 import { Floor } from "../models/Floor";
 
 export const getFloors = async (
@@ -32,10 +31,10 @@ export const getFloor = async (
   next: NextFunction
 ) => {
   try {
-    const note = await DatabaseConnection.getInstance().getFloorById(
+    const floor = await DatabaseConnection.getInstance().getFloorById(
       new ObjectId(req.params.id)
     );
-    res.json(note);
+    res.json(floor);
   } catch (error: unknown) {
     next(error);
   }
