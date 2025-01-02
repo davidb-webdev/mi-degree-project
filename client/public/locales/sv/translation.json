@@ -121,7 +121,8 @@
       "projects": "Projekt",
       "newProject": "Nytt projekt",
       "draftTitle": "Utkast",
-      "deleteProject": "Radera projekt"
+      "deleteProject": "Radera projekt",
+      "userProfile": "Användarprofil"
     },
     "floorPlan": {
       "draftTitle": "Utkast"

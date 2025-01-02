@@ -121,7 +121,8 @@
       "projects": "Projects",
       "newProject": "New project",
       "draftTitle": "Draft",
-      "deleteProject": "Delete project"
+      "deleteProject": "Delete project",
+      "userProfile": "User profile"
     },
     "floorPlan": {
       "draftTitle": "Draft"
