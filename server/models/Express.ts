@@ -1,8 +1,8 @@
-import Express from "express";
-import { Send, Query, ParamsDictionary } from "express-serve-static-core";
+import { Send, ParamsDictionary } from "express-serve-static-core";
 
 export interface TypedRequestBody<T> extends Express.Request {
   body: T;
+  file?: Express.Multer.File;
 }
 
 export interface TypedRequestParams<T extends ParamsDictionary>
@@ -14,6 +14,7 @@ export interface TypedRequest<U extends ParamsDictionary, T>
   extends Express.Request {
   params: U;
   body: T;
+  file?: Express.Multer.File;
 }
 
 export interface TypedResponse<ResBody> extends Express.Response {

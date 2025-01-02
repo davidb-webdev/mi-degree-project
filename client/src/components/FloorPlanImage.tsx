@@ -21,7 +21,7 @@ const FloorPlanImage = ({
 }: FloorPlanImageProps) => {
   const [isLongPress, setIsLongPress] = useState(false);
 
-  let pressTimer: number | undefined = undefined;
+  let pressTimer: ReturnType<typeof setTimeout> | undefined = undefined;
   let startX = 0;
   let startY = 0;
 
@@ -97,7 +97,7 @@ const FloorPlanImage = ({
   return (
     <img
       src={src}
-      id={`fp-${src}`}
+      id={"floorPlanImage"}
       alt="Floor plan"
       style={{
         width: "500px",

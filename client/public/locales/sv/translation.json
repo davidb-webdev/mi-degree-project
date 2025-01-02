@@ -78,7 +78,10 @@
       "floorPlanHint": {
         "mobile": "Håll inne i två sekunder på planskissen för att lägga till en ny anteckning",
         "desktop": "Högerklicka på planskissen för att lägga till en ny anteckning"
-      }
+      },
+      "uploadBlurb": "Börja med att ladda upp en planritning",
+      "selectFile": "Välj fil",
+      "upload": "Ladda upp"
     },
     "projectDetails": {
       "status": "Status",
@@ -118,7 +121,8 @@
       "projects": "Projekt",
       "newProject": "Nytt projekt",
       "draftTitle": "Utkast",
-      "deleteProject": "Radera projekt"
+      "deleteProject": "Radera projekt",
+      "userProfile": "Användarprofil"
     },
     "floorPlan": {
       "draftTitle": "Utkast"

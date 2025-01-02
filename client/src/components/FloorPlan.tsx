@@ -4,7 +4,6 @@ import {
   TransformComponent,
   ReactZoomPanPinchRef
 } from "react-zoom-pan-pinch";
-import floorPlan from "../assets/images/fp.png";
 import { useRef } from "react";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { useNotes } from "../utils/useNotes";
@@ -12,8 +11,10 @@ import FloorPlanImage from "./FloorPlanImage";
 import { useTranslation } from "react-i18next";
 import useAxios from "../utils/useAxios";
 import FloorPlanMarker from "./FloorPlanMarker";
+import { useFloor } from "../utils/useFloor";
 
 const FloorPlan = () => {
+  const {floor} = useFloor();
   const { notes, refreshNotes } = useNotes();
   const { getParam, navigateAndUpdateParams } = useCustomParams();
   const theme = useTheme();
@@ -46,7 +47,7 @@ const FloorPlan = () => {
 
   const zoomToImage = () => {
     if (transformComponentRef.current) {
-      transformComponentRef.current.zoomToElement(`fp-${floorPlan}`);
+      transformComponentRef.current.zoomToElement("floorPlanImage");
     }
   };
 
@@ -69,7 +70,7 @@ const FloorPlan = () => {
       >
         <Box sx={{ position: "relative" }}>
           <FloorPlanImage
-            src={floorPlan}
+            src={`/api/${floor?.floorPlanPath}`}
             onLoad={zoomToImage}
             onLongPress={(x: number, y: number) => addMarker(x, y)}
             onContext={(x: number, y: number) => addMarker(x, y)}

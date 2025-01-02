@@ -78,7 +78,10 @@
       "floorPlanHint": {
         "mobile": "Long-press on the floor plan to add a new note",
         "desktop": "Right-click on the floor plan to add a new note"
-      }
+      },
+      "uploadBlurb": "Begin by uploading a floor plan",
+      "selectFile": "Select file",
+      "upload": "Upload"
     },
     "projectDetails": {
       "status": "Status",
@@ -118,7 +121,8 @@
       "projects": "Projects",
       "newProject": "New project",
       "draftTitle": "Draft",
-      "deleteProject": "Delete project"
+      "deleteProject": "Delete project",
+      "userProfile": "User profile"
     },
     "floorPlan": {
       "draftTitle": "Draft"
