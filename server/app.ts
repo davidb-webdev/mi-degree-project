@@ -34,6 +34,7 @@ import {
   postNote
 } from "./controllers/notes.controller";
 import { patchNoteSchema, postNoteSchema } from "./schemas/notes.schema";
+import { postDocument } from "./controllers/document";
 
 dotenv.config();
 const app = express();
@@ -49,7 +50,7 @@ app.post("/register", validate(registerSchema), register);
 
 app.get("/projects", requireAuth, getProjects);
 app.get("/project/:id", requireAuth, getProject);
-app.post("/project/", requireAuth, validate(postProjectSchema), postProject);
+app.post("/project", requireAuth, validate(postProjectSchema), postProject);
 app.patch(
   "/project/:id",
   requireAuth,
@@ -60,15 +61,17 @@ app.delete("/project/:id", requireAuth, deleteProject);
 
 app.get("/floors/:projectId", requireAuth, getFloors);
 app.get("/floor/:id", requireAuth, getFloor);
-app.post("/floor/", requireAuth, validate(postFloorSchema), postFloor);
+app.post("/floor", requireAuth, validate(postFloorSchema), postFloor);
 app.patch("/floor/:id", requireAuth, validate(patchFloorSchema), patchFloor);
 app.delete("/floor/:id", requireAuth, deleteFloor);
 
 app.get("/notes/:floorId", requireAuth, getNotes);
 app.get("/note/:id", requireAuth, getNote);
-app.post("/note/", requireAuth, validate(postNoteSchema), postNote);
+app.post("/note", requireAuth, validate(postNoteSchema), postNote);
 app.patch("/note/:id", requireAuth, validate(patchNoteSchema), patchNote);
 app.delete("/note/:id", requireAuth, deleteNote);
+
+app.post("/document", postDocument);
 
 app.use(errorHandler);
 
