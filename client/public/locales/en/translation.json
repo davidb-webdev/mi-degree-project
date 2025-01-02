@@ -74,7 +74,11 @@
     },
     "project": {
       "floor": "Floor plan",
-      "editFloors": "Edit floor plans"
+      "editFloors": "Edit floor plans",
+      "floorPlanHint": {
+        "mobile": "Long-press on the floor plan to add a new note",
+        "desktop": "Right-click on the floor plan to add a new note"
+      }
     },
     "projectDetails": {
       "status": "Status",
@@ -115,6 +119,9 @@
       "newProject": "New project",
       "draftTitle": "Draft",
       "deleteProject": "Delete project"
+    },
+    "floorPlan": {
+      "draftTitle": "Draft"
     },
     "floors": {
       "floors": "Floors",

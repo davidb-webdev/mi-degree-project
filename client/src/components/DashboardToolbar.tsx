@@ -20,7 +20,7 @@ interface DashboardToolbarProps {
 const DashboardToolbar = ({ setShowMenu }: DashboardToolbarProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const { navigateWithParams } = useCustomParams();
+  const { navigateAndUpdateParams } = useCustomParams();
   const notesDrawer = useNotesDrawer();
   const { project } = useProject();
   const { t } = useTranslation("translation", {
@@ -38,7 +38,7 @@ const DashboardToolbar = ({ setShowMenu }: DashboardToolbarProps) => {
       </Typography>
 
       <Button
-        onClick={() => navigateWithParams("/dashboard/details")}
+        onClick={() => navigateAndUpdateParams("/dashboard/details", {}, ["n"])}
         sx={{ mr: isMobile ? 2 : 0 }}
       >
         {t("details")}

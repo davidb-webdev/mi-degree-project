@@ -15,5 +15,7 @@ export const patchNoteSchema = Joi.object({
 
 export const postNoteSchema = Joi.object({
   title: Joi.string().required(),
-  floorId: Joi.string().required()
+  floorId: Joi.string().required(),
+  xCoordinate: Joi.number().optional(),
+  yCoordinate: Joi.number().optional()
 });
