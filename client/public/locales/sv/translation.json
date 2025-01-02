@@ -74,7 +74,11 @@
     },
     "project": {
       "floor": "Våningsplan",
-      "editFloors": "Ändra våningsplan"
+      "editFloors": "Ändra våningsplan",
+      "floorPlanHint": {
+        "mobile": "Håll inne i två sekunder på planskissen för att lägga till en ny anteckning",
+        "desktop": "Högerklicka på planskissen för att lägga till en ny anteckning"
+      }
     },
     "projectDetails": {
       "status": "Status",
@@ -115,6 +119,9 @@
       "newProject": "Nytt projekt",
       "draftTitle": "Utkast",
       "deleteProject": "Radera projekt"
+    },
+    "floorPlan": {
+      "draftTitle": "Utkast"
     },
     "floors": {
       "floors": "Våningsplan",
