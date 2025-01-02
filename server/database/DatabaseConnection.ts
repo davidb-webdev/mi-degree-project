@@ -200,7 +200,7 @@ export default class DatabaseConnection {
   async updateFloor(
     id: string,
     floor: {
-      title: string;
+      title?: string;
       floorPlanPath: string;
       editedAt: Date;
     }

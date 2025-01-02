@@ -9,6 +9,7 @@ import { NextFunction } from "express";
 import { ObjectId } from "mongodb";
 import { WithId } from "../models/Mongodb";
 import { Floor } from "../models/Floor";
+import { BadRequestError } from "../models/Error";
 
 export const getFloors = async (
   req: TypedRequestParams<{ projectId: string }>,
@@ -95,6 +96,29 @@ export const deleteFloor = async (
       new ObjectId(req.params.id)
     );
     res.json({ success: true });
+  } catch (error: unknown) {
+    next(error);
+  }
+};
+
+export const postFloorPlan = async (
+  req: TypedRequestParams<{ id: string }>,
+  res: TypedResponse<{ success: true; floorPlanPath: string }>,
+  next: NextFunction
+) => {
+  try {
+    if (!req.file) throw new BadRequestError("No file uploaded");
+
+    const floor = {
+      floorPlanPath: req.file.path,
+      editedAt: new Date()
+    };
+    await DatabaseConnection.getInstance().updateFloor(req.params.id, floor);
+
+    res.json({
+      success: true,
+      floorPlanPath: req.file.path
+    });
   } catch (error: unknown) {
     next(error);
   }
