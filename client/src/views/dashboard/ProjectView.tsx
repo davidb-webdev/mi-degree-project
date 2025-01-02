@@ -1,17 +1,22 @@
 import {
   FormControl,
+  IconButton,
   MenuItem,
   Select,
   SelectChangeEvent,
+  Snackbar,
   useMediaQuery,
   useTheme
 } from "@mui/material";
-import FloorPlanView from "./FloorPlanView";
+import FloorPlan from "../../components/FloorPlan";
 import { useFloors } from "../../utils/useFloors";
 import { useCustomParams } from "../../utils/useCustomParams";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
 
 const ProjectView = () => {
+  const [showHint, setShowHint] = useState(true);
   const { floors } = useFloors();
   const { getParam, navigateAndUpdateParams } = useCustomParams();
   const theme = useTheme();
@@ -57,7 +62,26 @@ const ProjectView = () => {
         </Select>
       </FormControl>
 
-      <FloorPlanView />
+      <Snackbar
+        sx={{ mt: 6 }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={showHint}
+        autoHideDuration={5000}
+        onClose={() => setShowHint(false)}
+        message={t(`floorPlanHint.${isMobile ? "mobile" : "desktop"}`)}
+        action={
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={() => setShowHint(false)}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        }
+      />
+
+      <FloorPlan />
     </>
   );
 };
