@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from "express";
 dotenv.config();
 
 export const session = cookieSession({
-  secret: process.env.COOKIESESSION_SECRET,
+  keys: [process.env.COOKIESESSION_SECRET || "1noKeySet1d3jxw81jd9qwidhqw9qwe"],
   maxAge: 1000 * 60 * 60 * 24,
   httpOnly: true,
   secure: process.env.NODE_ENV === "production"
