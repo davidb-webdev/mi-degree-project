@@ -58,7 +58,7 @@ export const generateDocument = async (
         text: floor.title,
         heading: HeadingLevel.HEADING_2,
         spacing: {
-            before: 200,
+          before: 200
         }
       }),
       new Paragraph({
@@ -115,7 +115,7 @@ export const generateDocument = async (
             text: project.title,
             heading: HeadingLevel.HEADING_1,
             spacing: {
-                before: 100,
+              before: 100
             }
           }),
           new Paragraph({
@@ -138,7 +138,7 @@ export const generateDocument = async (
             text: translation.floorPlans,
             heading: HeadingLevel.HEADING_1,
             spacing: {
-                before: 100,
+              before: 100
             }
           }),
           ...docFloorPlans,
@@ -146,7 +146,7 @@ export const generateDocument = async (
             text: translation.notes,
             heading: HeadingLevel.HEADING_1,
             spacing: {
-                before: 100,
+              before: 100
             }
           }),
           ...docNotes
@@ -156,6 +156,8 @@ export const generateDocument = async (
   });
 
   Packer.toBuffer(doc).then((buffer) => {
-    fs.writeFileSync("files/documents/test.docx", buffer);
+    fs.writeFileSync(`files/documents/${projectId}.docx`, buffer);
   });
+
+  return `files/documents/${projectId}.docx`;
 };

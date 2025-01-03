@@ -5,11 +5,12 @@
       "signIn": "Sign in"
     },
     "intro": {
-      "p1": "p1",
-      "p2": "p2",
-      "p3": "p3",
+      "p1": "Document before, during, and after fire safety inspections",
+      "p2": "Link each note to a specific location in the building",
+      "p3": "Easily export all notes as a Word document",
       "register": "Register",
-      "signIn": "Sign in"
+      "signIn": "Sign in",
+      "or": "or"
     },
     "register": {
       "title": "Register User",
@@ -21,7 +22,8 @@
       "or": "or",
       "signIn": "Sign in",
       "passwordsMustMatch": "Password fields must match",
-      "success": "User registered successfully"
+      "success": "User registered successfully",
+      "cookies": "We use a cookie to keep you signed in"
     },
     "signIn": {
       "title": "Sign In",
@@ -29,7 +31,8 @@
       "password": "Password",
       "submit": "Sign in",
       "or": "or",
-      "register": "Register"
+      "register": "Register",
+      "cookies": "We use a cookie to keep you signed in"
     }
   },
   "dashboard": {
@@ -120,7 +123,7 @@
     "menu": {
       "projects": "Projects",
       "newProject": "New project",
-      "draftTitle": "Draft",
+      "draftTitle": "New project",
       "deleteProject": "Delete project",
       "userProfile": "User profile"
     },

@@ -17,6 +17,7 @@ interface EditNoteViewProps {
 const EditNoteView = ({ newNote }: EditNoteViewProps) => {
   const { note, setNote } = useNote();
   const { refreshNotes } = useNotes();
+  const { getParam } = useCustomParams();
   const [formData, setFormData] = useState(
     note ?? new Note("", NoteCategories.BlockedEscapeRoute, "", 1, 1)
   );
@@ -66,11 +67,12 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
       yCoordinate
     };
     await apiClient.patch<{ success: boolean }>(
-      `/api/note/${note!._id}`,
+      `/api/note/${getParam("n")}`,
       requestBody
     );
     setNote({ ...note!, ...formData });
     snackbar.open("success", t("success"));
+    refreshNotes();
     navigateWithParams(`/dashboard/note/`);
   };
 
@@ -81,7 +83,7 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
           newNote
             ? async () => {
                 await apiClient.delete<{ success: boolean }>(
-                  `/api/note/${note!._id}`
+                  `/api/note/${getParam("n")}`
                 );
                 refreshNotes();
                 navigateAndUpdateParams("/dashboard", {}, ["n"]);
@@ -117,12 +119,9 @@ const EditNoteView = ({ newNote }: EditNoteViewProps) => {
           value={formData.description}
           onChange={handleFormChange}
           multiline
+          maxRows={10}
           required
         />
-
-        <Button>{t("addPhotos")}</Button>
-
-        <Button>{t("editLocation")}</Button>
       </Stack>
     </form>
   ) : (

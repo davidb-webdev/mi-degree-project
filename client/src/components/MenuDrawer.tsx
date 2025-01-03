@@ -59,7 +59,7 @@ const MenuDrawer = ({ showMenu, toggleMenu }: MenuDrawerProps) => {
         <List sx={{ minWidth: "250px" }}>
           <ListItem disablePadding>
             <ListItemButton component={NavLink} to="/dashboard/user">
-              <ListItemText>TODO: User</ListItemText>
+              <ListItemText><ListItemText>{t("userProfile")}</ListItemText></ListItemText>
             </ListItemButton>
           </ListItem>
         </List>
