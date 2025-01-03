@@ -89,7 +89,6 @@ const NotesDrawer = ({ children }: NotesDrawerProps) => {
         )}
 
         <Box
-          className="scrollable"
           sx={{
             width: isMobile ? "auto" : notesDrawer.width
           }}

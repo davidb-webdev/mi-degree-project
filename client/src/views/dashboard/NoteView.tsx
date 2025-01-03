@@ -1,4 +1,4 @@
-import { Box, Button, Skeleton, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import ModalToolbar from "../../components/ModalToolbar";
 import { useTranslation } from "react-i18next";
 import NoteCategoryTag from "../../components/NoteCategoryTag";
@@ -25,8 +25,6 @@ const NoteView = () => {
           </Button>
         }
       />
-
-      <Skeleton variant="rectangular" height={200} sx={{ my: 2 }} />
 
       <Stack sx={{ mx: 3 }} spacing={2}>
         <Box>

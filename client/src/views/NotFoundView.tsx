@@ -1,7 +1,7 @@
 const NotFoundView = () => {
   return (
     <>
-      <title>Page not found - FireInspect</title>
+      <title>Page not found - BuildingInspect</title>
       <h1>Page not found</h1>
     </>
   );

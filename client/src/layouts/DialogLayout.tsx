@@ -19,8 +19,11 @@ const DialogLayout = ({ baseUrl }: ModalLayoutProps) => {
       fullScreen={isMobile}
       keepMounted
       aria-describedby="modalTitle"
+      fullWidth
+      maxWidth={"xs"}
+      sx={{ minHeight: isMobile ? "100vh" : "initial"}}
     >
-      <Box sx={{ maxWidth: "300px" }}>
+      <Box>
         <Outlet />
       </Box>
     </Dialog>

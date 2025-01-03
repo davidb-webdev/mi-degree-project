@@ -13,20 +13,20 @@ const StartLayout = () => {
   });
 
   if (auth === undefined) {
-    return <>Loading...</>;
+    return <></>;
   }
 
   return auth ? (
     <Navigate to="/dashboard" />
   ) : (
-    <Box className="scrollable">
+    <Box>
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Button
           aria-label="start page"
           onClick={() => navigate("/start")}
           startIcon={<LocalFireDepartmentIcon />}
         >
-          FireInspect
+          BuildingInspect
         </Button>
         <Stack direction="row">
           <Button
