@@ -1,15 +1,13 @@
 import DatabaseConnection from "../database/DatabaseConnection";
 import {
-  TypedRequest,
   TypedRequestBody,
-  TypedRequestParams,
   TypedResponse
 } from "../models/Express";
 import { NextFunction } from "express";
 import { generateDocument } from "../functions/docx";
 
 export const postDocument = async (
-  req: TypedRequestParams<{ projectId: string; language: string }>,
+  req: TypedRequestBody<{ projectId: string; language: "en" | "sv" }>,
   res: TypedResponse<{ success: boolean }>,
   next: NextFunction
 ) => {
