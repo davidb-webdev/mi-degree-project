@@ -23,7 +23,7 @@ const ProjectDetailsEditView = ({
     project ?? new Project("", "", ProjectStatuses.Draft)
   );
   const { refreshProjects } = useProjects();
-  const { navigateWithParams } = useCustomParams();
+  const { getParam, navigateWithParams } = useCustomParams();
   const snackbar = useSnackbar();
   const apiClient = useAxios();
   const { t } = useTranslation("translation", {
@@ -63,13 +63,13 @@ const ProjectDetailsEditView = ({
       status
     };
     await apiClient.patch<{ success: boolean }>(
-      `/api/project/${project!._id}`,
+      `/api/project/${getParam("p")}`,
       requestBody
     );
     setProject({ ...project!, ...formData });
     refreshProjects();
     snackbar.open("success", t("success"));
-    navigateWithParams("/dashboard/details");
+    navigateWithParams(newProject ? "/dashboard" : "/dashboard/details");
   };
 
   return (
@@ -105,6 +105,7 @@ const ProjectDetailsEditView = ({
           value={formData.description}
           onChange={handleFormChange}
           multiline
+          maxRows={10}
           required
         />
 

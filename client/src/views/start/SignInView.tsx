@@ -50,11 +50,13 @@ const SignInView = () => {
           required
         />
 
+        <Typography textAlign="center" variant="body2">{t("cookies")}</Typography>
+
         <Button type="submit" variant="contained">
           {t("submit")}
         </Button>
 
-        <Typography variant="body1" sx={{ textAlign: "center" }}>
+        <Typography variant="body2" textAlign="center">
           {t("or") + " "}
           <Link component={RouterLink} to="/start/register">
             {t("register")}

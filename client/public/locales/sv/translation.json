@@ -5,11 +5,12 @@
       "signIn": "Logga in"
     },
     "intro": {
-      "p1": "p1",
-      "p2": "p2",
-      "p3": "p3",
+      "p1": "Dokumentera före, under och efter brandskyddsinspektioner",
+      "p2": "Koppla varje anteckning till plats i byggnaden",
+      "p3": "Exportera enkelt alla anteckningar som Word-dokument",
       "register": "Registrera",
-      "signIn": "Logga in"
+      "signIn": "Logga in",
+      "or": "eller"
     },
     "register": {
       "title": "Registrera användare",
@@ -21,7 +22,8 @@
       "or": "eller",
       "signIn": "Logga in",
       "passwordsMustMatch": "Lösenordsfälten måste vara samma",
-      "success": "Användarkonto registrerat"
+      "success": "Användarkonto registrerat",
+      "cookies": "Vi använder en cookie för att hålla dig inloggad"
     },
     "signIn": {
       "title": "Logga in",
@@ -29,7 +31,8 @@
       "password": "Lösenord",
       "submit": "Logga in",
       "or": "eller",
-      "register": "Registrera"
+      "register": "Registrera",
+      "cookies": "Vi använder en cookie för att hålla dig inloggad"
     }
   },
   "dashboard": {
@@ -120,7 +123,7 @@
     "menu": {
       "projects": "Projekt",
       "newProject": "Nytt projekt",
-      "draftTitle": "Utkast",
+      "draftTitle": "Nytt projekt",
       "deleteProject": "Radera projekt",
       "userProfile": "Användarprofil"
     },

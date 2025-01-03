@@ -1,10 +1,10 @@
-import { Request, NextFunction } from "express";
+import { Request, Response, NextFunction } from "express";
 import { TypedResponse } from "../models/Express";
 
 const errorHandler = (
   error: Error & { statusCode?: number },
   req: Request,
-  res: TypedResponse<{ message: string; statusCode: number }>,
+  res: Response,
   next: NextFunction
 ) => {
   const statusCode = error.statusCode || 500;

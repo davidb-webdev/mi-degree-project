@@ -13,8 +13,10 @@ import { useNotes } from "../../utils/useNotes";
 import { useCustomParams } from "../../utils/useCustomParams";
 import useAxios from "../../utils/useAxios";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useProject } from "../../utils/useProject";
 
 const NotesListView = () => {
+  const { project } = useProject();
   const { notes, refreshNotes } = useNotes();
   const { getParam, navigateAndUpdateParams } = useCustomParams();
   const apiClient = useAxios();
@@ -89,10 +91,25 @@ const NotesListView = () => {
                 projectId: getParam("p"),
                 language: i18n.resolvedLanguage
               };
-              await apiClient.post<{ success: boolean }>(
+              const response = await apiClient.post<{ documentPath: string }>(
                 `/api/document`,
                 requestBody
               );
+
+              const documentResponse = await apiClient.get(
+                `/api/${response.data.documentPath}`,
+                { responseType: "blob" }
+              );
+
+              const blob = new Blob([documentResponse.data]);
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = `${project?.title ?? "project"}.docx`;
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+              window.URL.revokeObjectURL(url);
             }}
           >
             {t("export")}
