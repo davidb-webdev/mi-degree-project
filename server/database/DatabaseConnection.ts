@@ -1,10 +1,10 @@
 import { Collection, MongoClient, ObjectId } from "mongodb";
-import { WithId } from "../models/Mongodb";
-import { User } from "../models/User";
-import { Project, ProjectStatus } from "../models/Project";
-import { BadRequestError, UnauthorizedError } from "../models/Error";
-import { Note, NoteCategory } from "../models/Note";
-import { Floor } from "../models/Floor";
+import { WithId } from "../models/Mongodb.js";
+import { User } from "../models/User.js";
+import { Project, ProjectStatus } from "../models/Project.js";
+import { BadRequestError, UnauthorizedError } from "../models/Error.js";
+import { Note, NoteCategory } from "../models/Note.js";
+import { Floor } from "../models/Floor.js";
 
 let instance: DatabaseConnection | null = null;
 

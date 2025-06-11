@@ -1,5 +1,5 @@
-import app from "./app";
-import DatabaseConnection from "./database/DatabaseConnection";
+import app from "./app.js";
+import DatabaseConnection from "./database/DatabaseConnection.js";
 
 const serverPort = process.env.SERVER_PORT || 3000;
 const dbUrl = process.env.DB_URL || "noDbUrlSet";

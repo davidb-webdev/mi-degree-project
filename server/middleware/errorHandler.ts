@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { TypedResponse } from "../models/Express";
+import { TypedResponse } from "../models/Express.js";
 
 const errorHandler = (
   error: Error & { statusCode?: number },

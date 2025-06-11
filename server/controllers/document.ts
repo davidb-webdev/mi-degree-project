@@ -1,7 +1,7 @@
-import DatabaseConnection from "../database/DatabaseConnection";
-import { TypedRequestBody, TypedResponse } from "../models/Express";
+import DatabaseConnection from "../database/DatabaseConnection.js";
+import { TypedRequestBody, TypedResponse } from "../models/Express.js";
 import { NextFunction } from "express";
-import { generateDocument } from "../functions/docx";
+import { generateDocument } from "../functions/docx.js";
 
 export const postDocument = async (
   req: TypedRequestBody<{ projectId: string; language: "en" | "sv" }>,

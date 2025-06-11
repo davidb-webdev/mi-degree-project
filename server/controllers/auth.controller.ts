@@ -1,7 +1,7 @@
-import DatabaseConnection from "../database/DatabaseConnection";
+import DatabaseConnection from "../database/DatabaseConnection.js";
 import { hash, compare } from "bcrypt";
-import { TypedRequestBody, TypedResponse } from "../models/Express";
-import { BadRequestError, UnauthorizedError } from "../models/Error";
+import { TypedRequestBody, TypedResponse } from "../models/Express.js";
+import { BadRequestError } from "../models/Error.js";
 import { NextFunction, Request } from "express";
 
 export const signIn = async (
