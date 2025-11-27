@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { ProjectStatuses } from "../models/Project";
+import { ProjectStatuses } from "../models/Project.js";
 
 const projectStatusValues = Object.values(ProjectStatuses);
 

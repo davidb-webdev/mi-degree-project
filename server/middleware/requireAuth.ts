@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { UnauthorizedError } from "../models/Error";
+import { UnauthorizedError } from "../models/Error.js";
 
 const requireAuth = (req: Request, res: Response, next: NextFunction) => {
   if (!req.session || !req.session.email) {

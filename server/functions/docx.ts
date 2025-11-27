@@ -1,10 +1,10 @@
 import * as fs from "fs";
 import { Document, HeadingLevel, ImageRun, Packer, Paragraph } from "docx";
 import { ObjectId } from "mongodb";
-import DatabaseConnection from "../database/DatabaseConnection";
+import DatabaseConnection from "../database/DatabaseConnection.js";
 import { imageSize } from "image-size";
-import en from "../language/en.json";
-import sv from "../language/sv.json";
+import en from "../language/en.json" with { type: 'json' };
+import sv from "../language/sv.json" with { type: 'json' };
 
 export const generateDocument = async (
   projectId: string,

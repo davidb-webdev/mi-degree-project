@@ -1,15 +1,15 @@
-import DatabaseConnection from "../database/DatabaseConnection";
+import DatabaseConnection from "../database/DatabaseConnection.js";
 import {
   TypedRequest,
   TypedRequestBody,
   TypedRequestParams,
   TypedResponse
-} from "../models/Express";
+} from "../models/Express.js";
 import { NextFunction } from "express";
 import { ObjectId } from "mongodb";
-import { WithId } from "../models/Mongodb";
-import { Floor } from "../models/Floor";
-import { BadRequestError } from "../models/Error";
+import { WithId } from "../models/Mongodb.js";
+import { Floor } from "../models/Floor.js";
+import { BadRequestError } from "../models/Error.js";
 
 export const getFloors = async (
   req: TypedRequestParams<{ projectId: string }>,

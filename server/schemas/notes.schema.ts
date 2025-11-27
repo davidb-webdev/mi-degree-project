@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { NoteCategories } from "../models/Note";
+import { NoteCategories } from "../models/Note.js";
 
 const noteCategoryValues = Object.values(NoteCategories);
 

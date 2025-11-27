@@ -1,52 +1,61 @@
 import express from "express";
 import dotenv from "dotenv";
-import errorHandler from "./middleware/errorHandler";
-import validate from "./middleware/validate";
-import { renewSession, session } from "./middleware/session";
-import requireAuth from "./middleware/requireAuth";
+import errorHandler from "./middleware/errorHandler.js";
+import validate from "./middleware/validate.js";
+import { renewSession, session } from "./middleware/session.js";
+import requireAuth from "./middleware/requireAuth.js";
 import multer from "multer";
 import path from "path";
+import { fileURLToPath } from "url";
 
-import { auth, register, signIn, signOut } from "./controllers/auth.controller";
-import { signInSchema, registerSchema } from "./schemas/auth.schema";
+import {
+  auth,
+  register,
+  signIn,
+  signOut,
+} from "./controllers/auth.controller.js";
+import { signInSchema, registerSchema } from "./schemas/auth.schema.js";
 import {
   deleteProject,
   getProject,
   getProjects,
   patchProject,
-  postProject
-} from "./controllers/projects.controller";
+  postProject,
+} from "./controllers/projects.controller.js";
 import {
   patchProjectSchema,
-  postProjectSchema
-} from "./schemas/projects.schema";
+  postProjectSchema,
+} from "./schemas/projects.schema.js";
 import {
   deleteFloor,
   getFloor,
   getFloors,
   patchFloor,
   postFloor,
-  postFloorPlan
-} from "./controllers/floors.controller";
-import { patchFloorSchema, postFloorSchema } from "./schemas/floors.schema";
+  postFloorPlan,
+} from "./controllers/floors.controller.js";
+import { patchFloorSchema, postFloorSchema } from "./schemas/floors.schema.js";
 import {
   deleteNote,
   getNote,
   getNotes,
   patchNote,
-  postNote
-} from "./controllers/notes.controller";
-import { patchNoteSchema, postNoteSchema } from "./schemas/notes.schema";
-import { postDocument } from "./controllers/document";
-import { postDocumentSchema } from "./schemas/document.schema";
+  postNote,
+} from "./controllers/notes.controller.js";
+import { patchNoteSchema, postNoteSchema } from "./schemas/notes.schema.js";
+import { postDocument } from "./controllers/document.js";
+import { postDocumentSchema } from "./schemas/document.schema.js";
 
 dotenv.config();
 const app = express();
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use(express.json());
 app.use(session);
 app.use(renewSession);
-app.use('/files', express.static(path.join(__dirname, 'files')));
+app.use("/files", express.static(path.join(__dirname, "files")));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -58,7 +67,7 @@ const storage = multer.diskStorage({
       null,
       file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname)
     );
-  }
+  },
 });
 
 const upload = multer({ storage });

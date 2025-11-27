@@ -1,14 +1,14 @@
-import DatabaseConnection from "../database/DatabaseConnection";
+import DatabaseConnection from "../database/DatabaseConnection.js";
 import {
   TypedRequest,
   TypedRequestBody,
   TypedRequestParams,
   TypedResponse
-} from "../models/Express";
+} from "../models/Express.js";
 import { NextFunction } from "express";
 import { ObjectId } from "mongodb";
-import { WithId } from "../models/Mongodb";
-import { Note, NoteCategories, NoteCategory } from "../models/Note";
+import { WithId } from "../models/Mongodb.js";
+import { Note, NoteCategories, NoteCategory } from "../models/Note.js";
 
 export const getNotes = async (
   req: TypedRequestParams<{ floorId: string }>,

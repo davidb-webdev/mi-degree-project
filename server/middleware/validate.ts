@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { BadRequestError } from "../models/Error";
+import { BadRequestError } from "../models/Error.js";
 import { Schema } from "joi";
 
 const validate = (schema: Schema) => {

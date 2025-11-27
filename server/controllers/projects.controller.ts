@@ -1,15 +1,15 @@
-import DatabaseConnection from "../database/DatabaseConnection";
+import DatabaseConnection from "../database/DatabaseConnection.js";
 import {
   TypedRequest,
   TypedRequestBody,
   TypedRequestParams,
   TypedResponse
-} from "../models/Express";
+} from "../models/Express.js";
 import { NextFunction, Request } from "express";
-import { Project, ProjectStatus, ProjectStatuses } from "../models/Project";
+import { Project, ProjectStatus, ProjectStatuses } from "../models/Project.js";
 import { ObjectId } from "mongodb";
-import { WithId } from "../models/Mongodb";
-import { Floor } from "../models/Floor";
+import { WithId } from "../models/Mongodb.js";
+import { Floor } from "../models/Floor.js";
 
 export const getProjects = async (
   req: Request,
